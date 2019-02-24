@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">ВГУ Тестирование</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Name</string>
+    <string name="nav_header_subtitle">Email</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="et_email">Email</string>
+    <string name="et_password">Пароль</string>
+    <string name="btn_sign_in">Авторизация</string>
+    <string name="btn_registration">Создать аккаунт</string>
+    <string name="authorization_error">Авторизация неуспешна</string>
+    <string name="authorization_complete">Авторизация прошла успешно</string>
+    <string name="registration_error">Регистрация неуспешна. Введите другой E-mail</string>
+    <string name="registration_complete">Регистрация прошла успешно</string>
+    <string name="progressMessage">Вход в систему ...</string>
+    <string name="your_name">ФИО полностью</string>
+    <string name="register_user">Регистрация</string>
+    <string name="required">Пустое поле.</string>
+    <string name="you_need_to_start_new_account">Вам необходимо создать новый аккаунт</string>
+    <string name="checking_login">Проверка авторизации ...</string>
+    <string name="test_item">Открытые тесты</string>
+    <string name="result_item">Результаты</string>
+    <string name="rating_item">Рейтинги</string>
+    <string name="information_item">Информация</string>
+    <string name="divider">/</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rating_tv">Rating\n0</string>
+    <string name="create_your_question_tv">Создайте свой вопрос!</string>
+    <string name="hint_question">Введите свой вопрос</string>
+    <string name="enter_the_answers_tv">Введите ответы к своему вопросу. Поставьте галочку рядом с правильным ответом</string>
+    <string name="et_new_answer1">Ответ 1</string>
+    <string name="et_new_answer2">Ответ 2</string>
+    <string name="et_new_answer3">Ответ 3</string>
+    <string name="et_new_answer4">Ответ 4</string>
+    <string name="btn_send_new_question">Отправить вопрос на проверку</string>
+    <string name="courseET">Курс</string>
+    <string name="groupET">Группа</string>
+    <string name="student_tv">Студент</string>
+    <string name="teacher_tv">Преподаватель</string>
+    <string name="next_step">Далее</string>
+    <string name="et_code">Код активации</string>
+    <string name="et_department">Кафедра</string>
+    <string name="Statistic">Статистика</string>
+    <string name="open_test">Перейти к выполнению теста?</string>
+    <string name="btn_yes">Да</string>
+    <string name="btn_no">Нет</string>
+    <string name="previous"><![CDATA[<]]></string>
+    <string name="next"><![CDATA[>]]></string>
+    <string name="result_TV">Результат</string>
+    <string name="right_answer_TV">Правильных ответов:</string>
+    <string name="points_TV">Баллы:</string>
+    <string name="remark_TV">Чтобы узнать какие ответы неверны нажмите - ПРОСМОТР ТЕСТА.</string>
+    <string name="check_test_btn">Просмотр теста</string>
+    <string name="main_menu_btn">Главное меню</string>
+</resources>
