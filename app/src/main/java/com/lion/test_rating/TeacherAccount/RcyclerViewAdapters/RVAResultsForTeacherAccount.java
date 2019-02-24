@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.TeacherAccount.RcyclerViewAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lion.test_rating.R;
+
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterResultsTeachers extends RecyclerView.Adapter<RecyclerViewAdapterResultsTeachers.ViewHolder>{
+public class RVAResultsForTeacherAccount extends RecyclerView.Adapter<RVAResultsForTeacherAccount.ViewHolder>{
 
     private ArrayList<String> mStudents;
     private ArrayList<String> mPoints;
     private Context mContext;
 
-    RecyclerViewAdapterResultsTeachers(Context mContext, ArrayList<String> mStudents, ArrayList<String> mPoints) {
+    public RVAResultsForTeacherAccount(Context mContext, ArrayList<String> mStudents, ArrayList<String> mPoints) {
         this.mStudents = mStudents;
         this.mPoints = mPoints;
         this.mContext = mContext;
@@ -25,7 +27,7 @@ public class RecyclerViewAdapterResultsTeachers extends RecyclerView.Adapter<Rec
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_results_teachers, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_for_teachers_list_results, parent, false);
         return new ViewHolder(view);
     }
 

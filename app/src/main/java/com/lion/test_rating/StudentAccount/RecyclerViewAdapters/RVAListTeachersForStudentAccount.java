@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.ResultsStudentsActivity;
+
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterTeachers extends RecyclerView.Adapter<RecyclerViewAdapterTeachers.ViewHolder>{
+public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVAListTeachersForStudentAccount.ViewHolder>{
 
     private ArrayList<String> mTeacher;
     private Context mContext;
@@ -21,7 +24,7 @@ public class RecyclerViewAdapterTeachers extends RecyclerView.Adapter<RecyclerVi
     private String group;
     private String full_name;
 
-    RecyclerViewAdapterTeachers(Context mContext, ArrayList<String> mTeacher, String course, String group, String full_name) {
+    public RVAListTeachersForStudentAccount(Context mContext, ArrayList<String> mTeacher, String course, String group, String full_name) {
         this.mTeacher = mTeacher;
         this.mContext = mContext;
         this.course = course;
@@ -31,7 +34,7 @@ public class RecyclerViewAdapterTeachers extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_teachers, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_for_students_list_teachers, parent, false);
         return new ViewHolder(view);
     }
 

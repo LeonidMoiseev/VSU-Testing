@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
@@ -7,16 +7,16 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +27,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.MainActivity;
+import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.Fragments.FragmentTeachersForStudentsAccount;
+import com.lion.test_rating.StudentAccount.Fragments.FragmentTestsForStudentsAccount;
 
-public class AccountTeacherActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    final String USERS = "Пользователи";
-    final String TEACHERS = "Преподаватели";
-    final String EMAIL = "Email";
-    final String FULL_NAME = "ФИО";
+public class AccountStudentActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -43,12 +43,15 @@ public class AccountTeacherActivity extends AppCompatActivity
 
     String name;
     String email;
+    String course;
+    String group;
 
     TextView headerName;
     TextView headerEmail;
 
-    private FragmentTestsForTeachersAccount fResult;
     FragmentTransaction fragmentTransaction;
+    private FragmentTestsForStudentsAccount fTest;
+    private FragmentTeachersForStudentsAccount fResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +62,11 @@ public class AccountTeacherActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         navigationView = findViewById(R.id.nav_view);
-        navigationView.inflateMenu(R.menu.activity_main_drawer_teachers);
+        navigationView.inflateMenu(R.menu.activity_main_drawer_students);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = mFirebaseDatabase.getReference().child(USERS);
+        DatabaseReference myRef = mFirebaseDatabase.getReference().child(ConstantsNames.USERS);
         myRef.keepSynced(true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -77,7 +80,7 @@ public class AccountTeacherActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(AccountTeacherActivity.this, MainActivity.class);
+                    Intent loginIntent = new Intent(AccountStudentActivity.this, MainActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();
@@ -101,11 +104,11 @@ public class AccountTeacherActivity extends AppCompatActivity
             errorNull();
         }
 
-        fResult = new FragmentTestsForTeachersAccount();
+        fTest = new FragmentTestsForStudentsAccount();
+        fResult = new FragmentTeachersForStudentsAccount();
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fResult);
+        fragmentTransaction.replace(R.id.container, fTest);
         fragmentTransaction.commit();
-
     }
 
     private void showData(DataSnapshot snapshot) {
@@ -113,8 +116,11 @@ public class AccountTeacherActivity extends AppCompatActivity
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             String userID = user.getUid();
-            name = (String) snapshot.child(TEACHERS).child(userID).child(FULL_NAME).getValue();
-            email = (String) snapshot.child(TEACHERS).child(userID).child(EMAIL).getValue();
+            DataSnapshot dataStudents = snapshot.child(ConstantsNames.STUDENTS).child(userID);
+            name = (String) dataStudents.child(ConstantsNames.FULL_NAME).getValue();
+            email = (String) dataStudents.child(ConstantsNames.EMAIL).getValue();
+            course = (String) dataStudents.child(ConstantsNames.COURSE).getValue();
+            group = (String) dataStudents.child(ConstantsNames.GROUP).getValue();
 
             updateUI();
 
@@ -185,13 +191,13 @@ public class AccountTeacherActivity extends AppCompatActivity
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_result) {
+        if (id == R.id.nav_tests) {
+            fragmentTransaction.replace(R.id.container, fTest);
+        } else if (id == R.id.nav_result) {
             fragmentTransaction.replace(R.id.container, fResult);
-        } else if (id == R.id.nav_statistic) {
+        } else if (id == R.id.nav_rating) {
 
         } else if (id == R.id.nav_information) {
-
-        } else if (id == R.id.nav_rating) {
 
         }
         fragmentTransaction.commit();

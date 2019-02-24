@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
 
 public class RegistrationStudentActivity extends AppCompatActivity {
 
@@ -48,19 +50,10 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     String completeCode;
     Boolean dataUse = false;
 
-    final String USERS = "Пользователи";
-    final String STUDENTS = "Студенты";
-    final String COURSE = "Курс";
-    final String GROUP = "Группа";
-    final String EMAIL = "Email";
-    final String FULL_NAME = "ФИО";
-    final String RATING = "Рейтинг";
-    final String ACTIVATION_CODES = "Коды активации";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_students);
+        setContentView(R.layout.activity_for_student_registration);
         Toolbar toolbar = findViewById(R.id.myToolBar);
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -129,7 +122,8 @@ public class RegistrationStudentActivity extends AppCompatActivity {
 
     private void showData(DataSnapshot dataSnapshot) {
 
-        completeCode = (String) dataSnapshot.child(ACTIVATION_CODES).child(STUDENTS).child(course).child(group).child(name).getValue();
+        completeCode = (String) dataSnapshot.child(ConstantsNames.ACTIVATION_CODES).child(ConstantsNames.STUDENTS).
+                child(course).child(group).child(name).getValue();
 
         try {
             if (completeCode.equals(code)) {
@@ -159,16 +153,18 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                         String user_id = mAuth.getCurrentUser().getUid();
                         String user_email = mAuth.getCurrentUser().getEmail();
 
-                        DatabaseReference current_user_db = mDatabaseUsers.child(USERS).child(STUDENTS).child(user_id);
-                        current_user_db.child(FULL_NAME).setValue(name);
-                        current_user_db.child(COURSE).setValue(course);
-                        current_user_db.child(GROUP).setValue(group);
-                        current_user_db.child(RATING).setValue("0");
-                        current_user_db.child(EMAIL).setValue(user_email);
+                        DatabaseReference current_user_db = mDatabaseUsers.child(ConstantsNames.USERS).
+                                child(ConstantsNames.STUDENTS).child(user_id);
+                        current_user_db.child(ConstantsNames.FULL_NAME).setValue(name);
+                        current_user_db.child(ConstantsNames.COURSE).setValue(course);
+                        current_user_db.child(ConstantsNames.GROUP).setValue(group);
+                        current_user_db.child(ConstantsNames.RATING).setValue("0");
+                        current_user_db.child(ConstantsNames.EMAIL).setValue(user_email);
 
                         mProgress.dismiss();
 
-                        mDatabaseUsers.child(ACTIVATION_CODES).child(STUDENTS).child(course).child(group).child(name).removeValue();
+                        mDatabaseUsers.child(ConstantsNames.ACTIVATION_CODES).child(ConstantsNames.STUDENTS).
+                                child(course).child(group).child(name).removeValue();
 
                         Intent mainIntent = new Intent(RegistrationStudentActivity.this, AccountStudentActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

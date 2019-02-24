@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAResultsForStudentAccount;
 
 import java.util.ArrayList;
 
@@ -25,10 +28,6 @@ public class ResultsStudentsActivity extends AppCompatActivity {
     String full_name;
     String nameTeacher;
 
-    final String RESULTS = "Результаты";
-    final String SUBJECT = "Предмет";
-    final String DATA_CREATE = "Дата создания";
-
     private ArrayList<String> mSubjectName = new ArrayList<>();
     private ArrayList<String> mDataName = new ArrayList<>();
     private ArrayList<String> mPoints = new ArrayList<>();
@@ -36,11 +35,11 @@ public class ResultsStudentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results_students);
+        setContentView(R.layout.activity_for_student_results);
 
         Toolbar toolbar = findViewById(R.id.myToolBar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTitle(RESULTS);
+        toolbar.setTitle(ConstantsNames.RESULTS);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -50,7 +49,7 @@ public class ResultsStudentsActivity extends AppCompatActivity {
         nameTeacher = intent.getStringExtra("nameTeacher");
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(RESULTS).child(nameTeacher);
+        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS).child(nameTeacher);
         resultDatabase.keepSynced(true);
 
         try {
@@ -82,8 +81,8 @@ public class ResultsStudentsActivity extends AppCompatActivity {
 
                     if (numberTest.child(course).child(group).hasChild(full_name)) {
 
-                        initListTests((String) numberTest.child(SUBJECT).getValue()
-                                , (String) numberTest.child(DATA_CREATE).getValue()
+                        initListTests((String) numberTest.child(ConstantsNames.SUBJECT).getValue()
+                                , (String) numberTest.child(ConstantsNames.DATA_CREATE).getValue()
                                 , (String) numberTest.child(course).child(group).child(full_name).getValue());
                     }
                 }
@@ -100,7 +99,7 @@ public class ResultsStudentsActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_results_students);
-        RecyclerViewAdapterResultsStudents adapter = new RecyclerViewAdapterResultsStudents(this, mSubjectName, mDataName, mPoints);
+        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(this, mSubjectName, mDataName, mPoints);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

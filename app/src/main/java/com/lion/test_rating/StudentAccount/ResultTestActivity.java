@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
 
 public class ResultTestActivity extends AppCompatActivity {
 
@@ -23,13 +24,6 @@ public class ResultTestActivity extends AppCompatActivity {
     Button checkTest;
     Button backMenu;
 
-    final String TESTS = "Tests";
-    final String USER_COMPLETE_TEST = "Пользователи прошедшие тест";
-    final String COMPLETE = "Complete";
-    final String RESULTS = "Результаты";
-    final String SUBJECT = "Предмет";
-    final String DATA_CREATE = "Дата создания";
-
     String course;
     String group;
     String full_name;
@@ -38,19 +32,17 @@ public class ResultTestActivity extends AppCompatActivity {
     String dataCreateTest;
     String nameSubject;
 
-    DatabaseReference mDatabase;
+    DatabaseReference mDatabaseUserComplete;
+    DatabaseReference mDatabaseUserResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result_test);
+        setContentView(R.layout.activity_for_student_result_test);
 
         Toolbar toolbar = findViewById(R.id.myToolBar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.keepSynced(true);
 
         rightAnswerTV = findViewById(R.id.rightAnswer);
         pointsTV = findViewById(R.id.points);
@@ -102,13 +94,20 @@ public class ResultTestActivity extends AppCompatActivity {
     }
 
     private void writeUserCompletedTest() {
-        mDatabase.child(TESTS).child(nameTeacher).child(numberTest).child(USER_COMPLETE_TEST).child(full_name).setValue(COMPLETE);
+        mDatabaseUserComplete = FirebaseDatabase.getInstance().getReference();
+        mDatabaseUserComplete.keepSynced(true);
+
+        mDatabaseUserComplete.child(ConstantsNames.TESTS).child(nameTeacher).child(numberTest).child(ConstantsNames.USER_COMPLETE_TEST).
+                child(full_name).setValue(ConstantsNames.COMPLETE);
     }
 
     private void writeResultTest() {
-        mDatabase.child(RESULTS).child(nameTeacher).child(numberTest).child(course).child(group).child(full_name).setValue(Integer.toString(points));
-        mDatabase.child(RESULTS).child(nameTeacher).child(numberTest).child(SUBJECT).setValue(nameSubject);
-        mDatabase.child(RESULTS).child(nameTeacher).child(numberTest).child(DATA_CREATE).setValue(dataCreateTest);
+        mDatabaseUserResult = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
+        mDatabaseUserResult.keepSynced(true);
+
+        mDatabaseUserResult.child(course).child(group).child(full_name).setValue(Integer.toString(points));
+        mDatabaseUserResult.child(ConstantsNames.SUBJECT).setValue(nameSubject);
+        mDatabaseUserResult.child(ConstantsNames.DATA_CREATE).setValue(dataCreateTest);
     }
 
     @Override

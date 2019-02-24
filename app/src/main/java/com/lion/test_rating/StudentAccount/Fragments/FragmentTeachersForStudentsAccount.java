@@ -1,7 +1,7 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount.Fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,40 +18,34 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListTeachersForStudentAccount;
 
 import java.util.ArrayList;
 
-public class FragmentTestsForTeachersAccount extends Fragment {
-
-    final String SUBJECT = "Предмет";
-    final String DATA_CREATE = "Дата создания";
-    final String USERS = "Пользователи";
-    final String TEACHERS = "Преподаватели";
-    final String FULL_NAME = "ФИО";
-    final String RESULTS = "Результаты";
-
-    private ArrayList<String> mSubjectName = new ArrayList<>();
-    private ArrayList<String> mDataName = new ArrayList<>();
-    private ArrayList<String> mNumberTest = new ArrayList<>();
-
-    String full_name;
+public class FragmentTeachersForStudentsAccount extends Fragment {
 
     View fragmentView;
 
-    DatabaseReference testsDatabase;
+    String course;
+    String group;
+    String full_name;
+
+    private ArrayList<String> mTeacherName = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragmentView = inflater.inflate(R.layout.fragment_tests_for_teachers_account, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_for_student_list_teachers, container, false);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        testsDatabase = mFirebaseDatabase.getReference();
-        testsDatabase.keepSynced(true);
+        DatabaseReference teachersDatabase = mFirebaseDatabase.getReference();
+        teachersDatabase.keepSynced(true);
 
         try {
-            testsDatabase.addValueEventListener(new ValueEventListener() {
+            teachersDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     clearLists();
@@ -72,12 +66,23 @@ public class FragmentTestsForTeachersAccount extends Fragment {
     }
 
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
-        if (dataSnapshot.hasChild(RESULTS)) {
-            for (DataSnapshot tests : dataSnapshot.child(RESULTS).child(full_name).getChildren()) {
-                initList((String) tests.child(SUBJECT).getValue(), (String) tests.child(DATA_CREATE).getValue(), tests.getKey());
+        if (dataSnapshot.hasChild(ConstantsNames.RESULTS)) {
+            for (DataSnapshot teachers : dataSnapshot.child(ConstantsNames.RESULTS).getChildren()) {
+                initListTests(teachers.getKey());
             }
         }
         initRecyclerView();
+    }
+
+    private void initListTests(String teacher) {
+        mTeacherName.add(teacher);
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_teachers);
+        RVAListTeachersForStudentAccount adapter = new RVAListTeachersForStudentAccount(getActivity(), mTeacherName, course, group, full_name);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void usersInformation(DataSnapshot dataSnapshot) {
@@ -85,23 +90,13 @@ public class FragmentTestsForTeachersAccount extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             String userID = user.getUid();
-            full_name = (String) dataSnapshot.child(USERS).child(TEACHERS).child(userID).child(FULL_NAME).getValue();
+            DataSnapshot dataStudents = dataSnapshot.child(ConstantsNames.USERS).child(ConstantsNames.STUDENTS).child(userID);
+            course = (String) dataStudents.child(ConstantsNames.COURSE).getValue();
+            group = (String) dataStudents.child(ConstantsNames.GROUP).getValue();
+            full_name = (String) dataStudents.child(ConstantsNames.FULL_NAME).getValue();
         } catch (NullPointerException ex) {
             errorNull();
         }
-    }
-
-    private void initList(String subject, String data, String numberTest) {
-        mSubjectName.add(subject);
-        mDataName.add(data);
-        mNumberTest.add(numberTest);
-    }
-
-    private void initRecyclerView() {
-        RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_tests_for_teachers_account);
-        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDataName, mNumberTest, full_name);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void errorNull() {
@@ -111,8 +106,7 @@ public class FragmentTestsForTeachersAccount extends Fragment {
     }
 
     private void clearLists() {
-        mSubjectName.clear();
-        mDataName.clear();
-        mNumberTest.clear();
+        mTeacherName.clear();
     }
+
 }

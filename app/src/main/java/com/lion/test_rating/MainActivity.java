@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,12 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     String email;
     String password;
-
     Boolean dataUsed = false;
-
-    final String USERS = "Пользователи";
-    final String STUDENTS = "Студенты";
-    final String TEACHERS = "Преподаватели";
     Intent loginIntent;
 
     @Override
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void getUserInformationAndStartActivity() {
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference userDatabase = mFirebaseDatabase.getReference().child(USERS);
+        DatabaseReference userDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.USERS);
 
         try {
             userDatabase.addValueEventListener(new ValueEventListener() {
@@ -141,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             assert user != null;
                             String userID = user.getUid();
-                            if (dataSnapshot.child(STUDENTS).hasChild(userID)) {
+                            if (dataSnapshot.child(ConstantsNames.STUDENTS).hasChild(userID)) {
                                 loginIntent = new Intent(MainActivity.this, AccountStudentActivity.class);
-                            } else if (dataSnapshot.child(TEACHERS).hasChild(userID)) {
+                            } else if (dataSnapshot.child(ConstantsNames.TEACHERS).hasChild(userID)) {
                                 loginIntent = new Intent(MainActivity.this, AccountTeacherActivity.class);
                             }
                             loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

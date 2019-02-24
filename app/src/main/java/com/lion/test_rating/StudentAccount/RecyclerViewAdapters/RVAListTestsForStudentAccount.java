@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.StartTestActivity;
+
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterTests extends RecyclerView.Adapter<RecyclerViewAdapterTests.ViewHolder>{
+public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListTestsForStudentAccount.ViewHolder>{
 
     private ArrayList<String> mSubject;
     private ArrayList<String> mTeacher;
@@ -30,7 +33,7 @@ public class RecyclerViewAdapterTests extends RecyclerView.Adapter<RecyclerViewA
 
     private AlertDialog dialog;
 
-    RecyclerViewAdapterTests(Context mContext, ArrayList<String> mSubject, ArrayList<String> mTeacher, ArrayList<String> mData
+    public RVAListTestsForStudentAccount(Context mContext, ArrayList<String> mSubject, ArrayList<String> mTeacher, ArrayList<String> mData
             , ArrayList<String> mNumberTest, ArrayList<String> mRestrictionTest, ArrayList<String> mTestTime
             , String course, String group, String full_name) {
         this.mSubject = mSubject;
@@ -47,7 +50,7 @@ public class RecyclerViewAdapterTests extends RecyclerView.Adapter<RecyclerViewA
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_tests, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_for_students_list_tests, parent, false);
         return new ViewHolder(view);
     }
 

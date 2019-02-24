@@ -7,12 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import com.lion.test_rating.StudentAccount.RegistrationStudentActivity;
+import com.lion.test_rating.TeacherAccount.RegistrationTeacherActivity;
+
 public class PreRegistrationActivity extends AppCompatActivity {
 
     Button student, teacher;
-
-    final String STUDENTS = "Студенты";
-    final String TEACHERS = "Преподаватели";
     Intent registerIntent;
 
     @Override
@@ -30,22 +30,22 @@ public class PreRegistrationActivity extends AppCompatActivity {
         student.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openRegistrationActivity(STUDENTS);
+                openRegistrationActivity(ConstantsNames.STUDENTS);
             }
         });
 
         teacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openRegistrationActivity(TEACHERS);
+                openRegistrationActivity(ConstantsNames.TEACHERS);
             }
         });
     }
 
     private void openRegistrationActivity(String userType) {
-        if (userType.equals(STUDENTS)) {
+        if (userType.equals(ConstantsNames.STUDENTS)) {
             registerIntent = new Intent(PreRegistrationActivity.this, RegistrationStudentActivity.class);
-        } else if (userType.equals(TEACHERS)) {
+        } else if (userType.equals(ConstantsNames.TEACHERS)) {
             registerIntent = new Intent(PreRegistrationActivity.this, RegistrationTeacherActivity.class);
         }
         registerIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

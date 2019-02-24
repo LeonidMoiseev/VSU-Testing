@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.TeacherAccount;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,14 +19,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
+import com.lion.test_rating.TeacherAccount.RcyclerViewAdapters.RVAResultsForTeacherAccount;
 
 import java.util.ArrayList;
 
 public class ResultsTeachersActivity extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
-
-    final String RESULTS = "Результаты";
 
     String nameTeacher;
     String numberTest;
@@ -44,11 +45,11 @@ public class ResultsTeachersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results_teachers);
+        setContentView(R.layout.activity_for_teacher_results);
 
         Toolbar toolbar = findViewById(R.id.myToolBar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTitle(RESULTS);
+        toolbar.setTitle(ConstantsNames.RESULTS);
         setSupportActionBar(toolbar);
 
         previousList = findViewById(R.id.previous_list);
@@ -105,7 +106,7 @@ public class ResultsTeachersActivity extends AppCompatActivity {
 
     private void studentsData() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(RESULTS).child(nameTeacher).child(numberTest);
+        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
         resultDatabase.keepSynced(true);
 
         try {
@@ -144,7 +145,7 @@ public class ResultsTeachersActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_results_teachers);
-        RecyclerViewAdapterResultsTeachers adapter = new RecyclerViewAdapterResultsTeachers(this, mStudents, mPoints);
+        RVAResultsForTeacherAccount adapter = new RVAResultsForTeacherAccount(this, mStudents, mPoints);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

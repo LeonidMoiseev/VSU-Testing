@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount.Fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,24 +18,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListTestsForStudentAccount;
 
 import java.util.ArrayList;
 
 public class FragmentTestsForStudentsAccount extends Fragment {
-
-    final String TESTS = "Tests";
-    final String SUBJECT = "Предмет";
-    final String DATA_CREATE = "Дата создания";
-    final String RESTRICTION = "Ограничение на количество вопросов";
-    final String TIME_TEST = "Время теста (мин)";
-    final String USERS = "Пользователи";
-    final String STUDENTS = "Студенты";
-    final String COURSE = "Курс";
-    final String GROUP = "Группа";
-    final String USER_COMPLETE_TEST = "Пользователи прошедшие тест";
-    final String FULL_NAME = "ФИО";
-    final String STATUS_TEST = "Статус теста";
-    final String OPEN = "Открыт";
 
     private ArrayList<String> mSubjectName = new ArrayList<>();
     private ArrayList<String> mTeacherName = new ArrayList<>();
@@ -55,7 +44,7 @@ public class FragmentTestsForStudentsAccount extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragmentView = inflater.inflate(R.layout.fragment_tests, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_for_student_list_tests, container, false);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference testsDatabase = mFirebaseDatabase.getReference();
@@ -84,7 +73,7 @@ public class FragmentTestsForStudentsAccount extends Fragment {
 
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
         try {
-            DataSnapshot dataTests = dataSnapshot.child(TESTS);
+            DataSnapshot dataTests = dataSnapshot.child(ConstantsNames.TESTS);
 
             for (DataSnapshot teachers : dataTests.getChildren()) {
                 mAllTeachers.add(teachers.getKey());
@@ -96,10 +85,10 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                     String m = testNumber.getKey();
 
                     assert m != null;
-                    String openTest = (String) dataTests.child(mAllTeachers.get(k)).child(m).child(STATUS_TEST).getValue();
+                    String openTest = (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.STATUS_TEST).getValue();
                     assert openTest != null;
                     //Проверка статуса теста
-                    if (openTest.equals(OPEN)) {
+                    if (openTest.equals(ConstantsNames.OPEN)) {
 
                         //Проверка: для каких курсов открыт тест
                         if (dataTests.child(mAllTeachers.get(k)).child(m).hasChild(course)) {
@@ -110,14 +99,14 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                             if (groups.contains(group)) {
 
                                 //Проверка: кто уже прошёл тест
-                                if (!dataTests.child(mAllTeachers.get(k)).child(m).child(USER_COMPLETE_TEST).hasChild(full_name)) {
+                                if (!dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.USER_COMPLETE_TEST).hasChild(full_name)) {
 
-                                    initListTests((String) dataTests.child(mAllTeachers.get(k)).child(m).child(SUBJECT).getValue()
+                                    initListTests((String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.SUBJECT).getValue()
                                             , mAllTeachers.get(k)
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(DATA_CREATE).getValue()
+                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.DATA_CREATE).getValue()
                                             , m
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(RESTRICTION).getValue()
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(TIME_TEST).getValue());
+                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.RESTRICTION).getValue()
+                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.TIME_TEST).getValue());
                                 }
                             }
                         }
@@ -137,9 +126,10 @@ public class FragmentTestsForStudentsAccount extends Fragment {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             String userID = user.getUid();
-            course = (String) dataSnapshot.child(USERS).child(STUDENTS).child(userID).child(COURSE).getValue();
-            group = (String) dataSnapshot.child(USERS).child(STUDENTS).child(userID).child(GROUP).getValue();
-            full_name = (String) dataSnapshot.child(USERS).child(STUDENTS).child(userID).child(FULL_NAME).getValue();
+            DataSnapshot dataStudents = dataSnapshot.child(ConstantsNames.USERS).child(ConstantsNames.STUDENTS).child(userID);
+            course = (String) dataStudents.child(ConstantsNames.COURSE).getValue();
+            group = (String) dataStudents.child(ConstantsNames.GROUP).getValue();
+            full_name = (String) dataStudents.child(ConstantsNames.FULL_NAME).getValue();
         } catch (NullPointerException ex) {
             errorNull();
         }
@@ -156,7 +146,7 @@ public class FragmentTestsForStudentsAccount extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view);
-        RecyclerViewAdapterTests adapter = new RecyclerViewAdapterTests(getActivity(), mSubjectName, mTeacherName, mDataName
+        RVAListTestsForStudentAccount adapter = new RVAListTestsForStudentAccount(getActivity(), mSubjectName, mTeacherName, mDataName
                 , mNumberTeacherTest, mRestrictionCountQuestion, mTestTime
                 , course, group, full_name);
         recyclerView.setAdapter(adapter);

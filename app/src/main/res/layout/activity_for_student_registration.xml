@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     android:orientation="vertical"
-    tools:context=".RegistrationStudentActivity">
+    tools:context=".StudentAccount.RegistrationStudentActivity">
 
     <include layout="@layout/toolbar" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,27 +19,41 @@
         <EditText
             android:id="@+id/nameField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:layout_weight="1"
             android:background="@color/gray2"
             android:hint="@string/your_name"
-            android:padding="10dp"
-            android:layout_weight="1"
+            android:padding="5dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/text_size" />
 
         <EditText
-            android:id="@+id/departmentField"
+            android:id="@+id/courseField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
-            android:background="@color/gray2"
-            android:hint="@string/et_department"
-            android:padding="10dp"
             android:layout_weight="1"
+            android:background="@color/gray2"
+            android:hint="@string/courseET"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_size" />
+
+        <EditText
+            android:id="@+id/groupField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="@color/gray2"
+            android:hint="@string/groupET"
+            android:padding="5dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/text_size" />
@@ -46,13 +61,13 @@
         <EditText
             android:id="@+id/emailField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:layout_weight="1"
             android:background="@color/gray2"
             android:hint="@string/et_email"
-            android:padding="10dp"
-            android:layout_weight="1"
+            android:padding="5dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/text_size" />
@@ -60,13 +75,13 @@
         <EditText
             android:id="@+id/passwordField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:layout_weight="1"
             android:background="@color/gray2"
             android:hint="@string/et_password"
-            android:padding="10dp"
-            android:layout_weight="1"
+            android:padding="5dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/text_size"
@@ -75,7 +90,7 @@
         <EditText
             android:id="@+id/codeField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:background="@color/gray2"
@@ -89,15 +104,15 @@
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:layout_weight="1"
             android:background="@drawable/ripple_btn"
             android:elevation="10dp"
-            android:layout_weight="1"
             android:text="@string/register_user"
-            android:textSize="@dimen/text_size"
+            android:textSize="17sp"
             android:translationZ="10dp" />
 
     </LinearLayout>

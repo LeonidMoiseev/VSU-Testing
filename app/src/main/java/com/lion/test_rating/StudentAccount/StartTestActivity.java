@@ -1,4 +1,4 @@
-package com.lion.test_rating;
+package com.lion.test_rating.StudentAccount;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lion.test_rating.ConstantsNames;
+import com.lion.test_rating.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,15 +42,6 @@ public class StartTestActivity extends AppCompatActivity {
     ImageButton nextQuestion;
     Button finishTest;
     CountDownTimer cTimer;
-
-    final String TESTS = "Tests";
-    final String QUESTION_TEST = "Вопросы";
-    final String ANSWER_1 = "Answer1";
-    final String ANSWER_2 = "Answer2";
-    final String ANSWER_3 = "Answer3";
-    final String ANSWER_4 = "Answer4";
-    final String QUESTION = "Question";
-    final String CORRECT_ANSWER = "Correct_answer";
 
     private boolean listDownload = false;
     private boolean testFinished = false;
@@ -86,10 +79,10 @@ public class StartTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_test);
+        setContentView(R.layout.activity_for_student_start_test);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = mFirebaseDatabase.getReference().child(TESTS);
+        DatabaseReference myRef = mFirebaseDatabase.getReference().child(ConstantsNames.TESTS);
         myRef.keepSynced(true);
 
         Intent intent = getIntent();
@@ -125,7 +118,8 @@ public class StartTestActivity extends AppCompatActivity {
                         mProgress.setMessage("Загрузка вопросов ...");
                         mProgress.show();
                         clearLists();
-                        numberAllQuestion = (int) dataSnapshot.child(nameTeacher).child(numberTest).child(QUESTION_TEST).getChildrenCount();
+                        numberAllQuestion = (int) dataSnapshot.child(nameTeacher).child(numberTest).
+                                child(ConstantsNames.QUESTION_TEST).getChildrenCount();
                         createListColorBtnAndListUserAnswer();
                         numberAnswer();
                         randomNumberQuestion();
@@ -185,13 +179,15 @@ public class StartTestActivity extends AppCompatActivity {
         for (int k = 0; k < numberQuestion; k++) {
             randomNumberAnswers();
             String number = Integer.toString(masNumberQuestion[k]);
-            DataSnapshot testDB = dataSnapshot.child(nameTeacher).child(numberTest).child(QUESTION_TEST).child(number);
-            mListQuestion.add((String) testDB.child(QUESTION).getValue());
+            DataSnapshot testDB = dataSnapshot.child(nameTeacher).child(numberTest).
+                    child(ConstantsNames.QUESTION_TEST).child(number);
+
+            mListQuestion.add((String) testDB.child(ConstantsNames.QUESTION).getValue());
             mListAnswer1.add((String) testDB.child(mListAnswers.get(masNumberAnswers[0])).getValue());
             mListAnswer2.add((String) testDB.child(mListAnswers.get(masNumberAnswers[1])).getValue());
             mListAnswer3.add((String) testDB.child(mListAnswers.get(masNumberAnswers[2])).getValue());
             mListAnswer4.add((String) testDB.child(mListAnswers.get(masNumberAnswers[3])).getValue());
-            mListCorrectAnswer.add((String) testDB.child(CORRECT_ANSWER).getValue());
+            mListCorrectAnswer.add((String) testDB.child(ConstantsNames.CORRECT_ANSWER).getValue());
         }
         listDownload = true;
     }
@@ -229,10 +225,10 @@ public class StartTestActivity extends AppCompatActivity {
     }
 
     private void numberAnswer() {
-        mListAnswers.add(ANSWER_1);
-        mListAnswers.add(ANSWER_2);
-        mListAnswers.add(ANSWER_3);
-        mListAnswers.add(ANSWER_4);
+        mListAnswers.add(ConstantsNames.ANSWER_1);
+        mListAnswers.add(ConstantsNames.ANSWER_2);
+        mListAnswers.add(ConstantsNames.ANSWER_3);
+        mListAnswers.add(ConstantsNames.ANSWER_4);
     }
 
     private void randomNumberAnswers() {
