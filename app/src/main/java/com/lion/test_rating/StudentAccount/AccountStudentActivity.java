@@ -48,6 +48,7 @@ public class AccountStudentActivity extends AppCompatActivity
 
     TextView headerName;
     TextView headerEmail;
+    TextView headerOtherInformation;
 
     FragmentTransaction fragmentTransaction;
     private FragmentTestsForStudentsAccount fTest;
@@ -134,8 +135,10 @@ public class AccountStudentActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         headerName = header.findViewById(R.id.headerName);
         headerEmail = header.findViewById(R.id.headerEmail);
+        headerOtherInformation = header.findViewById(R.id.otherInformation);
         headerName.setText(name);
         headerEmail.setText(email);
+        headerOtherInformation.setText(course + " курс, " + group + " группа");
     }
 
     protected boolean isOnline() {

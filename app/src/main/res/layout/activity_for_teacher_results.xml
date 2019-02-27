@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     android:orientation="vertical"
-    tools:context=".TeacherAccount.ResultsTeachersActivity">
+    tools:context=".TeacherAccount.ResultsActivityForTeachers">
 
     <include layout="@layout/toolbar"/>
 

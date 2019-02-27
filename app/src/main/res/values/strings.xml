@@ -34,11 +34,11 @@
     <string name="checking_login">Проверка авторизации ...</string>
     <string name="test_item">Открытые тесты</string>
     <string name="result_item">Результаты</string>
+    <string name="result_and_statistics_item">Результаты и статистика</string>
     <string name="rating_item">Рейтинги</string>
     <string name="information_item">Информация</string>
     <string name="divider">/</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="rating_tv">Rating\n0</string>
     <string name="create_your_question_tv">Создайте свой вопрос!</string>
@@ -68,4 +68,7 @@
     <string name="remark_TV">Чтобы узнать какие ответы неверны нажмите - ПРОСМОТР ТЕСТА.</string>
     <string name="check_test_btn">Просмотр теста</string>
     <string name="main_menu_btn">Главное меню</string>
+    <string name="what_information_about_test">Какую информацию о данном тесте вы хотите посмотреть?</string>
+    <string name="count_student_TV">Количество студентов, вошедших в данные промежутки баллов</string>
+    <string name="nav_header_course_group_or_department">course, group or department</string>
 </resources>

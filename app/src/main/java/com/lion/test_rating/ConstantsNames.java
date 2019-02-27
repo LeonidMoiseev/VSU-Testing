@@ -28,4 +28,5 @@ public class ConstantsNames {
     public static final String ANSWER_4 = "Answer4";
     public static final String QUESTION = "Question";
     public static final String CORRECT_ANSWER = "Correct_answer";
+    public static final String TOPIC_NAME = "Название темы";
 }

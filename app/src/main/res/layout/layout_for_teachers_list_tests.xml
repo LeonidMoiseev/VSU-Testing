@@ -13,25 +13,38 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/text_name_subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="@dimen/text_size2"
             android:text="Технологии программирования"
             android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/text_topic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size2"
+            android:text="Аттестация 1. ООП"
+            android:layout_below="@+id/text_name_subject"/>
 
         <TextView
             android:id="@+id/text_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="@dimen/text_size3"
             android:text="28.01.2019"
-            android:layout_below="@+id/text_name_subject"/>
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/text_topic_name"/>
 
     </RelativeLayout>
 

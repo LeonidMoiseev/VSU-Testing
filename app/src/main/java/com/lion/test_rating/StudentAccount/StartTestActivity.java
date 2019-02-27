@@ -74,6 +74,7 @@ public class StartTestActivity extends AppCompatActivity {
     private String full_name;
     private String dataCreateTest;
     private String nameSubject;
+    private String topicName;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -93,6 +94,7 @@ public class StartTestActivity extends AppCompatActivity {
         numberTest = intent.getStringExtra("numberTest");
         dataCreateTest = intent.getStringExtra("dataCreateTest");
         nameSubject = intent.getStringExtra("nameSubject");
+        topicName = intent.getStringExtra("topicName");
         numberQuestion = Integer.parseInt(intent.getStringExtra("restrictionTest"));
         testTime = Integer.parseInt(intent.getStringExtra("testTime"));
 
@@ -352,6 +354,7 @@ public class StartTestActivity extends AppCompatActivity {
         resultTest.putExtra("full_name", full_name);
         resultTest.putExtra("dataCreateTest", dataCreateTest);
         resultTest.putExtra("nameSubject", nameSubject);
+        resultTest.putExtra("topicName", topicName);
         startActivity(resultTest);
     }
 

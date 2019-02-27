@@ -18,14 +18,16 @@ public class RVAResultsForStudentAccount extends RecyclerView.Adapter<RVAResults
     private ArrayList<String> mSubject;
     private ArrayList<String> mData;
     private ArrayList<String> mPoints;
+    private ArrayList<String> mTopicName;
     private Context mContext;
 
     public RVAResultsForStudentAccount(Context mContext, ArrayList<String> mSubject
-            , ArrayList<String> mData, ArrayList<String> mPoints) {
+            , ArrayList<String> mData, ArrayList<String> mPoints, ArrayList<String> mTopic) {
         this.mSubject = mSubject;
         this.mData = mData;
         this.mPoints = mPoints;
         this.mContext = mContext;
+        this.mTopicName = mTopic;
     }
 
     @Override
@@ -40,6 +42,7 @@ public class RVAResultsForStudentAccount extends RecyclerView.Adapter<RVAResults
         holder.subjectTV.setText(mSubject.get(position));
         holder.dataCreateTestTV.setText(mData.get(position));
         holder.pointsTV.setText(mPoints.get(position));
+        holder.topicTV.setText(mTopicName.get(position));
 
     }
 
@@ -50,7 +53,7 @@ public class RVAResultsForStudentAccount extends RecyclerView.Adapter<RVAResults
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView subjectTV, pointsTV, dataCreateTestTV;
+        TextView subjectTV, pointsTV, dataCreateTestTV, topicTV;
         RelativeLayout parentLayout;
 
         ViewHolder(View itemView) {
@@ -58,6 +61,7 @@ public class RVAResultsForStudentAccount extends RecyclerView.Adapter<RVAResults
             subjectTV = itemView.findViewById(R.id.text_name_subject);
             pointsTV = itemView.findViewById(R.id.points_result);
             dataCreateTestTV = itemView.findViewById(R.id.text_data);
+            topicTV = itemView.findViewById(R.id.text_topic_name);
             parentLayout = itemView.findViewById(R.id.parent_layout_results_students);
         }
     }

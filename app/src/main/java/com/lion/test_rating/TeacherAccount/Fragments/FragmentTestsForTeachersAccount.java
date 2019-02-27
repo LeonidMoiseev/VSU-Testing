@@ -29,6 +29,7 @@ public class FragmentTestsForTeachersAccount extends Fragment {
     private ArrayList<String> mSubjectName = new ArrayList<>();
     private ArrayList<String> mDataName = new ArrayList<>();
     private ArrayList<String> mNumberTest = new ArrayList<>();
+    private ArrayList<String> mTopicName = new ArrayList<>();
 
     String full_name;
 
@@ -71,7 +72,9 @@ public class FragmentTestsForTeachersAccount extends Fragment {
         if (dataSnapshot.hasChild(ConstantsNames.RESULTS)) {
             for (DataSnapshot tests : dataSnapshot.child(ConstantsNames.RESULTS).child(full_name).getChildren()) {
                 initList((String) tests.child(ConstantsNames.SUBJECT).getValue(),
-                        (String) tests.child(ConstantsNames.DATA_CREATE).getValue(), tests.getKey());
+                        (String) tests.child(ConstantsNames.DATA_CREATE).getValue(),
+                        tests.getKey(),
+                        (String) tests.child(ConstantsNames.TOPIC_NAME).getValue());
             }
         }
         initRecyclerView();
@@ -88,28 +91,32 @@ public class FragmentTestsForTeachersAccount extends Fragment {
         }
     }
 
-    private void initList(String subject, String data, String numberTest) {
+    private void initList(String subject, String data, String numberTest, String topic) {
         mSubjectName.add(subject);
         mDataName.add(data);
         mNumberTest.add(numberTest);
+        mTopicName.add(topic);
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_tests_for_teachers_account);
-        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDataName, mNumberTest, full_name);
+        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDataName, mNumberTest, full_name, mTopicName);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
         Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
-        getActivity().finish();
     }
 
     private void clearLists() {
         mSubjectName.clear();
         mDataName.clear();
         mNumberTest.clear();
+        mTopicName.clear();
     }
 }

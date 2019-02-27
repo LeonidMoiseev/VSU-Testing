@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.ResultsStudentsActivity;
+import com.lion.test_rating.StudentAccount.ResultsActivityForStudents;
 
 import java.util.ArrayList;
 
@@ -46,7 +46,7 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentStartTest = new Intent(mContext, ResultsStudentsActivity.class);
+                Intent intentStartTest = new Intent(mContext, ResultsActivityForStudents.class);
                 intentStartTest.putExtra("nameTeacher", mTeacher.get(position));
                 intentStartTest.putExtra("course", course);
                 intentStartTest.putExtra("group", group);

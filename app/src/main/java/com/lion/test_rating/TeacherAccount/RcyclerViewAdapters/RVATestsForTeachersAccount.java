@@ -3,15 +3,18 @@ package com.lion.test_rating.TeacherAccount.RcyclerViewAdapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.ResultsTeachersActivity;
+import com.lion.test_rating.TeacherAccount.ResultsActivityForTeachers;
+import com.lion.test_rating.TeacherAccount.StatisticsActivity;
 
 import java.util.ArrayList;
 
@@ -20,17 +23,21 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
     private ArrayList<String> mSubject;
     private ArrayList<String> mData;
     private ArrayList<String> mNumberTest;
+    private ArrayList<String> mTopicName;
     private Context mContext;
 
     private String full_name;
 
+    private AlertDialog dialog;
+
     public RVATestsForTeachersAccount(Context mContext, ArrayList<String> mSubject, ArrayList<String> mData
-            , ArrayList<String> mNumberTest, String full_name) {
+            , ArrayList<String> mNumberTest, String full_name, ArrayList<String> mTopic) {
         this.mSubject = mSubject;
         this.mData = mData;
         this.mContext = mContext;
         this.mNumberTest = mNumberTest;
         this.full_name = full_name;
+        this.mTopicName = mTopic;
     }
 
     @Override
@@ -44,14 +51,50 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
 
         holder.subjectTV.setText(mSubject.get(position));
         holder.dataCreateTestTV.setText(mData.get(position));
+        holder.topicTV.setText(mTopicName.get(position));
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentStartTest = new Intent(mContext, ResultsTeachersActivity.class);
+                showDialog(position);
+            }
+        });
+    }
+
+    private void showDialog(final int position) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
+        @SuppressLint("InflateParams")
+        View mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_open_results_or_statistics, null);
+
+        Button btnResults = mView.findViewById(R.id.btn_results);
+        Button btnStatistics = mView.findViewById(R.id.btn_statistics);
+
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+        dialog.show();
+
+        btnResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentStartTest = new Intent(mContext, ResultsActivityForTeachers.class);
                 intentStartTest.putExtra("full_name", full_name);
                 intentStartTest.putExtra("numberTest", mNumberTest.get(position));
                 mContext.startActivity(intentStartTest);
+                dialog.dismiss();
+            }
+        });
+
+        btnStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentStartTest = new Intent(mContext, StatisticsActivity.class);
+                intentStartTest.putExtra("subjectName", mSubject.get(position));
+                intentStartTest.putExtra("topicName", mTopicName.get(position));
+                intentStartTest.putExtra("dataCreateTest", mData.get(position));
+                intentStartTest.putExtra("full_name", full_name);
+                intentStartTest.putExtra("numberTest", mNumberTest.get(position));
+                mContext.startActivity(intentStartTest);
+                dialog.dismiss();
             }
         });
     }
@@ -63,12 +106,13 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView subjectTV, dataCreateTestTV;
+        TextView subjectTV, dataCreateTestTV, topicTV;
         RelativeLayout parentLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
             subjectTV = itemView.findViewById(R.id.text_name_subject);
+            topicTV = itemView.findViewById(R.id.text_topic_name);
             dataCreateTestTV = itemView.findViewById(R.id.text_data);
             parentLayout = itemView.findViewById(R.id.parent_layout_tests_for_teachers_account);
         }

@@ -31,6 +31,7 @@ public class ResultTestActivity extends AppCompatActivity {
     String numberTest;
     String dataCreateTest;
     String nameSubject;
+    String topicName;
 
     DatabaseReference mDatabaseUserComplete;
     DatabaseReference mDatabaseUserResult;
@@ -59,6 +60,7 @@ public class ResultTestActivity extends AppCompatActivity {
         numberTest = intent.getStringExtra("numberTest");
         dataCreateTest = intent.getStringExtra("dataCreateTest");
         nameSubject = intent.getStringExtra("nameSubject");
+        topicName = intent.getStringExtra("topicName");
 
         countPoints();
         showResult();
@@ -108,11 +110,11 @@ public class ResultTestActivity extends AppCompatActivity {
         mDatabaseUserResult.child(course).child(group).child(full_name).setValue(Integer.toString(points));
         mDatabaseUserResult.child(ConstantsNames.SUBJECT).setValue(nameSubject);
         mDatabaseUserResult.child(ConstantsNames.DATA_CREATE).setValue(dataCreateTest);
+        mDatabaseUserResult.child(ConstantsNames.TOPIC_NAME).setValue(topicName);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 }

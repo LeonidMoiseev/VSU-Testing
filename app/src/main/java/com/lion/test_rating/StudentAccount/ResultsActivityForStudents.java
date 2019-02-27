@@ -21,7 +21,7 @@ import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAResultsForStu
 
 import java.util.ArrayList;
 
-public class ResultsStudentsActivity extends AppCompatActivity {
+public class ResultsActivityForStudents extends AppCompatActivity {
 
     String course;
     String group;
@@ -31,6 +31,7 @@ public class ResultsStudentsActivity extends AppCompatActivity {
     private ArrayList<String> mSubjectName = new ArrayList<>();
     private ArrayList<String> mDataName = new ArrayList<>();
     private ArrayList<String> mPoints = new ArrayList<>();
+    private ArrayList<String> mTopicName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,8 @@ public class ResultsStudentsActivity extends AppCompatActivity {
 
                         initListTests((String) numberTest.child(ConstantsNames.SUBJECT).getValue()
                                 , (String) numberTest.child(ConstantsNames.DATA_CREATE).getValue()
-                                , (String) numberTest.child(course).child(group).child(full_name).getValue());
+                                , (String) numberTest.child(course).child(group).child(full_name).getValue()
+                                , (String) numberTest.child(ConstantsNames.TOPIC_NAME).getValue());
                     }
                 }
             }
@@ -91,22 +93,26 @@ public class ResultsStudentsActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
-    private void initListTests(String subject, String dataCreateTest, String points) {
+    private void initListTests(String subject, String dataCreateTest, String points, String topic) {
         mDataName.add(dataCreateTest);
         mPoints.add(points);
         mSubjectName.add(subject);
+        mTopicName.add(topic);
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_results_students);
-        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(this, mSubjectName, mDataName, mPoints);
+        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(this, mSubjectName, mDataName, mPoints, mTopicName);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
-        Toast.makeText(ResultsStudentsActivity.this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(ResultsActivityForStudents.this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -114,5 +120,6 @@ public class ResultsStudentsActivity extends AppCompatActivity {
         mPoints.clear();
         mSubjectName.clear();
         mDataName.clear();
+        mTopicName.clear();
     }
 }

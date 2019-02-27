@@ -28,6 +28,7 @@ public class FragmentTestsForStudentsAccount extends Fragment {
 
     private ArrayList<String> mSubjectName = new ArrayList<>();
     private ArrayList<String> mTeacherName = new ArrayList<>();
+    private ArrayList<String> mTopicName = new ArrayList<>();
     private ArrayList<String> mNumberTeacherTest = new ArrayList<>();
     private ArrayList<String> mDataName = new ArrayList<>();
     private ArrayList<String> mAllTeachers = new ArrayList<>();
@@ -106,7 +107,8 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                                             , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.DATA_CREATE).getValue()
                                             , m
                                             , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.RESTRICTION).getValue()
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.TIME_TEST).getValue());
+                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.TIME_TEST).getValue()
+                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.TOPIC_NAME).getValue());
                                 }
                             }
                         }
@@ -135,22 +137,27 @@ public class FragmentTestsForStudentsAccount extends Fragment {
         }
     }
 
-    private void initListTests(String subject, String teacher, String data, String numberTest, String restriction, String time) {
+    private void initListTests(String subject, String teacher, String data, String numberTest,
+                               String restriction, String time, String topic) {
         mSubjectName.add(subject);
         mTeacherName.add(teacher);
         mDataName.add(data);
         mNumberTeacherTest.add(numberTest);
         mRestrictionCountQuestion.add(restriction);
         mTestTime.add(time);
+        mTopicName.add(topic);
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view);
         RVAListTestsForStudentAccount adapter = new RVAListTestsForStudentAccount(getActivity(), mSubjectName, mTeacherName, mDataName
                 , mNumberTeacherTest, mRestrictionCountQuestion, mTestTime
-                , course, group, full_name);
+                , course, group, full_name, mTopicName);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void errorNull() {
@@ -167,5 +174,6 @@ public class FragmentTestsForStudentsAccount extends Fragment {
         mNumberTeacherTest.clear();
         mRestrictionCountQuestion.clear();
         mTestTime.clear();
+        mTopicName.clear();
     }
 }

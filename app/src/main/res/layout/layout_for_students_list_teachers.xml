@@ -13,14 +13,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/text_name_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="@dimen/text_size2"
+            android:textStyle="bold"
             android:text="Teacher1"/>
 
     </RelativeLayout>

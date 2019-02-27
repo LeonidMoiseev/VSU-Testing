@@ -25,7 +25,7 @@ import com.lion.test_rating.TeacherAccount.RcyclerViewAdapters.RVAResultsForTeac
 
 import java.util.ArrayList;
 
-public class ResultsTeachersActivity extends AppCompatActivity {
+public class ResultsActivityForTeachers extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
 
@@ -152,7 +152,7 @@ public class ResultsTeachersActivity extends AppCompatActivity {
 
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
-        Toast.makeText(ResultsTeachersActivity.this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(ResultsActivityForTeachers.this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
         finish();
     }
 

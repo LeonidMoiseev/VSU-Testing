@@ -42,9 +42,11 @@ public class AccountTeacherActivity extends AppCompatActivity
 
     String name;
     String email;
+    String department;
 
     TextView headerName;
     TextView headerEmail;
+    TextView headerOtherInformation;
 
     private FragmentTestsForTeachersAccount fResult;
     FragmentTransaction fragmentTransaction;
@@ -115,6 +117,7 @@ public class AccountTeacherActivity extends AppCompatActivity
             DataSnapshot dataTeachers = snapshot.child(ConstantsNames.TEACHERS).child(userID);
             name = (String) dataTeachers.child(ConstantsNames.FULL_NAME).getValue();
             email = (String) dataTeachers.child(ConstantsNames.EMAIL).getValue();
+            department = (String) dataTeachers.child(ConstantsNames.DEPARTMENT).getValue();
 
             updateUI();
 
@@ -128,8 +131,10 @@ public class AccountTeacherActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         headerName = header.findViewById(R.id.headerName);
         headerEmail = header.findViewById(R.id.headerEmail);
+        headerOtherInformation = header.findViewById(R.id.otherInformation);
         headerName.setText(name);
         headerEmail.setText(email);
+        headerOtherInformation.setText(department);
     }
 
     protected boolean isOnline() {
@@ -187,8 +192,6 @@ public class AccountTeacherActivity extends AppCompatActivity
 
         if (id == R.id.nav_result) {
             fragmentTransaction.replace(R.id.container, fResult);
-        } else if (id == R.id.nav_statistic) {
-
         } else if (id == R.id.nav_information) {
 
         } else if (id == R.id.nav_rating) {

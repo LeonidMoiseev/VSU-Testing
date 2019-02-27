@@ -6,6 +6,8 @@
     <dimen name="nav_header_height">120dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_size">22sp</dimen>
+    <dimen name="text_size2">17sp</dimen>
+    <dimen name="text_size3">15sp</dimen>
     <dimen name="text_question_size">15sp</dimen>
     <dimen name="text_answer_size">13sp</dimen>
 </resources>

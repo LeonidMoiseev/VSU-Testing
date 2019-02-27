@@ -48,11 +48,13 @@
             android:name=".PreRegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StudentAccount.ResultsStudentsActivity"
+            android:name=".StudentAccount.ResultsActivityForStudents"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TeacherAccount.ResultsTeachersActivity"
-            android:screenOrientation="portrait" ></activity>
+            android:name=".TeacherAccount.ResultsActivityForTeachers"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TeacherAccount.StatisticsActivity"></activity>
     </application>
 
 </manifest>

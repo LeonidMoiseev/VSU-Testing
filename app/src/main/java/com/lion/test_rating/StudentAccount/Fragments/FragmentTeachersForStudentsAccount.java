@@ -82,7 +82,10 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_teachers);
         RVAListTeachersForStudentAccount adapter = new RVAListTeachersForStudentAccount(getActivity(), mTeacherName, course, group, full_name);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void usersInformation(DataSnapshot dataSnapshot) {

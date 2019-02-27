@@ -25,6 +25,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
     private ArrayList<String> mNumberTest;
     private ArrayList<String> mRestrictionTest;
     private ArrayList<String> mTestTime;
+    private ArrayList<String> mTopicName;
     private Context mContext;
 
     private String course;
@@ -35,7 +36,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
 
     public RVAListTestsForStudentAccount(Context mContext, ArrayList<String> mSubject, ArrayList<String> mTeacher, ArrayList<String> mData
             , ArrayList<String> mNumberTest, ArrayList<String> mRestrictionTest, ArrayList<String> mTestTime
-            , String course, String group, String full_name) {
+            , String course, String group, String full_name, ArrayList<String> mTopic) {
         this.mSubject = mSubject;
         this.mTeacher = mTeacher;
         this.mData = mData;
@@ -46,6 +47,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
         this.course = course;
         this.group = group;
         this.full_name = full_name;
+        this.mTopicName = mTopic;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
         holder.subjectTV.setText(mSubject.get(position));
         holder.nameTeacherTV.setText(mTeacher.get(position));
         holder.dataCreateTestTV.setText(mData.get(position));
+        holder.topicTV.setText(mTopicName.get(position));
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +98,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
                 intentStartTest.putExtra("full_name", full_name);
                 intentStartTest.putExtra("dataCreateTest", mData.get(position));
                 intentStartTest.putExtra("nameSubject", mSubject.get(position));
+                intentStartTest.putExtra("topicName", mTopicName.get(position));
                 mContext.startActivity(intentStartTest);
                 dialog.dismiss();
             }
@@ -115,7 +119,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView subjectTV, nameTeacherTV, dataCreateTestTV;
+        TextView subjectTV, nameTeacherTV, dataCreateTestTV, topicTV;
         RelativeLayout parentLayout;
 
         ViewHolder(View itemView) {
@@ -123,6 +127,7 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
             subjectTV = itemView.findViewById(R.id.text_name_subject);
             nameTeacherTV = itemView.findViewById(R.id.text_name_teacher);
             dataCreateTestTV = itemView.findViewById(R.id.text_data);
+            topicTV = itemView.findViewById(R.id.text_topic_name);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
