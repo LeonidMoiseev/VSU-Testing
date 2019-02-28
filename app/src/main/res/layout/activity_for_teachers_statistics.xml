@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="Заголовок"
             android:textColor="@color/white"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size2"
             android:gravity="center"
             android:textStyle="bold"
             android:layout_margin="5dp"/>
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="@string/count_student_TV"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size3"
             android:gravity="center"
             android:layout_margin="5dp"/>
 

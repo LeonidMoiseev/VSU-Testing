@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="@color/gray">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Добавляйте курсы и группы, которым вы хотите отправить информацию"
+        android:textSize="@dimen/text_size2"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ET_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginRight="5dp"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/gray"
+            android:hint="@string/courseET"
+            android:gravity="center"
+            android:padding="5dp"
+            android:background="@color/white"/>
+
+        <EditText
+            android:id="@+id/ET_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="5dp"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/gray"
+            android:hint="@string/groupET"
+            android:gravity="center"
+            android:padding="5dp"
+            android:background="@color/white"/>
+
+        <ImageView
+            android:id="@+id/addCourseAndGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:padding="3dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ripple_btn3"
+            android:src="@drawable/icon_plus"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/courses_and_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size2"
+        android:textStyle="bold"
+        android:padding="10dp"/>
+
+    <EditText
+        android:id="@+id/text_information"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/gray"
+        android:gravity="start"
+        android:padding="5dp"
+        android:background="@color/white"
+        android:hint="Введите информацию"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:text="@string/cancel_btn"
+            android:textSize="@dimen/text_size2"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/btn_send_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:text="@string/btn_send"
+            android:textSize="@dimen/text_size2"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -30,7 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.MainActivity;
 import com.lion.test_rating.R;
+import com.lion.test_rating.TeacherAccount.Fragments.FragmentInformationForTeacherAccount;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentTestsForTeachersAccount;
+
+import java.util.ArrayList;
 
 public class AccountTeacherActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,15 +43,16 @@ public class AccountTeacherActivity extends AppCompatActivity
 
     NavigationView navigationView;
 
-    String name;
-    String email;
-    String department;
-
     TextView headerName;
     TextView headerEmail;
     TextView headerOtherInformation;
 
+    TeacherInformation teacherInformation;
+
+    public static ArrayList<String> mList;
+
     private FragmentTestsForTeachersAccount fResult;
+    private FragmentInformationForTeacherAccount fInformation;
     FragmentTransaction fragmentTransaction;
 
     @Override
@@ -90,6 +94,7 @@ public class AccountTeacherActivity extends AppCompatActivity
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //mList.clear();
                     showData(dataSnapshot);
                 }
 
@@ -103,10 +108,10 @@ public class AccountTeacherActivity extends AppCompatActivity
         }
 
         fResult = new FragmentTestsForTeachersAccount();
+        fInformation = new FragmentInformationForTeacherAccount();
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fResult);
         fragmentTransaction.commit();
-
     }
 
     private void showData(DataSnapshot snapshot) {
@@ -114,10 +119,17 @@ public class AccountTeacherActivity extends AppCompatActivity
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             String userID = user.getUid();
+
+            teacherInformation = new TeacherInformation();
             DataSnapshot dataTeachers = snapshot.child(ConstantsNames.TEACHERS).child(userID);
-            name = (String) dataTeachers.child(ConstantsNames.FULL_NAME).getValue();
-            email = (String) dataTeachers.child(ConstantsNames.EMAIL).getValue();
-            department = (String) dataTeachers.child(ConstantsNames.DEPARTMENT).getValue();
+            teacherInformation.setName((String) dataTeachers.child(ConstantsNames.FULL_NAME).getValue());
+            teacherInformation.setEmail((String) dataTeachers.child(ConstantsNames.EMAIL).getValue());
+            teacherInformation.setDepartment((String) dataTeachers.child(ConstantsNames.DEPARTMENT).getValue());
+
+            mList = new ArrayList<>();
+            mList.add(teacherInformation.getName());
+            mList.add(teacherInformation.getEmail());
+            mList.add(teacherInformation.getDepartment());
 
             updateUI();
 
@@ -132,9 +144,9 @@ public class AccountTeacherActivity extends AppCompatActivity
         headerName = header.findViewById(R.id.headerName);
         headerEmail = header.findViewById(R.id.headerEmail);
         headerOtherInformation = header.findViewById(R.id.otherInformation);
-        headerName.setText(name);
-        headerEmail.setText(email);
-        headerOtherInformation.setText(department);
+        headerName.setText(mList.get(0));
+        headerEmail.setText(mList.get(1));
+        headerOtherInformation.setText(mList.get(2));
     }
 
     protected boolean isOnline() {
@@ -190,11 +202,11 @@ public class AccountTeacherActivity extends AppCompatActivity
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_result) {
+        if (id == R.id.nav_result_t) {
             fragmentTransaction.replace(R.id.container, fResult);
-        } else if (id == R.id.nav_information) {
-
-        } else if (id == R.id.nav_rating) {
+        } else if (id == R.id.nav_information_t) {
+            fragmentTransaction.replace(R.id.container, fInformation);
+        } else if (id == R.id.nav_rating_t) {
 
         }
         fragmentTransaction.commit();

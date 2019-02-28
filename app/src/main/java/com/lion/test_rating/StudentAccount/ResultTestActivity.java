@@ -24,9 +24,6 @@ public class ResultTestActivity extends AppCompatActivity {
     Button checkTest;
     Button backMenu;
 
-    String course;
-    String group;
-    String full_name;
     String nameTeacher;
     String numberTest;
     String dataCreateTest;
@@ -51,9 +48,6 @@ public class ResultTestActivity extends AppCompatActivity {
         backMenu = findViewById(R.id.backMenu);
 
         Intent intent = getIntent();
-        course = intent.getStringExtra("course");
-        group = intent.getStringExtra("group");
-        full_name = intent.getStringExtra("full_name");
         countTrueAnswers = intent.getIntExtra("countTrueAnswers", 0);
         numberQuestions = intent.getIntExtra("numberQuestions", 0);
         nameTeacher = intent.getStringExtra("nameTeacher");
@@ -100,14 +94,15 @@ public class ResultTestActivity extends AppCompatActivity {
         mDatabaseUserComplete.keepSynced(true);
 
         mDatabaseUserComplete.child(ConstantsNames.TESTS).child(nameTeacher).child(numberTest).child(ConstantsNames.USER_COMPLETE_TEST).
-                child(full_name).setValue(ConstantsNames.COMPLETE);
+                child(AccountStudentActivity.mList.get(0)).setValue(ConstantsNames.COMPLETE);
     }
 
     private void writeResultTest() {
         mDatabaseUserResult = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
         mDatabaseUserResult.keepSynced(true);
 
-        mDatabaseUserResult.child(course).child(group).child(full_name).setValue(Integer.toString(points));
+        mDatabaseUserResult.child(AccountStudentActivity.mList.get(2)).child(AccountStudentActivity.mList.get(3))
+                .child(AccountStudentActivity.mList.get(0)).setValue(Integer.toString(points));
         mDatabaseUserResult.child(ConstantsNames.SUBJECT).setValue(nameSubject);
         mDatabaseUserResult.child(ConstantsNames.DATA_CREATE).setValue(dataCreateTest);
         mDatabaseUserResult.child(ConstantsNames.TOPIC_NAME).setValue(topicName);

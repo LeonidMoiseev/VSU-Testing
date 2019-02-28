@@ -97,7 +97,7 @@
             android:elevation="10dp"
             android:layout_weight="1"
             android:text="@string/register_user"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/text_size2"
             android:translationZ="10dp" />
 
     </LinearLayout>

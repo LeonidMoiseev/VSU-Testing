@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:text="@string/open_test"
-        android:textSize="23sp"
+        android:textSize="@dimen/text_size2"
         android:gravity="center"
         android:padding="10dp"
         android:background="@color/gray2"/>
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:text="@string/btn_yes"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size2"
             android:layout_weight="1"
             android:layout_margin="13dp"/>
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:text="@string/btn_no"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size2"
             android:layout_weight="1"
             android:layout_margin="13dp"/>
 

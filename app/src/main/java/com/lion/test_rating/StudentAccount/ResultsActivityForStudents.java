@@ -23,9 +23,6 @@ import java.util.ArrayList;
 
 public class ResultsActivityForStudents extends AppCompatActivity {
 
-    String course;
-    String group;
-    String full_name;
     String nameTeacher;
 
     private ArrayList<String> mSubjectName = new ArrayList<>();
@@ -44,9 +41,6 @@ public class ResultsActivityForStudents extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        course = intent.getStringExtra("course");
-        group = intent.getStringExtra("group");
-        full_name = intent.getStringExtra("full_name");
         nameTeacher = intent.getStringExtra("nameTeacher");
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -76,15 +70,18 @@ public class ResultsActivityForStudents extends AppCompatActivity {
 
         for (DataSnapshot numberTest : dataSnapshot.getChildren()) {
 
-            if (numberTest.hasChild(course)) {
+            if (numberTest.hasChild(AccountStudentActivity.mList.get(2))) {
 
-                if (numberTest.child(course).hasChild(group)) {
+                if (numberTest.child(AccountStudentActivity.mList.get(2)).hasChild(AccountStudentActivity.mList.get(3))) {
 
-                    if (numberTest.child(course).child(group).hasChild(full_name)) {
+                    if (numberTest.child(AccountStudentActivity.mList.get(2)).child(AccountStudentActivity.mList.get(3))
+                            .hasChild(AccountStudentActivity.mList.get(0))) {
 
                         initListTests((String) numberTest.child(ConstantsNames.SUBJECT).getValue()
                                 , (String) numberTest.child(ConstantsNames.DATA_CREATE).getValue()
-                                , (String) numberTest.child(course).child(group).child(full_name).getValue()
+                                , (String) numberTest.child(AccountStudentActivity.mList.get(2))
+                                        .child(AccountStudentActivity.mList.get(3))
+                                        .child(AccountStudentActivity.mList.get(0)).getValue()
                                 , (String) numberTest.child(ConstantsNames.TOPIC_NAME).getValue());
                     }
                 }

@@ -20,16 +20,9 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
     private ArrayList<String> mTeacher;
     private Context mContext;
 
-    private String course;
-    private String group;
-    private String full_name;
-
-    public RVAListTeachersForStudentAccount(Context mContext, ArrayList<String> mTeacher, String course, String group, String full_name) {
+    public RVAListTeachersForStudentAccount(Context mContext, ArrayList<String> mTeacher) {
         this.mTeacher = mTeacher;
         this.mContext = mContext;
-        this.course = course;
-        this.group = group;
-        this.full_name = full_name;
     }
 
     @Override
@@ -48,9 +41,6 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
             public void onClick(View v) {
                 Intent intentStartTest = new Intent(mContext, ResultsActivityForStudents.class);
                 intentStartTest.putExtra("nameTeacher", mTeacher.get(position));
-                intentStartTest.putExtra("course", course);
-                intentStartTest.putExtra("group", group);
-                intentStartTest.putExtra("full_name", full_name);
                 mContext.startActivity(intentStartTest);
             }
         });

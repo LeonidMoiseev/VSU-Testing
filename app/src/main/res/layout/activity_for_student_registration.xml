@@ -112,7 +112,7 @@
             android:background="@drawable/ripple_btn"
             android:elevation="10dp"
             android:text="@string/register_user"
-            android:textSize="17sp"
+            android:textSize="@dimen/text_size2"
             android:translationZ="10dp" />
 
     </LinearLayout>

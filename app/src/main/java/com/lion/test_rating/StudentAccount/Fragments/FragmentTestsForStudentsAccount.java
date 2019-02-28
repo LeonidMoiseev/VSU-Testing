@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.AccountStudentActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListTestsForStudentAccount;
 
 import java.util.ArrayList;
@@ -34,10 +35,6 @@ public class FragmentTestsForStudentsAccount extends Fragment {
     private ArrayList<String> mAllTeachers = new ArrayList<>();
     private ArrayList<String> mRestrictionCountQuestion = new ArrayList<>();
     private ArrayList<String> mTestTime = new ArrayList<>();
-
-    String course;
-    String group;
-    String full_name;
 
     View fragmentView;
 
@@ -56,7 +53,6 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     clearLists();
-                    usersInformation(dataSnapshot);
                     checkExistenceTests(dataSnapshot);
                 }
 
@@ -92,15 +88,15 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                     if (openTest.equals(ConstantsNames.OPEN)) {
 
                         //Проверка: для каких курсов открыт тест
-                        if (dataTests.child(mAllTeachers.get(k)).child(m).hasChild(course)) {
+                        if (dataTests.child(mAllTeachers.get(k)).child(m).hasChild(AccountStudentActivity.mList.get(2))) {
 
-                            String groups = (String) dataTests.child(mAllTeachers.get(k)).child(m).child(course).getValue();
+                            String groups = (String) dataTests.child(mAllTeachers.get(k)).child(m).child(AccountStudentActivity.mList.get(2)).getValue();
                             assert groups != null;
                             //Проверка: для каких групп открыт тест
-                            if (groups.contains(group)) {
+                            if (groups.contains(AccountStudentActivity.mList.get(3))) {
 
                                 //Проверка: кто уже прошёл тест
-                                if (!dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.USER_COMPLETE_TEST).hasChild(full_name)) {
+                                if (!dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.USER_COMPLETE_TEST).hasChild(AccountStudentActivity.mList.get(0))) {
 
                                     initListTests((String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.SUBJECT).getValue()
                                             , mAllTeachers.get(k)
@@ -123,20 +119,6 @@ public class FragmentTestsForStudentsAccount extends Fragment {
         }
     }
 
-    private void usersInformation(DataSnapshot dataSnapshot) {
-        try {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            assert user != null;
-            String userID = user.getUid();
-            DataSnapshot dataStudents = dataSnapshot.child(ConstantsNames.USERS).child(ConstantsNames.STUDENTS).child(userID);
-            course = (String) dataStudents.child(ConstantsNames.COURSE).getValue();
-            group = (String) dataStudents.child(ConstantsNames.GROUP).getValue();
-            full_name = (String) dataStudents.child(ConstantsNames.FULL_NAME).getValue();
-        } catch (NullPointerException ex) {
-            errorNull();
-        }
-    }
-
     private void initListTests(String subject, String teacher, String data, String numberTest,
                                String restriction, String time, String topic) {
         mSubjectName.add(subject);
@@ -151,8 +133,7 @@ public class FragmentTestsForStudentsAccount extends Fragment {
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view);
         RVAListTestsForStudentAccount adapter = new RVAListTestsForStudentAccount(getActivity(), mSubjectName, mTeacherName, mDataName
-                , mNumberTeacherTest, mRestrictionCountQuestion, mTestTime
-                , course, group, full_name, mTopicName);
+                , mNumberTeacherTest, mRestrictionCountQuestion, mTestTime, mTopicName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);

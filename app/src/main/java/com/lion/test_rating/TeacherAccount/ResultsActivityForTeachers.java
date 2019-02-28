@@ -29,7 +29,6 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
 
-    String nameTeacher;
     String numberTest;
 
     ImageButton previousList, nextList;
@@ -59,7 +58,6 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
         countCourseAndGroup = 0;
 
         Intent intent = getIntent();
-        nameTeacher = intent.getStringExtra("full_name");
         numberTest = intent.getStringExtra("numberTest");
 
         studentsData();
@@ -106,7 +104,8 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
 
     private void studentsData() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
+        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS)
+                .child(AccountTeacherActivity.mList.get(0)).child(numberTest);
         resultDatabase.keepSynced(true);
 
         try {

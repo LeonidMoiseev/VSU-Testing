@@ -48,7 +48,7 @@
     <string name="et_new_answer2">Ответ 2</string>
     <string name="et_new_answer3">Ответ 3</string>
     <string name="et_new_answer4">Ответ 4</string>
-    <string name="btn_send_new_question">Отправить вопрос на проверку</string>
+    <string name="btn_send">Отправить</string>
     <string name="courseET">Курс</string>
     <string name="groupET">Группа</string>
     <string name="student_tv">Студент</string>
@@ -71,4 +71,5 @@
     <string name="what_information_about_test">Какую информацию о данном тесте вы хотите посмотреть?</string>
     <string name="count_student_TV">Количество студентов, вошедших в данные промежутки баллов</string>
     <string name="nav_header_course_group_or_department">course, group or department</string>
+    <string name="cancel_btn">Отмена</string>
 </resources>

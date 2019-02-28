@@ -69,9 +69,6 @@ public class StartTestActivity extends AppCompatActivity {
     private ArrayList<Integer> mListColorButton3 = new ArrayList<>();
     private ArrayList<Integer> mListColorButton4 = new ArrayList<>();
 
-    private String course;
-    private String group;
-    private String full_name;
     private String dataCreateTest;
     private String nameSubject;
     private String topicName;
@@ -87,9 +84,6 @@ public class StartTestActivity extends AppCompatActivity {
         myRef.keepSynced(true);
 
         Intent intent = getIntent();
-        course = intent.getStringExtra("course");
-        group = intent.getStringExtra("group");
-        full_name = intent.getStringExtra("full_name");
         nameTeacher = intent.getStringExtra("nameTeacher");
         numberTest = intent.getStringExtra("numberTest");
         dataCreateTest = intent.getStringExtra("dataCreateTest");
@@ -349,9 +343,6 @@ public class StartTestActivity extends AppCompatActivity {
         resultTest.putExtra("numberQuestions", numberQuestion);
         resultTest.putExtra("nameTeacher", nameTeacher);
         resultTest.putExtra("numberTest", numberTest);
-        resultTest.putExtra("course", course);
-        resultTest.putExtra("group", group);
-        resultTest.putExtra("full_name", full_name);
         resultTest.putExtra("dataCreateTest", dataCreateTest);
         resultTest.putExtra("nameSubject", nameSubject);
         resultTest.putExtra("topicName", topicName);

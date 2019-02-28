@@ -33,6 +33,8 @@ import com.lion.test_rating.R;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentTeachersForStudentsAccount;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentTestsForStudentsAccount;
 
+import java.util.ArrayList;
+
 public class AccountStudentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -41,10 +43,9 @@ public class AccountStudentActivity extends AppCompatActivity
 
     NavigationView navigationView;
 
-    String name;
-    String email;
-    String course;
-    String group;
+    StudentInformation studentInformation;
+
+    public static ArrayList<String> mList;
 
     TextView headerName;
     TextView headerEmail;
@@ -117,11 +118,19 @@ public class AccountStudentActivity extends AppCompatActivity
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             String userID = user.getUid();
+
             DataSnapshot dataStudents = snapshot.child(ConstantsNames.STUDENTS).child(userID);
-            name = (String) dataStudents.child(ConstantsNames.FULL_NAME).getValue();
-            email = (String) dataStudents.child(ConstantsNames.EMAIL).getValue();
-            course = (String) dataStudents.child(ConstantsNames.COURSE).getValue();
-            group = (String) dataStudents.child(ConstantsNames.GROUP).getValue();
+            studentInformation = new StudentInformation();
+            studentInformation.setName((String) dataStudents.child(ConstantsNames.FULL_NAME).getValue());
+            studentInformation.setEmail((String) dataStudents.child(ConstantsNames.EMAIL).getValue());
+            studentInformation.setCourse((String) dataStudents.child(ConstantsNames.COURSE).getValue());
+            studentInformation.setGroup((String) dataStudents.child(ConstantsNames.GROUP).getValue());
+
+            mList = new ArrayList<>();
+            mList.add(studentInformation.getName());
+            mList.add(studentInformation.getEmail());
+            mList.add(studentInformation.getCourse());
+            mList.add(studentInformation.getGroup());
 
             updateUI();
 
@@ -136,9 +145,9 @@ public class AccountStudentActivity extends AppCompatActivity
         headerName = header.findViewById(R.id.headerName);
         headerEmail = header.findViewById(R.id.headerEmail);
         headerOtherInformation = header.findViewById(R.id.otherInformation);
-        headerName.setText(name);
-        headerEmail.setText(email);
-        headerOtherInformation.setText(course + " курс, " + group + " группа");
+        headerName.setText(mList.get(0));
+        headerEmail.setText(mList.get(1));
+        headerOtherInformation.setText(mList.get(2) + " курс, " + mList.get(3) + " группа");
     }
 
     protected boolean isOnline() {

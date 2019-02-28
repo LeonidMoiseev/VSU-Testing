@@ -26,17 +26,14 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
     private ArrayList<String> mTopicName;
     private Context mContext;
 
-    private String full_name;
-
     private AlertDialog dialog;
 
     public RVATestsForTeachersAccount(Context mContext, ArrayList<String> mSubject, ArrayList<String> mData
-            , ArrayList<String> mNumberTest, String full_name, ArrayList<String> mTopic) {
+            , ArrayList<String> mNumberTest, ArrayList<String> mTopic) {
         this.mSubject = mSubject;
         this.mData = mData;
         this.mContext = mContext;
         this.mNumberTest = mNumberTest;
-        this.full_name = full_name;
         this.mTopicName = mTopic;
     }
 
@@ -77,7 +74,6 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
             @Override
             public void onClick(View v) {
                 Intent intentStartTest = new Intent(mContext, ResultsActivityForTeachers.class);
-                intentStartTest.putExtra("full_name", full_name);
                 intentStartTest.putExtra("numberTest", mNumberTest.get(position));
                 mContext.startActivity(intentStartTest);
                 dialog.dismiss();
@@ -91,7 +87,6 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
                 intentStartTest.putExtra("subjectName", mSubject.get(position));
                 intentStartTest.putExtra("topicName", mTopicName.get(position));
                 intentStartTest.putExtra("dataCreateTest", mData.get(position));
-                intentStartTest.putExtra("full_name", full_name);
                 intentStartTest.putExtra("numberTest", mNumberTest.get(position));
                 mContext.startActivity(intentStartTest);
                 dialog.dismiss();

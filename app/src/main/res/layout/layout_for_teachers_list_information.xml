@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:id="@+id/parent_layout_information_for_teachers_account"
+    android:background="@drawable/ripple_btn2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/text_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size2"
+                android:text="Информация"/>
+
+            <TextView
+                android:id="@+id/text_course_and_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size3"
+                android:textStyle="bold"
+                android:text="1 курс 7 группа"
+                android:layout_below="@+id/text_information"/>
+
+            <TextView
+                android:id="@+id/text_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size3"
+                android:textStyle="bold"
+                android:text="28.01.2019"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/text_course_and_group"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:text="Кликните, чтобы удалить информацию"
+            android:background="@color/colorAccent"
+            android:padding="2dp"
+            android:gravity="center"
+            android:layout_below="@+id/text_data"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -28,10 +28,6 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
 
     View fragmentView;
 
-    String course;
-    String group;
-    String full_name;
-
     private ArrayList<String> mTeacherName = new ArrayList<>();
 
     @Override
@@ -49,7 +45,6 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     clearLists();
-                    usersInformation(dataSnapshot);
                     checkExistenceTests(dataSnapshot);
                 }
 
@@ -80,26 +75,12 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_teachers);
-        RVAListTeachersForStudentAccount adapter = new RVAListTeachersForStudentAccount(getActivity(), mTeacherName, course, group, full_name);
+        RVAListTeachersForStudentAccount adapter = new RVAListTeachersForStudentAccount(getActivity(), mTeacherName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void usersInformation(DataSnapshot dataSnapshot) {
-        try {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            assert user != null;
-            String userID = user.getUid();
-            DataSnapshot dataStudents = dataSnapshot.child(ConstantsNames.USERS).child(ConstantsNames.STUDENTS).child(userID);
-            course = (String) dataStudents.child(ConstantsNames.COURSE).getValue();
-            group = (String) dataStudents.child(ConstantsNames.GROUP).getValue();
-            full_name = (String) dataStudents.child(ConstantsNames.FULL_NAME).getValue();
-        } catch (NullPointerException ex) {
-            errorNull();
-        }
     }
 
     private void errorNull() {

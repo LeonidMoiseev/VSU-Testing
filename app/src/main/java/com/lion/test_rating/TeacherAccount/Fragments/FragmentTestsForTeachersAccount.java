@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
+import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
 import com.lion.test_rating.TeacherAccount.RcyclerViewAdapters.RVATestsForTeachersAccount;
 
 import java.util.ArrayList;
@@ -30,8 +29,6 @@ public class FragmentTestsForTeachersAccount extends Fragment {
     private ArrayList<String> mDataName = new ArrayList<>();
     private ArrayList<String> mNumberTest = new ArrayList<>();
     private ArrayList<String> mTopicName = new ArrayList<>();
-
-    String full_name;
 
     View fragmentView;
 
@@ -52,7 +49,6 @@ public class FragmentTestsForTeachersAccount extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     clearLists();
-                    usersInformation(dataSnapshot);
                     checkExistenceTests(dataSnapshot);
                 }
 
@@ -70,25 +66,18 @@ public class FragmentTestsForTeachersAccount extends Fragment {
 
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
         if (dataSnapshot.hasChild(ConstantsNames.RESULTS)) {
-            for (DataSnapshot tests : dataSnapshot.child(ConstantsNames.RESULTS).child(full_name).getChildren()) {
+            for (DataSnapshot tests : dataSnapshot.child(ConstantsNames.RESULTS)
+                    .child(AccountTeacherActivity.mList.get(0)).getChildren()) {
+
+
                 initList((String) tests.child(ConstantsNames.SUBJECT).getValue(),
                         (String) tests.child(ConstantsNames.DATA_CREATE).getValue(),
                         tests.getKey(),
                         (String) tests.child(ConstantsNames.TOPIC_NAME).getValue());
+
             }
         }
         initRecyclerView();
-    }
-
-    private void usersInformation(DataSnapshot dataSnapshot) {
-        try {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            assert user != null;
-            String userID = user.getUid();
-            full_name = (String) dataSnapshot.child(ConstantsNames.USERS).child(ConstantsNames.TEACHERS).child(userID).child(ConstantsNames.FULL_NAME).getValue();
-        } catch (NullPointerException ex) {
-            errorNull();
-        }
     }
 
     private void initList(String subject, String data, String numberTest, String topic) {
@@ -100,7 +89,7 @@ public class FragmentTestsForTeachersAccount extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_tests_for_teachers_account);
-        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDataName, mNumberTest, full_name, mTopicName);
+        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDataName, mNumberTest, mTopicName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);

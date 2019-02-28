@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="30dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size"
             android:layout_marginBottom="15dp"/>
 
         <Button
@@ -33,7 +33,7 @@
             android:background="@drawable/ripple_btn"
             android:padding="10dp"
             android:text="@string/student_tv"
-            android:textSize="25sp" />
+            android:textSize="@dimen/text_size" />
 
         <Button
             android:id="@+id/teacher_btn"
@@ -42,7 +42,7 @@
             android:background="@drawable/ripple_btn"
             android:padding="10dp"
             android:text="@string/teacher_tv"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size"
             android:layout_marginTop="15dp"/>
 
     </LinearLayout>
