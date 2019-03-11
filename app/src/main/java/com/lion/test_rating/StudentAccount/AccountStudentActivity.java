@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.MainActivity;
 import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.Fragments.FragmentInformationForStudentsAccount;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentTeachersForStudentsAccount;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentTestsForStudentsAccount;
 
@@ -54,6 +55,7 @@ public class AccountStudentActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
     private FragmentTestsForStudentsAccount fTest;
     private FragmentTeachersForStudentsAccount fResult;
+    private FragmentInformationForStudentsAccount fInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,7 @@ public class AccountStudentActivity extends AppCompatActivity
 
         fTest = new FragmentTestsForStudentsAccount();
         fResult = new FragmentTeachersForStudentsAccount();
+        fInformation = new FragmentInformationForStudentsAccount();
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fTest);
         fragmentTransaction.commit();
@@ -210,7 +213,7 @@ public class AccountStudentActivity extends AppCompatActivity
         } else if (id == R.id.nav_rating) {
 
         } else if (id == R.id.nav_information) {
-
+            fragmentTransaction.replace(R.id.container, fInformation);
         }
         fragmentTransaction.commit();
 

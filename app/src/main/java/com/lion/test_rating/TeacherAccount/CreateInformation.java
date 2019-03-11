@@ -48,9 +48,6 @@ public class CreateInformation {
     private ArrayList<String> listGroups = new ArrayList<>();
     private ArrayList<String> listNumberInformationBlock = new ArrayList<>();
 
-    //private ArrayList<String> listSendCourses = new ArrayList<>();
-    //private ArrayList<String> listSendGroups = new ArrayList<>();
-
     private DatabaseReference dataInformation;
 
     public CreateInformation(Context context) {
@@ -156,31 +153,8 @@ public class CreateInformation {
                     .child(Integer.toString(i)).setValue(text);
         }
 
-        /*countListCourseAndGroup();
-
-        for (int i = 0; i < listSendCourses.size(); i++) {
-            dataInformation.child(ConstantsNames.INFORMATION).child(AccountTeacherActivity.mListUserInformation.get(0))
-                    .child(Integer.toString(countInformationBlocks)).child(listSendCourses.get(i))
-                    .setValue(listSendGroups.get(i));
-        }*/
-
         dialog.dismiss();
     }
-
-    /*private void countListCourseAndGroup() {
-        listSendCourses.add(listCourses.get(0));
-        String group = listGroups.get(0);
-        for (int i = 1; i < listCourses.size(); i++) {
-            if (listCourses.get(i).equals(listCourses.get(i - 1))) {
-                group = group + " " + listGroups.get(i);
-            } else {
-                listSendCourses.add(listCourses.get(i));
-                listSendGroups.add(group);
-                group = listGroups.get(i);
-            }
-        }
-        listSendGroups.add(group);
-    }*/
 
     private void addCoursesAndGroups() {
         listCourses.add(course_inf);
@@ -204,8 +178,6 @@ public class CreateInformation {
         listCourses.clear();
         listGroups.clear();
         listNumberInformationBlock.clear();
-        //listSendCourses.clear();
-        //listSendGroups.clear();
     }
 
     private void validateForm1() {

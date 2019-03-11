@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout_information_for_students_account"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/ripple_btn2">
+
+    <TextView
+        android:id="@+id/text_name_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teacher"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/text_size2"
+        android:textStyle="bold"
+        android:background="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/text_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_name_teacher"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:text="Информация"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size2" />
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_information"
+        android:layout_alignParentRight="true"
+        android:text="28.01.2019"
+        android:paddingRight="15dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size3"
+        android:textStyle="bold" />
+
+</RelativeLayout>

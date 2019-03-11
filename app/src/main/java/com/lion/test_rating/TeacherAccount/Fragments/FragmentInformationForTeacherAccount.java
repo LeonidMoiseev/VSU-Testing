@@ -40,7 +40,7 @@ public class FragmentInformationForTeacherAccount extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragmentView = inflater.inflate(R.layout.fragment_for_teacher_information, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_for_teacher_list_information, container, false);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         testsDatabase = mFirebaseDatabase.getReference();
