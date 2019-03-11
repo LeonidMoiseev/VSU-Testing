@@ -1,8 +1,8 @@
 package com.lion.test_rating.StudentAccount;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,7 +36,10 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     private EditText mPasswordField;
     private EditText mCodeField;
     private Button mRegisterBtn;
-    private ProgressDialog mProgress;
+    private AlertDialog dialogProgressBar;
+    private ProgressBar progressBar;
+
+    TextView progressBarText;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -47,15 +52,23 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     String password;
     String code;
 
-    String completeCode;
+    String completeCode = "";
     Boolean dataUse = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_student_registration);
-        Toolbar toolbar = findViewById(R.id.myToolBar);
 
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(RegistrationStudentActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_progress_bar, null);
+        mBuilder.setView(mView);
+        dialogProgressBar = mBuilder.create();
+        progressBar = mView.findViewById(R.id.progressBar);
+        progressBarText = mView.findViewById(R.id.text_progress_bar);
+        progressBarText.setText(getString(R.string.progressMessage));
+
+        Toolbar toolbar = findViewById(R.id.myToolBar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
 
@@ -63,7 +76,6 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseUsers = mFirebaseDatabase.getReference();
         mDatabaseUsers.keepSynced(true);
-        mProgress = new ProgressDialog(this);
 
 
         mNameField = findViewById(R.id.nameField);
@@ -91,13 +103,13 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         password = mPasswordField.getText().toString().trim();
         code = mCodeField.getText().toString().trim();
 
-        validateForm1();
+        validateForm();
 
         if ((!TextUtils.isEmpty(name) && !TextUtils.isEmpty(course) && !TextUtils.isEmpty(group)
                 && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(code))) {
 
-            mProgress.setMessage(getString(R.string.progressMessage));
-            mProgress.show();
+            dialogProgressBar.show();
+            progressBar.setVisibility(ProgressBar.VISIBLE);
 
             try {
                 mDatabaseUsers.addValueEventListener(new ValueEventListener() {
@@ -114,7 +126,8 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                     }
                 });
             } catch (NullPointerException ex) {
-                mProgress.dismiss();
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
+                dialogProgressBar.dismiss();
                 Log.d("Errors", "NullPointerException");
             }
         }
@@ -129,12 +142,14 @@ public class RegistrationStudentActivity extends AppCompatActivity {
             if (completeCode.equals(code)) {
                 createAccount();
             } else {
-                mProgress.dismiss();
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
+                dialogProgressBar.dismiss();
                 Toast.makeText(RegistrationStudentActivity.this, "Неправильный код активации",
                         Toast.LENGTH_SHORT).show();
             }
         } catch (NullPointerException ex) {
-            mProgress.dismiss();
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            dialogProgressBar.dismiss();
             Toast.makeText(RegistrationStudentActivity.this, "Данные указаны неправильно",
                     Toast.LENGTH_SHORT).show();
         }
@@ -161,7 +176,8 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                         current_user_db.child(ConstantsNames.RATING).setValue("0");
                         current_user_db.child(ConstantsNames.EMAIL).setValue(user_email);
 
-                        mProgress.dismiss();
+                        progressBar.setVisibility(ProgressBar.INVISIBLE);
+                        dialogProgressBar.dismiss();
 
                         mDatabaseUsers.child(ConstantsNames.ACTIVATION_CODES).child(ConstantsNames.STUDENTS).
                                 child(course).child(group).child(name).removeValue();
@@ -172,20 +188,22 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                         finish();
 
                     } else {
-                        mProgress.dismiss();
+                        progressBar.setVisibility(ProgressBar.INVISIBLE);
+                        dialogProgressBar.dismiss();
                         Toast.makeText(RegistrationStudentActivity.this, getResources().getString(R.string.registration_error),
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         } catch (NullPointerException ex) {
-            mProgress.dismiss();
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            dialogProgressBar.dismiss();
             Toast.makeText(RegistrationStudentActivity.this, "Ошибка регистрации",
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void validateForm1() {
+    private void validateForm() {
 
         if (TextUtils.isEmpty(name)) {
             mNameField.setError(getString(R.string.required));

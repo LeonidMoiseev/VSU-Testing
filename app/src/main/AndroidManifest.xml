@@ -54,7 +54,8 @@
             android:name=".TeacherAccount.ResultsActivityForTeachers"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TeacherAccount.StatisticsActivity"></activity>
+            android:name=".TeacherAccount.StatisticsActivity"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

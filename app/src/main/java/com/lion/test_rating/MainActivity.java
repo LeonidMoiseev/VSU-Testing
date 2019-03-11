@@ -1,8 +1,8 @@
 package com.lion.test_rating;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,27 +35,35 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText mEmailField;
     private EditText mPasswordField;
-    private ProgressDialog mProgress;
+    private ProgressBar progressBar;
+    private AlertDialog dialogProgressBar;
 
     String email;
     String password;
     Boolean dataUsed = false;
     Intent loginIntent;
 
+    TextView progressBarText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage(getString(R.string.checking_login));
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_progress_bar, null);
+        mBuilder.setView(mView);
+        dialogProgressBar = mBuilder.create();
+        progressBar = mView.findViewById(R.id.progressBar);
+        progressBarText = mView.findViewById(R.id.text_progress_bar);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if (firebaseAuth.getCurrentUser() != null) {
-                    mProgress.show();
+                    dialogProgressBar.show();
+                    progressBar.setVisibility(ProgressBar.VISIBLE);
                     getUserInformationAndStartActivity();
                 } else activityVisible();
             }
@@ -69,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
-            mProgress.setMessage(getString(R.string.checking_login));
-            mProgress.show();
+            progressBarText.setText(getString(R.string.progressMessage));
+            dialogProgressBar.show();
+            progressBar.setVisibility(ProgressBar.VISIBLE);
 
             try {
 
@@ -79,15 +90,18 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             getUserInformationAndStartActivity();
-                            mProgress.dismiss();
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            dialogProgressBar.dismiss();
                         } else {
-                            mProgress.dismiss();
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            dialogProgressBar.dismiss();
                             Toast.makeText(MainActivity.this, R.string.authorization_error, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
             } catch (NullPointerException ex) {
-                mProgress.dismiss();
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
+                dialogProgressBar.dismiss();
                 Toast.makeText(MainActivity.this, R.string.authorization_error, Toast.LENGTH_LONG).show();
             }
         }
@@ -103,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         mPasswordField = findViewById(R.id.et_password);
         Button mSigning = findViewById(R.id.btn_sign_in);
         Button mRegister = findViewById(R.id.btn_registration);
-        mProgress = new ProgressDialog(this);
 
         mSigning.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
                             loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(loginIntent);
                             dataUsed = true;
-                            mProgress.dismiss();
+                            progressBar.setVisibility(ProgressBar.INVISIBLE);
+                            dialogProgressBar.dismiss();
                             finish();
 
                         } catch (NullPointerException ex) {
@@ -184,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Errors", "NullPointerException");
         Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
         logout();
-        mProgress.dismiss();
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        dialogProgressBar.dismiss();
     }
 
     private void logout() {

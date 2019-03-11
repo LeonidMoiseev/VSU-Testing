@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="@string/open_test"
+        android:text="@string/delete_this_info"
         android:textSize="@dimen/text_size2"
         android:gravity="center"
         android:padding="10dp"

@@ -11,7 +11,7 @@ public class ConstantsNames {
     public static final String RESULTS = "Результаты";
     public static final String TESTS = "Tests";
     public static final String SUBJECT = "Предмет";
-    public static final String DATA_CREATE = "Дата создания";
+    public static final String DATE_CREATE = "Дата создания";
     public static final String RESTRICTION = "Ограничение на количество вопросов";
     public static final String TIME_TEST = "Время теста (мин)";
     public static final String USER_COMPLETE_TEST = "Пользователи прошедшие тест";
@@ -30,4 +30,5 @@ public class ConstantsNames {
     public static final String CORRECT_ANSWER = "Correct_answer";
     public static final String TOPIC_NAME = "Название темы";
     public static final String INFORMATION = "Информация";
+    public static final String COURSES_AND_GROUPS = "Курсы и группы";
 }

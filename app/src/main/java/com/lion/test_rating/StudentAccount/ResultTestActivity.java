@@ -93,18 +93,21 @@ public class ResultTestActivity extends AppCompatActivity {
         mDatabaseUserComplete = FirebaseDatabase.getInstance().getReference();
         mDatabaseUserComplete.keepSynced(true);
 
-        mDatabaseUserComplete.child(ConstantsNames.TESTS).child(nameTeacher).child(numberTest).child(ConstantsNames.USER_COMPLETE_TEST).
-                child(AccountStudentActivity.mList.get(0)).setValue(ConstantsNames.COMPLETE);
+        mDatabaseUserComplete.child(ConstantsNames.TESTS).child(nameTeacher).child(numberTest)
+                .child(ConstantsNames.USER_COMPLETE_TEST)
+                .child(AccountStudentActivity.mListUserInformation.get(0)).setValue(ConstantsNames.COMPLETE);
     }
 
     private void writeResultTest() {
         mDatabaseUserResult = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
         mDatabaseUserResult.keepSynced(true);
 
-        mDatabaseUserResult.child(AccountStudentActivity.mList.get(2)).child(AccountStudentActivity.mList.get(3))
-                .child(AccountStudentActivity.mList.get(0)).setValue(Integer.toString(points));
+        mDatabaseUserResult.child(AccountStudentActivity.mListUserInformation.get(2))
+                .child(AccountStudentActivity.mListUserInformation.get(3))
+                .child(AccountStudentActivity.mListUserInformation.get(0))
+                .setValue(Integer.toString(points));
         mDatabaseUserResult.child(ConstantsNames.SUBJECT).setValue(nameSubject);
-        mDatabaseUserResult.child(ConstantsNames.DATA_CREATE).setValue(dataCreateTest);
+        mDatabaseUserResult.child(ConstantsNames.DATE_CREATE).setValue(dataCreateTest);
         mDatabaseUserResult.child(ConstantsNames.TOPIC_NAME).setValue(topicName);
     }
 

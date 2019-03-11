@@ -19,14 +19,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
 import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
-import com.lion.test_rating.TeacherAccount.RcyclerViewAdapters.RVATestsForTeachersAccount;
+import com.lion.test_rating.TeacherAccount.RecyclerViewAdapters.RVATestsForTeachersAccount;
 
 import java.util.ArrayList;
 
 public class FragmentTestsForTeachersAccount extends Fragment {
 
     private ArrayList<String> mSubjectName = new ArrayList<>();
-    private ArrayList<String> mDataName = new ArrayList<>();
+    private ArrayList<String> mDateName = new ArrayList<>();
     private ArrayList<String> mNumberTest = new ArrayList<>();
     private ArrayList<String> mTopicName = new ArrayList<>();
 
@@ -67,11 +67,11 @@ public class FragmentTestsForTeachersAccount extends Fragment {
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
         if (dataSnapshot.hasChild(ConstantsNames.RESULTS)) {
             for (DataSnapshot tests : dataSnapshot.child(ConstantsNames.RESULTS)
-                    .child(AccountTeacherActivity.mList.get(0)).getChildren()) {
+                    .child(AccountTeacherActivity.mListUserInformation.get(0)).getChildren()) {
 
 
                 initList((String) tests.child(ConstantsNames.SUBJECT).getValue(),
-                        (String) tests.child(ConstantsNames.DATA_CREATE).getValue(),
+                        (String) tests.child(ConstantsNames.DATE_CREATE).getValue(),
                         tests.getKey(),
                         (String) tests.child(ConstantsNames.TOPIC_NAME).getValue());
 
@@ -82,14 +82,14 @@ public class FragmentTestsForTeachersAccount extends Fragment {
 
     private void initList(String subject, String data, String numberTest, String topic) {
         mSubjectName.add(subject);
-        mDataName.add(data);
+        mDateName.add(data);
         mNumberTest.add(numberTest);
         mTopicName.add(topic);
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_tests_for_teachers_account);
-        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDataName, mNumberTest, mTopicName);
+        RVATestsForTeachersAccount adapter = new RVATestsForTeachersAccount(getActivity(), mSubjectName, mDateName, mNumberTest, mTopicName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
@@ -104,7 +104,7 @@ public class FragmentTestsForTeachersAccount extends Fragment {
 
     private void clearLists() {
         mSubjectName.clear();
-        mDataName.clear();
+        mDateName.clear();
         mNumberTest.clear();
         mTopicName.clear();
     }

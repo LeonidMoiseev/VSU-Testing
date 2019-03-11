@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/gray">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="7dp"
+        android:layout_centerVertical="true"
+        android:indeterminateDrawable="@drawable/spinner_ring"
+        android:indeterminateOnly="true" />
+
+    <TextView
+        android:id="@+id/text_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="7dp"
+        android:text="@string/checking_login"
+        android:layout_toRightOf="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size2" />
+
+</RelativeLayout>

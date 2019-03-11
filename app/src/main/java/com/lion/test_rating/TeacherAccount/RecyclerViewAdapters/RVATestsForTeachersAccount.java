@@ -1,4 +1,4 @@
-package com.lion.test_rating.TeacherAccount.RcyclerViewAdapters;
+package com.lion.test_rating.TeacherAccount.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

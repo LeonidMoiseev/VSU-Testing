@@ -40,7 +40,7 @@
                 android:layout_below="@+id/text_information"/>
 
             <TextView
-                android:id="@+id/text_data"
+                android:id="@+id/text_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
             android:textSize="14sp"
-            android:text="Кликните, чтобы удалить информацию"
+            android:text="@string/click_delete_info"
             android:background="@color/colorAccent"
             android:padding="2dp"
             android:gravity="center"

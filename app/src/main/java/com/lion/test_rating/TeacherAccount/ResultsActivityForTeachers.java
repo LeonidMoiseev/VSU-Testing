@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.RcyclerViewAdapters.RVAResultsForTeacherAccount;
+import com.lion.test_rating.TeacherAccount.RecyclerViewAdapters.RVAResultsForTeacherAccount;
 
 import java.util.ArrayList;
 
@@ -105,7 +105,7 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
     private void studentsData() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS)
-                .child(AccountTeacherActivity.mList.get(0)).child(numberTest);
+                .child(AccountTeacherActivity.mListUserInformation.get(0)).child(numberTest);
         resultDatabase.keepSynced(true);
 
         try {

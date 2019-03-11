@@ -70,18 +70,20 @@ public class ResultsActivityForStudents extends AppCompatActivity {
 
         for (DataSnapshot numberTest : dataSnapshot.getChildren()) {
 
-            if (numberTest.hasChild(AccountStudentActivity.mList.get(2))) {
+            if (numberTest.hasChild(AccountStudentActivity.mListUserInformation.get(2))) {
 
-                if (numberTest.child(AccountStudentActivity.mList.get(2)).hasChild(AccountStudentActivity.mList.get(3))) {
+                if (numberTest.child(AccountStudentActivity.mListUserInformation.get(2))
+                        .hasChild(AccountStudentActivity.mListUserInformation.get(3))) {
 
-                    if (numberTest.child(AccountStudentActivity.mList.get(2)).child(AccountStudentActivity.mList.get(3))
-                            .hasChild(AccountStudentActivity.mList.get(0))) {
+                    if (numberTest.child(AccountStudentActivity.mListUserInformation.get(2))
+                            .child(AccountStudentActivity.mListUserInformation.get(3))
+                            .hasChild(AccountStudentActivity.mListUserInformation.get(0))) {
 
                         initListTests((String) numberTest.child(ConstantsNames.SUBJECT).getValue()
-                                , (String) numberTest.child(ConstantsNames.DATA_CREATE).getValue()
-                                , (String) numberTest.child(AccountStudentActivity.mList.get(2))
-                                        .child(AccountStudentActivity.mList.get(3))
-                                        .child(AccountStudentActivity.mList.get(0)).getValue()
+                                , (String) numberTest.child(ConstantsNames.DATE_CREATE).getValue()
+                                , (String) numberTest.child(AccountStudentActivity.mListUserInformation.get(2))
+                                        .child(AccountStudentActivity.mListUserInformation.get(3))
+                                        .child(AccountStudentActivity.mListUserInformation.get(0)).getValue()
                                 , (String) numberTest.child(ConstantsNames.TOPIC_NAME).getValue());
                     }
                 }

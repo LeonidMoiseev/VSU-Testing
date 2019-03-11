@@ -45,7 +45,7 @@ public class AccountStudentActivity extends AppCompatActivity
 
     StudentInformation studentInformation;
 
-    public static ArrayList<String> mList;
+    public static ArrayList<String> mListUserInformation;
 
     TextView headerName;
     TextView headerEmail;
@@ -126,11 +126,11 @@ public class AccountStudentActivity extends AppCompatActivity
             studentInformation.setCourse((String) dataStudents.child(ConstantsNames.COURSE).getValue());
             studentInformation.setGroup((String) dataStudents.child(ConstantsNames.GROUP).getValue());
 
-            mList = new ArrayList<>();
-            mList.add(studentInformation.getName());
-            mList.add(studentInformation.getEmail());
-            mList.add(studentInformation.getCourse());
-            mList.add(studentInformation.getGroup());
+            mListUserInformation = new ArrayList<>();
+            mListUserInformation.add(studentInformation.getName());
+            mListUserInformation.add(studentInformation.getEmail());
+            mListUserInformation.add(studentInformation.getCourse());
+            mListUserInformation.add(studentInformation.getGroup());
 
             updateUI();
 
@@ -145,9 +145,9 @@ public class AccountStudentActivity extends AppCompatActivity
         headerName = header.findViewById(R.id.headerName);
         headerEmail = header.findViewById(R.id.headerEmail);
         headerOtherInformation = header.findViewById(R.id.otherInformation);
-        headerName.setText(mList.get(0));
-        headerEmail.setText(mList.get(1));
-        headerOtherInformation.setText(mList.get(2) + " курс, " + mList.get(3) + " группа");
+        headerName.setText(mListUserInformation.get(0));
+        headerEmail.setText(mListUserInformation.get(1));
+        headerOtherInformation.setText(mListUserInformation.get(2) + " курс, " + mListUserInformation.get(3) + " группа");
     }
 
     protected boolean isOnline() {

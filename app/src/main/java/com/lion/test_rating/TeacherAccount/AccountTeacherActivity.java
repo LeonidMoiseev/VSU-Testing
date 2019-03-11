@@ -49,7 +49,7 @@ public class AccountTeacherActivity extends AppCompatActivity
 
     TeacherInformation teacherInformation;
 
-    public static ArrayList<String> mList;
+    public static ArrayList<String> mListUserInformation;
 
     private FragmentTestsForTeachersAccount fResult;
     private FragmentInformationForTeacherAccount fInformation;
@@ -126,10 +126,10 @@ public class AccountTeacherActivity extends AppCompatActivity
             teacherInformation.setEmail((String) dataTeachers.child(ConstantsNames.EMAIL).getValue());
             teacherInformation.setDepartment((String) dataTeachers.child(ConstantsNames.DEPARTMENT).getValue());
 
-            mList = new ArrayList<>();
-            mList.add(teacherInformation.getName());
-            mList.add(teacherInformation.getEmail());
-            mList.add(teacherInformation.getDepartment());
+            mListUserInformation = new ArrayList<>();
+            mListUserInformation.add(teacherInformation.getName());
+            mListUserInformation.add(teacherInformation.getEmail());
+            mListUserInformation.add(teacherInformation.getDepartment());
 
             updateUI();
 
@@ -144,9 +144,9 @@ public class AccountTeacherActivity extends AppCompatActivity
         headerName = header.findViewById(R.id.headerName);
         headerEmail = header.findViewById(R.id.headerEmail);
         headerOtherInformation = header.findViewById(R.id.otherInformation);
-        headerName.setText(mList.get(0));
-        headerEmail.setText(mList.get(1));
-        headerOtherInformation.setText(mList.get(2));
+        headerName.setText(mListUserInformation.get(0));
+        headerEmail.setText(mListUserInformation.get(1));
+        headerOtherInformation.setText(mListUserInformation.get(2));
     }
 
     protected boolean isOnline() {

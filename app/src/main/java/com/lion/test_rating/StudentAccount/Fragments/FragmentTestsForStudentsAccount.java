@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,29 +80,39 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                     String m = testNumber.getKey();
 
                     assert m != null;
-                    String openTest = (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.STATUS_TEST).getValue();
+                    String openTest = (String) dataTests.child(mAllTeachers.get(k)).child(m)
+                            .child(ConstantsNames.STATUS_TEST).getValue();
                     assert openTest != null;
                     //Проверка статуса теста
                     if (openTest.equals(ConstantsNames.OPEN)) {
 
                         //Проверка: для каких курсов открыт тест
-                        if (dataTests.child(mAllTeachers.get(k)).child(m).hasChild(AccountStudentActivity.mList.get(2))) {
+                        if (dataTests.child(mAllTeachers.get(k)).child(m)
+                                .hasChild(AccountStudentActivity.mListUserInformation.get(2))) {
 
-                            String groups = (String) dataTests.child(mAllTeachers.get(k)).child(m).child(AccountStudentActivity.mList.get(2)).getValue();
+                            String groups = (String) dataTests.child(mAllTeachers.get(k)).child(m)
+                                    .child(AccountStudentActivity.mListUserInformation.get(2)).getValue();
                             assert groups != null;
                             //Проверка: для каких групп открыт тест
-                            if (groups.contains(AccountStudentActivity.mList.get(3))) {
+                            if (groups.contains(AccountStudentActivity.mListUserInformation.get(3))) {
 
                                 //Проверка: кто уже прошёл тест
-                                if (!dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.USER_COMPLETE_TEST).hasChild(AccountStudentActivity.mList.get(0))) {
+                                if (!dataTests.child(mAllTeachers.get(k)).child(m)
+                                        .child(ConstantsNames.USER_COMPLETE_TEST)
+                                        .hasChild(AccountStudentActivity.mListUserInformation.get(0))) {
 
-                                    initListTests((String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.SUBJECT).getValue()
+                                    initListTests((String) dataTests.child(mAllTeachers.get(k))
+                                                    .child(m).child(ConstantsNames.SUBJECT).getValue()
                                             , mAllTeachers.get(k)
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.DATA_CREATE).getValue()
+                                            , (String) dataTests.child(mAllTeachers.get(k))
+                                                    .child(m).child(ConstantsNames.DATE_CREATE).getValue()
                                             , m
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.RESTRICTION).getValue()
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.TIME_TEST).getValue()
-                                            , (String) dataTests.child(mAllTeachers.get(k)).child(m).child(ConstantsNames.TOPIC_NAME).getValue());
+                                            , (String) dataTests.child(mAllTeachers.get(k))
+                                                    .child(m).child(ConstantsNames.RESTRICTION).getValue()
+                                            , (String) dataTests.child(mAllTeachers.get(k))
+                                                    .child(m).child(ConstantsNames.TIME_TEST).getValue()
+                                            , (String) dataTests.child(mAllTeachers.get(k))
+                                                    .child(m).child(ConstantsNames.TOPIC_NAME).getValue());
                                 }
                             }
                         }

@@ -64,7 +64,7 @@ public class StatisticsActivity extends AppCompatActivity {
         numberTest = intent.getStringExtra("numberTest");
 
         statisticsDatabase = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).
-                child(AccountTeacherActivity.mList.get(0)).child(numberTest);
+                child(AccountTeacherActivity.mListUserInformation.get(0)).child(numberTest);
         statisticsDatabase.keepSynced(true);
 
         try {
