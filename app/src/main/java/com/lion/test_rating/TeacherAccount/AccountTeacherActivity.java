@@ -1,6 +1,7 @@
 package com.lion.test_rating.TeacherAccount;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.MainActivity;
 import com.lion.test_rating.R;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentInformationForTeacherAccount;
+import com.lion.test_rating.TeacherAccount.Fragments.FragmentRatingForTeacherAccount;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentTestsForTeachersAccount;
 
 import java.util.ArrayList;
@@ -53,7 +55,10 @@ public class AccountTeacherActivity extends AppCompatActivity
 
     private FragmentTestsForTeachersAccount fResult;
     private FragmentInformationForTeacherAccount fInformation;
+    private FragmentRatingForTeacherAccount fRating;
     FragmentTransaction fragmentTransaction;
+
+    public static int checkFragment = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +114,7 @@ public class AccountTeacherActivity extends AppCompatActivity
 
         fResult = new FragmentTestsForTeachersAccount();
         fInformation = new FragmentInformationForTeacherAccount();
+        fRating = new FragmentRatingForTeacherAccount();
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fResult);
         fragmentTransaction.commit();
@@ -166,7 +172,14 @@ public class AccountTeacherActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (checkFragment == 0) {
+                super.onBackPressed();
+            } else if (checkFragment == 1) {
+                    fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container, fRating);
+                    fragmentTransaction.commit();
+                    checkFragment = 0;
+                }
         }
     }
 
@@ -199,6 +212,7 @@ public class AccountTeacherActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        checkFragment = 0;
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 
@@ -207,7 +221,7 @@ public class AccountTeacherActivity extends AppCompatActivity
         } else if (id == R.id.nav_information_t) {
             fragmentTransaction.replace(R.id.container, fInformation);
         } else if (id == R.id.nav_rating_t) {
-
+            fragmentTransaction.replace(R.id.container, fRating);
         }
         fragmentTransaction.commit();
 

@@ -1,68 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout_information_for_teachers_account"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:id="@+id/parent_layout_information_for_teachers_account"
     android:background="@drawable/ripple_btn2">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/text_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingTop="@dimen/paddingTopBottom"
+            android:text="Информация"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size2" />
 
-            <TextView
-                android:id="@+id/text_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size2"
-                android:text="Информация"/>
+        <TextView
+            android:id="@+id/text_course_and_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_information"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:text="1 курс 7 группа"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size3"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/text_course_and_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size3"
-                android:textStyle="bold"
-                android:text="1 курс 7 группа"
-                android:layout_below="@+id/text_information"/>
-
-            <TextView
-                android:id="@+id/text_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size3"
-                android:textStyle="bold"
-                android:text="28.01.2019"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/text_course_and_group"/>
-
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_course_and_group"
+            android:layout_alignParentRight="true"
+            android:background="@color/coral_btn"
+            android:padding="5dp"
+            android:text="28.01.2019"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size3"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:textSize="14sp"
-            android:text="@string/click_delete_info"
-            android:background="@color/colorAccent"
-            android:padding="2dp"
-            android:gravity="center"
-            android:layout_below="@+id/text_data"/>
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/text_date"
+            android:background="@drawable/ripple_btn3"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

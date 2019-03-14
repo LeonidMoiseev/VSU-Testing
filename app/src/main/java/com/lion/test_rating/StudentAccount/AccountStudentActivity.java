@@ -128,12 +128,14 @@ public class AccountStudentActivity extends AppCompatActivity
             studentInformation.setEmail((String) dataStudents.child(ConstantsNames.EMAIL).getValue());
             studentInformation.setCourse((String) dataStudents.child(ConstantsNames.COURSE).getValue());
             studentInformation.setGroup((String) dataStudents.child(ConstantsNames.GROUP).getValue());
+            studentInformation.setRating((String) dataStudents.child(ConstantsNames.RATING).getValue());
 
             mListUserInformation = new ArrayList<>();
             mListUserInformation.add(studentInformation.getName());
             mListUserInformation.add(studentInformation.getEmail());
             mListUserInformation.add(studentInformation.getCourse());
             mListUserInformation.add(studentInformation.getGroup());
+            mListUserInformation.add(studentInformation.getRating());
 
             updateUI();
 

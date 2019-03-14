@@ -10,4 +10,6 @@
     <dimen name="text_size3">15sp</dimen>
     <dimen name="text_question_size">15sp</dimen>
     <dimen name="text_answer_size">13sp</dimen>
+    <dimen name="paddingLeftRight">15dp</dimen>
+    <dimen name="paddingTopBottom">8dp</dimen>
 </resources>

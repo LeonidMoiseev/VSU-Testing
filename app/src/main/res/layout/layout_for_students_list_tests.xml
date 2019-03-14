@@ -10,11 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/text_name_subject"
@@ -22,6 +18,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size2"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingTop="@dimen/paddingTopBottom"
             android:text="Технологии программирования"
             android:textStyle="bold"/>
 
@@ -29,6 +28,8 @@
             android:id="@+id/text_topic_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size2"
             android:text="Аттестация 1. ООП"
@@ -38,6 +39,8 @@
             android:id="@+id/text_name_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size3"
             android:text="Teacher1"
@@ -47,11 +50,20 @@
             android:id="@+id/text_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:background="@color/orange_btn"
+            android:textColor="@color/gray"
+            android:textStyle="bold"
+            android:padding="5dp"
             android:textSize="@dimen/text_size3"
             android:text="28.01.2019"
             android:layout_below="@+id/text_name_teacher"
             android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/text_data"
+            android:background="@drawable/ripple_btn"/>
 
     </RelativeLayout>
 

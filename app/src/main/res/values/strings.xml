@@ -72,6 +72,15 @@
     <string name="count_student_TV">Количество студентов, вошедших в данные промежутки баллов</string>
     <string name="nav_header_course_group_or_department">course, group or department</string>
     <string name="cancel_btn">Отмена</string>
-    <string name="click_delete_info">Кликните, чтобы удалить информацию</string>
-    <string name="delete_this_info">Удалить данную информаию?</string>
+    <string name="click_delete_info">Чтобы удалить информацию, кликните по ней</string>
+    <string name="delete_this_info">Удалить данную информацию?</string>
+    <string name="rating_on_course">Рейтинг на курсе</string>
+    <string name="enter_the_course">Введите курс:</string>
+    <string name="search">Поиск</string>
+    <string name="rating_on_group">Рейтинг в группе</string>
+    <string name="enter_course_and_group">Введите курс и группу:</string>
+    <string name="student_rating">Рейтинг студента</string>
+    <string name="enter_fio_student">Введите ФИО студента:</string>
+    <string name="fio_et">Иванов Иван Иванович</string>
+    <string name="not_data_about_students">Нет данных по вашему запросу</string>
 </resources>

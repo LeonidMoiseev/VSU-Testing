@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lion.test_rating.ConstantsNames;
@@ -32,6 +34,7 @@ public class ResultTestActivity extends AppCompatActivity {
 
     DatabaseReference mDatabaseUserComplete;
     DatabaseReference mDatabaseUserResult;
+    DatabaseReference mDatabaseRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,8 @@ public class ResultTestActivity extends AppCompatActivity {
     }
 
     private void writeResultTest() {
-        mDatabaseUserResult = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
+        mDatabaseUserResult = FirebaseDatabase.getInstance().getReference()
+                .child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
         mDatabaseUserResult.keepSynced(true);
 
         mDatabaseUserResult.child(AccountStudentActivity.mListUserInformation.get(2))
@@ -109,6 +113,16 @@ public class ResultTestActivity extends AppCompatActivity {
         mDatabaseUserResult.child(ConstantsNames.SUBJECT).setValue(nameSubject);
         mDatabaseUserResult.child(ConstantsNames.DATE_CREATE).setValue(dataCreateTest);
         mDatabaseUserResult.child(ConstantsNames.TOPIC_NAME).setValue(topicName);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        String userID = user.getUid();
+        mDatabaseRating = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.USERS)
+                .child(ConstantsNames.STUDENTS).child(userID);
+
+        int newPoints = Integer.parseInt(AccountStudentActivity.mListUserInformation.get(4)) + points;
+        mDatabaseRating.child(ConstantsNames.RATING).setValue(Integer.toString(newPoints));
+
     }
 
     @Override

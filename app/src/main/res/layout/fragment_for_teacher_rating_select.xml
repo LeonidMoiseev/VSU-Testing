@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    tools:context=".TeacherAccount.Fragments.FragmentInformationForTeacherAccount">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/ripple_btn2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/white"
+            android:text="@string/rating_on_course"
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingTop="@dimen/paddingTopBottom"
+            android:paddingBottom="@dimen/paddingTopBottom" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size2"
+                android:textColor="@color/white"
+                android:text="@string/enter_the_course"/>
+
+            <EditText
+                android:id="@+id/course_rating_on_course_ET"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size2"
+                android:textColor="@color/white"
+                android:hint="@string/courseET"
+                android:backgroundTint="@color/yellow_btn"
+                android:textCursorDrawable="@drawable/cursor_yellow_color"
+                android:textColorHint="@color/white2"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/search_rating_on_course"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ripple_btn4"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/gray"
+            android:textAllCaps="false"
+            android:text="@string/search"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/search_rating_on_course"
+            android:background="@drawable/ripple_btn4" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/ripple_btn2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/white"
+            android:text="@string/rating_on_group"
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingTop="@dimen/paddingTopBottom"
+            android:paddingBottom="@dimen/paddingTopBottom" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size2"
+                android:textColor="@color/white"
+                android:text="@string/enter_course_and_group"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/course_rating_on_group_ET"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size2"
+                    android:textColor="@color/white"
+                    android:hint="@string/courseET"
+                    android:backgroundTint="@color/orange_btn"
+                    android:textCursorDrawable="@drawable/cursor_orange_color"
+                    android:textColorHint="@color/white2"/>
+
+                <EditText
+                    android:id="@+id/group_rating_on_group_ET"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="@dimen/text_size2"
+                    android:textColor="@color/white"
+                    android:hint="@string/groupET"
+                    android:backgroundTint="@color/orange_btn"
+                    android:textCursorDrawable="@drawable/cursor_orange_color"
+                    android:textColorHint="@color/white2"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/search_rating_on_group"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ripple_btn"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/gray"
+            android:textAllCaps="false"
+            android:text="@string/search"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/search_rating_on_group"
+            android:background="@drawable/ripple_btn" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ripple_btn2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/white"
+            android:text="@string/student_rating"
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingTop="@dimen/paddingTopBottom"
+            android:paddingBottom="@dimen/paddingTopBottom" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size2"
+                android:textColor="@color/white"
+                android:text="@string/enter_fio_student"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/student_ET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size2"
+                    android:textColor="@color/white"
+                    android:hint="@string/fio_et"
+                    android:backgroundTint="@color/coral_btn"
+                    android:textCursorDrawable="@drawable/cursor_accent_color"
+                    android:textColorHint="@color/white2"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/search_student_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ripple_btn3"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/gray"
+            android:textAllCaps="false"
+            android:text="@string/search"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignBottom="@+id/search_student_rating"
+            android:background="@drawable/ripple_btn3" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -6,6 +6,8 @@ public class StudentInformation {
     private String course;
     private String group;
 
+    private String rating;
+
     public StudentInformation() {
 
     }
@@ -40,5 +42,13 @@ public class StudentInformation {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }

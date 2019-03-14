@@ -12,23 +12,21 @@
         android:id="@+id/text_name_teacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/paddingLeftRight"
+        android:paddingRight="@dimen/paddingLeftRight"
+        android:paddingTop="@dimen/paddingTopBottom"
         android:text="Teacher"
-        android:paddingLeft="15dp"
-        android:paddingTop="8dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/gray"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size2"
-        android:textStyle="bold"
-        android:background="@color/colorAccent"/>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/text_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_name_teacher"
-        android:paddingLeft="15dp"
-        android:paddingTop="8dp"
+        android:paddingLeft="@dimen/paddingLeftRight"
+        android:paddingRight="@dimen/paddingLeftRight"
         android:text="Информация"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size2" />
@@ -37,13 +35,19 @@
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ripple_btn3"
         android:layout_below="@+id/text_information"
         android:layout_alignParentRight="true"
         android:text="28.01.2019"
-        android:paddingRight="15dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/white"
+        android:padding="5dp"
+        android:textColor="@color/gray"
         android:textSize="@dimen/text_size3"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignBottom="@+id/text_date"
+        android:background="@drawable/ripple_btn3"/>
 
 </RelativeLayout>
