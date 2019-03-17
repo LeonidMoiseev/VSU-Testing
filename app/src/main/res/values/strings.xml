@@ -83,4 +83,14 @@
     <string name="enter_fio_student">Введите ФИО студента:</string>
     <string name="fio_et">Иванов Иван Иванович</string>
     <string name="not_data_about_students">Нет данных по вашему запросу</string>
+
+    <string-array name="chooseList">
+        <item>Первые 10 студентов в рейтинге</item>
+        <item>Первые 30 студентов в рейтинге</item>
+        <item>Первые 100 студентов в рейтинге</item>
+        <item>Последние 10 студентов в рейтинге</item>
+        <item>Последние 30 студентов в рейтинге</item>
+        <item>Последние 100 студентов в рейтинге</item>
+        <item>Рейтинг всех студентов на курсе</item>
+    </string-array>
 </resources>

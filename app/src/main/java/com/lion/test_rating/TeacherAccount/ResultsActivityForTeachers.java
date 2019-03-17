@@ -113,11 +113,13 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     clearLists();
-                    setCourseAndGroupList(dataSnapshot);
-                    try {
-                        setStudentsList(dataSnapshot, countCourseAndGroup);
-                    } catch (IndexOutOfBoundsException ex) {
-                        errorNull();
+                    if (dataSnapshot.exists()) {
+                        setCourseAndGroupList(dataSnapshot);
+                        try {
+                            setStudentsList(dataSnapshot, countCourseAndGroup);
+                        } catch (IndexOutOfBoundsException ex) {
+                            errorNull();
+                        }
                     }
                 }
 

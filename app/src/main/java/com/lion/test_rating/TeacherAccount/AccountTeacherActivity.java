@@ -1,7 +1,6 @@
 package com.lion.test_rating.TeacherAccount;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -99,8 +98,9 @@ public class AccountTeacherActivity extends AppCompatActivity
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    //mList.clear();
-                    showData(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        showData(dataSnapshot);
+                    }
                 }
 
                 @Override
@@ -175,11 +175,11 @@ public class AccountTeacherActivity extends AppCompatActivity
             if (checkFragment == 0) {
                 super.onBackPressed();
             } else if (checkFragment == 1) {
-                    fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.container, fRating);
-                    fragmentTransaction.commit();
-                    checkFragment = 0;
-                }
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fRating);
+                fragmentTransaction.commit();
+                checkFragment = 0;
+            }
         }
     }
 
@@ -230,18 +230,18 @@ public class AccountTeacherActivity extends AppCompatActivity
         return true;
     }
 
+    private void errorNull() {
+        Log.d("Errors", "NullPointerException");
+        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        logout();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         if (!isOnline()) {
             Toast.makeText(getApplicationContext(), "Нет соединения с интернетом!", Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void errorNull() {
-        Log.d("Errors", "NullPointerException");
-        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
-        logout();
     }
 
     @Override

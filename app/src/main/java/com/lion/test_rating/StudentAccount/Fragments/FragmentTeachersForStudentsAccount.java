@@ -35,15 +35,17 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
         fragmentView = inflater.inflate(R.layout.fragment_for_student_list_teachers, container, false);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference teachersDatabase = mFirebaseDatabase.getReference();
+        DatabaseReference teachersDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS);
         teachersDatabase.keepSynced(true);
 
         try {
             teachersDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    clearLists();
-                    checkExistenceTests(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        clearLists();
+                        checkExistenceTests(dataSnapshot);
+                    }
                 }
 
                 @Override
@@ -59,10 +61,8 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
     }
 
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
-        if (dataSnapshot.hasChild(ConstantsNames.RESULTS)) {
-            for (DataSnapshot teachers : dataSnapshot.child(ConstantsNames.RESULTS).getChildren()) {
-                initListTests(teachers.getKey());
-            }
+        for (DataSnapshot teachers : dataSnapshot.getChildren()) {
+            initListTests(teachers.getKey());
         }
         initRecyclerView();
     }

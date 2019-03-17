@@ -43,15 +43,18 @@ public class FragmentInformationForTeacherAccount extends Fragment {
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_list_information, container, false);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        testsDatabase = mFirebaseDatabase.getReference();
+        testsDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.INFORMATION)
+                .child(AccountTeacherActivity.mListUserInformation.get(0));
         testsDatabase.keepSynced(true);
 
         try {
             testsDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    clearLists();
-                    OpenDataInformation(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        clearLists();
+                        OpenDataInformation(dataSnapshot);
+                    }
                 }
 
                 @Override
@@ -77,28 +80,18 @@ public class FragmentInformationForTeacherAccount extends Fragment {
     }
 
     private void OpenDataInformation(DataSnapshot dataSnapshot) {
-        if (dataSnapshot.hasChild(ConstantsNames.INFORMATION)) {
+        for (DataSnapshot info : dataSnapshot.getChildren()) {
 
-            if (dataSnapshot.child(ConstantsNames.INFORMATION)
-                    .hasChild(AccountTeacherActivity.mListUserInformation.get(0))) {
-
-                DataSnapshot dataInfo = dataSnapshot.child(ConstantsNames.INFORMATION)
-                        .child(AccountTeacherActivity.mListUserInformation.get(0));
-
-                for (DataSnapshot info : dataInfo.getChildren()) {
-
-                    String text = "";
-                    for (DataSnapshot coursesAndGroups : info.child(ConstantsNames.COURSES_AND_GROUPS).getChildren()) {
-                        text = text + "\n" + coursesAndGroups.getValue();
-                    }
-
-                    initList((String) info.child(ConstantsNames.INFORMATION).getValue(),
-                            (String) info.child(ConstantsNames.DATE_CREATE).getValue(),
-                            text,
-                            info.getKey());
-
-                }
+            String text = "";
+            for (DataSnapshot coursesAndGroups : info.child(ConstantsNames.COURSES_AND_GROUPS).getChildren()) {
+                text = text + "\n" + coursesAndGroups.getValue();
             }
+
+            initList((String) info.child(ConstantsNames.INFORMATION).getValue(),
+                    (String) info.child(ConstantsNames.DATE_CREATE).getValue(),
+                    text,
+                    info.getKey());
+
         }
         initRecyclerView();
     }

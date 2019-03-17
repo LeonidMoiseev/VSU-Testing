@@ -1,5 +1,6 @@
 package com.lion.test_rating.TeacherAccount.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -35,11 +36,24 @@ public class FragmentRatingForTeacherAccount extends Fragment {
 
     View fragmentView;
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    FragmentRatingOnCourse fragmentRatingOnCourse;
+    FragmentRatingOnGroup fragmentRatingOnGroup;
+    FragmentRatingStudent fragmentRatingStudent;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_rating_select, container, false);
+
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentRatingOnCourse = new FragmentRatingOnCourse();
+        fragmentRatingOnGroup = new FragmentRatingOnGroup();
+        fragmentRatingStudent = new FragmentRatingStudent();
 
         searchRatingOnCourseBtn = fragmentView.findViewById(R.id.search_rating_on_course);
         searchRatingOnGroupBtn = fragmentView.findViewById(R.id.search_rating_on_group);
@@ -78,11 +92,7 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         courseOnRatingCourse = courseOnRatingCourseET.getText().toString().trim();
         validateForm1();
         if (!TextUtils.isEmpty(courseOnRatingCourse)) {
-            FragmentRatingOnCourse fragment = new FragmentRatingOnCourse();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
-            //fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.container, fragmentRatingOnCourse);
             fragmentTransaction.commit();
             AccountTeacherActivity.checkFragment = 1;
             hideKeyboardFrom(getActivity(), fragmentView);
@@ -94,7 +104,10 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         groupOnRatingGroup = groupOnRatingGroupET.getText().toString().trim();
         validateForm2();
         if (!TextUtils.isEmpty(courseOnRatingGroup) && !TextUtils.isEmpty(groupOnRatingGroup)) {
-
+            fragmentTransaction.replace(R.id.container, fragmentRatingOnGroup);
+            fragmentTransaction.commit();
+            AccountTeacherActivity.checkFragment = 1;
+            hideKeyboardFrom(getActivity(), fragmentView);
         }
     }
 
@@ -102,7 +115,10 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         nameStudentOnStudentRating = nameStudentOnStudentRatingET.getText().toString().trim();
         validateForm3();
         if (!TextUtils.isEmpty(nameStudentOnStudentRating)) {
-
+            fragmentTransaction.replace(R.id.container, fragmentRatingStudent);
+            fragmentTransaction.commit();
+            AccountTeacherActivity.checkFragment = 1;
+            hideKeyboardFrom(getActivity(), fragmentView);
         }
     }
 
@@ -138,6 +154,7 @@ public class FragmentRatingForTeacherAccount extends Fragment {
 
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        assert imm != null;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

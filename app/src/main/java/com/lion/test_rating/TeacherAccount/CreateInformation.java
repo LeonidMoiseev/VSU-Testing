@@ -55,23 +55,20 @@ public class CreateInformation {
     }
 
     public void openData() {
-        dataInformation = FirebaseDatabase.getInstance().getReference();
+
+        dataInformation = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.INFORMATION)
+                .child(AccountTeacherActivity.mListUserInformation.get(0));
 
         dataInformation.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(ConstantsNames.INFORMATION)) {
+                if (dataSnapshot.exists()) {
 
-                    if (dataSnapshot.child(ConstantsNames.INFORMATION)
-                            .hasChild(AccountTeacherActivity.mListUserInformation.get(0))) {
-
-                        for (DataSnapshot lastInfo : dataSnapshot.child(ConstantsNames.INFORMATION)
-                                .child(AccountTeacherActivity.mListUserInformation.get(0)).getChildren()) {
-                            listNumberInformationBlock.add(lastInfo.getKey());
-                        }
-                        countInformationBlocks = Integer.parseInt(listNumberInformationBlock
-                                .get(listNumberInformationBlock.size() - 1)) + 1;
+                    for (DataSnapshot lastInfo : dataSnapshot.getChildren()) {
+                        listNumberInformationBlock.add(lastInfo.getKey());
                     }
+                    countInformationBlocks = Integer.parseInt(listNumberInformationBlock
+                            .get(listNumberInformationBlock.size() - 1)) + 1;
 
                 }
             }
@@ -141,15 +138,14 @@ public class CreateInformation {
         @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         String date = df.format(Calendar.getInstance().getTime());
 
-        dataInformation.child(ConstantsNames.INFORMATION).child(AccountTeacherActivity.mListUserInformation.get(0))
-                .child(Integer.toString(countInformationBlocks)).child(ConstantsNames.INFORMATION).setValue(text_inf);
-        dataInformation.child(ConstantsNames.INFORMATION).child(AccountTeacherActivity.mListUserInformation.get(0))
-                .child(Integer.toString(countInformationBlocks)).child(ConstantsNames.DATE_CREATE).setValue(date);
+        dataInformation.child(Integer.toString(countInformationBlocks)).child(ConstantsNames.INFORMATION)
+                .setValue(text_inf);
+        dataInformation.child(Integer.toString(countInformationBlocks)).child(ConstantsNames.DATE_CREATE)
+                .setValue(date);
 
         for (int i = 0; i < listCourses.size(); i++) {
             String text = listCourses.get(i) + " курс " + listGroups.get(i) + " группа";
-            dataInformation.child(ConstantsNames.INFORMATION).child(AccountTeacherActivity.mListUserInformation.get(0))
-                    .child(Integer.toString(countInformationBlocks)).child(ConstantsNames.COURSES_AND_GROUPS)
+            dataInformation.child(Integer.toString(countInformationBlocks)).child(ConstantsNames.COURSES_AND_GROUPS)
                     .child(Integer.toString(i)).setValue(text);
         }
 

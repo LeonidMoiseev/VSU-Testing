@@ -1,6 +1,7 @@
 package com.lion.test_rating.TeacherAccount.Fragments;
 
 import android.app.Fragment;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,11 @@ public class FragmentRatingOnCourse extends Fragment {
     private ArrayList<String> mListCourseAndGroup = new ArrayList<>();
     private ArrayList<String> mListStudentRating = new ArrayList<>();
 
+    private ArrayList<String> mChangeListPlaceNumber = new ArrayList<>();
+    private ArrayList<String> mChangeListNameStudent = new ArrayList<>();
+    private ArrayList<String> mChangeListCourseAndGroup = new ArrayList<>();
+    private ArrayList<String> mChangeListStudentRating = new ArrayList<>();
+
     View fragmentView;
 
     DatabaseReference userDatabase;
@@ -38,6 +47,7 @@ public class FragmentRatingOnCourse extends Fragment {
     int number;
 
     TextView textNoData;
+    Spinner spinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +56,25 @@ public class FragmentRatingOnCourse extends Fragment {
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_rating_on_course, container, false);
 
         textNoData = fragmentView.findViewById(R.id.text_no_data);
+        textNoData.setText(getString(R.string.not_data_about_students));
+
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.chooseList
+                , R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+
+        spinner = fragmentView.findViewById(R.id.spinner);
+        spinner.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                initRecyclerView();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         userDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.USERS).child(ConstantsNames.STUDENTS);
@@ -55,8 +84,12 @@ public class FragmentRatingOnCourse extends Fragment {
             userDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    clearLists();
-                    openUserDatabase(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        clearLists();
+                        openUserDatabase(dataSnapshot);
+                        sortingList();
+                        initRecyclerView();
+                    }
                 }
 
                 @Override
@@ -72,20 +105,17 @@ public class FragmentRatingOnCourse extends Fragment {
     }
 
     private void openUserDatabase(DataSnapshot dataSnapshot) {
-        if (dataSnapshot.exists()) {
-            for (DataSnapshot users : dataSnapshot.getChildren()) {
-                if (users.child(ConstantsNames.COURSE).getValue().equals(FragmentRatingForTeacherAccount.courseOnRatingCourse)) {
-                    textNoData.setText("");
-                    number++;
-                    String courseAndGroup = users.child(ConstantsNames.COURSE).getValue() + " курс "
-                            + users.child(ConstantsNames.GROUP).getValue() + " группа";
+        for (DataSnapshot users : dataSnapshot.getChildren()) {
+            if (users.child(ConstantsNames.COURSE).getValue().equals(FragmentRatingForTeacherAccount.courseOnRatingCourse)) {
+                textNoData.setText("");
+                number++;
+                String courseAndGroup = users.child(ConstantsNames.COURSE).getValue() + " курс "
+                        + users.child(ConstantsNames.GROUP).getValue() + " группа";
 
-                    initList(Integer.toString(number), (String) users.child(ConstantsNames.FULL_NAME).getValue()
-                            , courseAndGroup, (String) users.child(ConstantsNames.RATING).getValue());
-                }
+                initList(Integer.toString(number), (String) users.child(ConstantsNames.FULL_NAME).getValue()
+                        , courseAndGroup, (String) users.child(ConstantsNames.RATING).getValue());
             }
         }
-        initRecyclerView();
     }
 
     private void initList(String number, String name, String courseAndGroup, String rating) {
@@ -96,15 +126,35 @@ public class FragmentRatingOnCourse extends Fragment {
     }
 
     private void initRecyclerView() {
-        sortingList();
+        switch (spinner.getSelectedItemPosition()) {
+            case 0:
+                changeListStudents(1, false);
+                break;
+            case 1:
+                changeListStudents(2, false);
+                break;
+            case 2:
+                changeListStudents(3, false);
+                break;
+            case 3:
+                changeListStudents(1, true);
+                break;
+            case 4:
+                changeListStudents(2, true);
+                break;
+            case 5:
+                changeListStudents(3, true);
+                break;
+            case 6:
+                changeListStudents(mListPlaceNumber.size(), true);
+                break;
+        }
 
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_rating_on_course);
         RVARatingOnCourseForTeacherAccount adapter = new RVARatingOnCourseForTeacherAccount(getActivity()
-                , mListPlaceNumber, mListNameStudent, mListCourseAndGroup, mListStudentRating);
+                , mChangeListPlaceNumber, mChangeListNameStudent, mChangeListCourseAndGroup, mChangeListStudentRating);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
     }
 
@@ -132,6 +182,34 @@ public class FragmentRatingOnCourse extends Fragment {
         Collections.sort(mListPlaceNumber, Collections.reverseOrder());
     }
 
+    private void changeListStudents(int sizeList, boolean reverseList) {
+        mChangeListPlaceNumber.clear();
+        mChangeListNameStudent.clear();
+        mChangeListCourseAndGroup.clear();
+        mChangeListStudentRating.clear();
+
+        int sizeOriginalList = mListPlaceNumber.size();
+        if (sizeList > sizeOriginalList) {
+            sizeList = sizeOriginalList;
+        }
+
+        if (!reverseList) {
+            for (int i = sizeOriginalList - 1; i >= sizeOriginalList - sizeList; i--) {
+                mChangeListPlaceNumber.add(mListPlaceNumber.get(i));
+                mChangeListNameStudent.add(mListNameStudent.get(i));
+                mChangeListCourseAndGroup.add(mListCourseAndGroup.get(i));
+                mChangeListStudentRating.add(mListStudentRating.get(i));
+            }
+        } else {
+            for (int i = sizeList - 1; i >= 0; i--) {
+                mChangeListPlaceNumber.add(mListPlaceNumber.get(i));
+                mChangeListNameStudent.add(mListNameStudent.get(i));
+                mChangeListCourseAndGroup.add(mListCourseAndGroup.get(i));
+                mChangeListStudentRating.add(mListStudentRating.get(i));
+            }
+        }
+    }
+
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
         Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
@@ -143,7 +221,5 @@ public class FragmentRatingOnCourse extends Fragment {
         mListCourseAndGroup.clear();
         mListStudentRating.clear();
         number = 0;
-        textNoData.setText(getString(R.string.not_data_about_students));
     }
-
 }

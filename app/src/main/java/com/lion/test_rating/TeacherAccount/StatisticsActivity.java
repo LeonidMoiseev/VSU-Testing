@@ -71,11 +71,13 @@ public class StatisticsActivity extends AppCompatActivity {
             statisticsDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    assessment_2 = 0;
-                    assessment_3 = 0;
-                    assessment_4 = 0;
-                    assessment_5 = 0;
-                    countAssessment(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        assessment_2 = 0;
+                        assessment_3 = 0;
+                        assessment_4 = 0;
+                        assessment_5 = 0;
+                        countAssessment(dataSnapshot);
+                    }
                 }
 
                 @Override

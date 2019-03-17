@@ -41,15 +41,17 @@ public class FragmentTestsForTeachersAccount extends Fragment {
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_list_tests, container, false);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        testsDatabase = mFirebaseDatabase.getReference();
+        testsDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS);
         testsDatabase.keepSynced(true);
 
         try {
             testsDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    clearLists();
-                    checkExistenceTests(dataSnapshot);
+                    if (dataSnapshot.child(AccountTeacherActivity.mListUserInformation.get(0)).exists()) {
+                        clearLists();
+                        checkExistenceTests(dataSnapshot);
+                    }
                 }
 
                 @Override
@@ -65,17 +67,14 @@ public class FragmentTestsForTeachersAccount extends Fragment {
     }
 
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
-        if (dataSnapshot.hasChild(ConstantsNames.RESULTS)) {
-            for (DataSnapshot tests : dataSnapshot.child(ConstantsNames.RESULTS)
-                    .child(AccountTeacherActivity.mListUserInformation.get(0)).getChildren()) {
+        for (DataSnapshot tests : dataSnapshot
+                .child(AccountTeacherActivity.mListUserInformation.get(0)).getChildren()) {
 
+            initList((String) tests.child(ConstantsNames.SUBJECT).getValue(),
+                    (String) tests.child(ConstantsNames.DATE_CREATE).getValue(),
+                    tests.getKey(),
+                    (String) tests.child(ConstantsNames.TOPIC_NAME).getValue());
 
-                initList((String) tests.child(ConstantsNames.SUBJECT).getValue(),
-                        (String) tests.child(ConstantsNames.DATE_CREATE).getValue(),
-                        tests.getKey(),
-                        (String) tests.child(ConstantsNames.TOPIC_NAME).getValue());
-
-            }
         }
         initRecyclerView();
     }

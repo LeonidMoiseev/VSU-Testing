@@ -44,15 +44,18 @@ public class ResultsActivityForStudents extends AppCompatActivity {
         nameTeacher = intent.getStringExtra("nameTeacher");
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS).child(nameTeacher);
+        DatabaseReference resultDatabase = mFirebaseDatabase.getReference()
+                .child(ConstantsNames.RESULTS).child(nameTeacher);
         resultDatabase.keepSynced(true);
 
         try {
             resultDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    clearLists();
-                    checkExistenceTests(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        clearLists();
+                        checkExistenceTests(dataSnapshot);
+                    }
                 }
 
                 @Override

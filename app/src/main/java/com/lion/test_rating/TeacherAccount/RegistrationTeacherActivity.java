@@ -74,14 +74,12 @@ public class RegistrationTeacherActivity extends AppCompatActivity {
         mDatabaseUsers = mFirebaseDatabase.getReference();
         mDatabaseUsers.keepSynced(true);
 
-
         mNameField = findViewById(R.id.nameField);
         mDepartmentField = findViewById(R.id.departmentField);
         mEmailField = findViewById(R.id.emailField);
         mPasswordField = findViewById(R.id.passwordField);
         mCodeField = findViewById(R.id.codeField);
         mRegisterBtn = findViewById(R.id.registerBtn);
-
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override

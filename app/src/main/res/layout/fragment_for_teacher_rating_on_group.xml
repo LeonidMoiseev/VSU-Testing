@@ -3,31 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="15dp">
-
-    <LinearLayout
-        android:id="@+id/backSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray2"
-        android:paddingLeft="@dimen/paddingLeftRight"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="10dp">
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </Spinner>
-
-    </LinearLayout>
+    android:paddingTop="5dp">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view_rating_on_course"
-        android:layout_below="@+id/backSpinner">
+        android:id="@+id/recycler_view_rating_on_group">
 
     </android.support.v7.widget.RecyclerView>
 

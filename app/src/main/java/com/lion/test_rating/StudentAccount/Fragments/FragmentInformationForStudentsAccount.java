@@ -37,15 +37,18 @@ public class FragmentInformationForStudentsAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_student_list_information, container, false);
 
-        DatabaseReference informationDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference informationDatabase = FirebaseDatabase.getInstance()
+                .getReference().child(ConstantsNames.INFORMATION);
         informationDatabase.keepSynced(true);
 
         try {
             informationDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    clearLists();
-                    openDataInformation(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        clearLists();
+                        openDataInformation(dataSnapshot);
+                    }
                 }
 
                 @Override
@@ -61,23 +64,21 @@ public class FragmentInformationForStudentsAccount extends Fragment {
     }
 
     private void openDataInformation(DataSnapshot dataSnapshot) {
-        if (dataSnapshot.hasChild(ConstantsNames.INFORMATION)) {
-            for (DataSnapshot teachers : dataSnapshot.child(ConstantsNames.INFORMATION).getChildren()) {
-                for (DataSnapshot numberInfo : teachers.getChildren()) {
-                    for (DataSnapshot checkCourseAndGroup : numberInfo.child(ConstantsNames.COURSES_AND_GROUPS).getChildren()) {
+        for (DataSnapshot teachers : dataSnapshot.getChildren()) {
+            for (DataSnapshot numberInfo : teachers.getChildren()) {
+                for (DataSnapshot checkCourseAndGroup : numberInfo.child(ConstantsNames.COURSES_AND_GROUPS).getChildren()) {
 
-                        String courseAndGroup = (String) checkCourseAndGroup.getValue();
-                        String course = Character.toString(courseAndGroup.charAt(0));
-                        String group = Character.toString(courseAndGroup.charAt(7));
-                        if (AccountStudentActivity.mListUserInformation.get(2).equals(course)
-                                && AccountStudentActivity.mListUserInformation.get(3).equals(group)) {
+                    String courseAndGroup = (String) checkCourseAndGroup.getValue();
+                    String course = Character.toString(courseAndGroup.charAt(0));
+                    String group = Character.toString(courseAndGroup.charAt(7));
+                    if (AccountStudentActivity.mListUserInformation.get(2).equals(course)
+                            && AccountStudentActivity.mListUserInformation.get(3).equals(group)) {
 
-                            initListTests(teachers.getKey(), (String) numberInfo.child(ConstantsNames.INFORMATION).getValue()
-                                    , (String) numberInfo.child(ConstantsNames.DATE_CREATE).getValue());
-
-                        }
+                        initListTests(teachers.getKey(), (String) numberInfo.child(ConstantsNames.INFORMATION).getValue()
+                                , (String) numberInfo.child(ConstantsNames.DATE_CREATE).getValue());
 
                     }
+
                 }
             }
         }
