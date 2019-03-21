@@ -156,14 +156,10 @@ public class AccountTeacherActivity extends AppCompatActivity
     }
 
     protected boolean isOnline() {
-        String cs = Context.CONNECTIVITY_SERVICE;
         ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(cs);
-        if (cm.getActiveNetworkInfo() == null) {
-            return false;
-        } else {
-            return true;
-        }
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        return cm.getActiveNetworkInfo() != null;
     }
 
     @Override
@@ -177,6 +173,11 @@ public class AccountTeacherActivity extends AppCompatActivity
             } else if (checkFragment == 1) {
                 fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fRating);
+                fragmentTransaction.commit();
+                checkFragment = 0;
+            } else if (checkFragment == 2) {
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fResult);
                 fragmentTransaction.commit();
                 checkFragment = 0;
             }
@@ -213,6 +214,7 @@ public class AccountTeacherActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         checkFragment = 0;
+        setTitle(getString(R.string.app_name));
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 

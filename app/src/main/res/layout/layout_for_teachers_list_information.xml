@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_course_and_group"
             android:layout_alignParentRight="true"
-            android:background="@color/coral_btn"
+            android:background="@drawable/ripple_btn3"
             android:padding="5dp"
             android:text="28.01.2019"
             android:textColor="@color/gray"

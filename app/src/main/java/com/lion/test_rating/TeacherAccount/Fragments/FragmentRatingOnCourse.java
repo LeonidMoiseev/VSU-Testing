@@ -58,6 +58,8 @@ public class FragmentRatingOnCourse extends Fragment {
         textNoData = fragmentView.findViewById(R.id.text_no_data);
         textNoData.setText(getString(R.string.not_data_about_students));
 
+        getActivity().setTitle(getString(R.string.rating_on_course));
+
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.chooseList
                 , R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
@@ -106,7 +108,7 @@ public class FragmentRatingOnCourse extends Fragment {
 
     private void openUserDatabase(DataSnapshot dataSnapshot) {
         for (DataSnapshot users : dataSnapshot.getChildren()) {
-            if (users.child(ConstantsNames.COURSE).getValue().equals(FragmentRatingForTeacherAccount.courseOnRatingCourse)) {
+            if (FragmentRatingForTeacherAccount.courseOnRatingCourse.equals(users.child(ConstantsNames.COURSE).getValue())) {
                 textNoData.setText("");
                 number++;
                 String courseAndGroup = users.child(ConstantsNames.COURSE).getValue() + " курс "

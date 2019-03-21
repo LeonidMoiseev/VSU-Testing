@@ -8,13 +8,11 @@
     android:background="@color/gray"
     tools:context=".TeacherAccount.StatisticsActivity">
 
-    <include layout="@layout/toolbar"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="@dimen/paddingLeftRight">
 
         <TextView
             android:id="@+id/graph_title"
@@ -25,7 +23,7 @@
             android:textSize="@dimen/text_size2"
             android:gravity="center"
             android:textStyle="bold"
-            android:layout_margin="5dp"/>
+            android:layout_marginBottom="5dp"/>
 
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
@@ -40,7 +38,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size3"
             android:gravity="center"
-            android:layout_margin="5dp"/>
+            android:layout_marginTop="5dp"/>
 
     </LinearLayout>
 

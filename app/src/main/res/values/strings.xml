@@ -24,7 +24,8 @@
     <string name="btn_registration">Создать аккаунт</string>
     <string name="authorization_error">Авторизация неуспешна</string>
     <string name="authorization_complete">Авторизация прошла успешно</string>
-    <string name="registration_error">Регистрация неуспешна. Введите другой E-mail</string>
+    <string name="registration_error_with_email">Регистрация неуспешна. Введите другой E-mail</string>
+    <string name="registration_error">Ошибка регистрации</string>
     <string name="registration_complete">Регистрация прошла успешно</string>
     <string name="progressMessage">Вход в систему ...</string>
     <string name="your_name">ФИО полностью</string>
@@ -34,6 +35,7 @@
     <string name="checking_login">Проверка авторизации ...</string>
     <string name="test_item">Открытые тесты</string>
     <string name="result_item">Результаты</string>
+    <string name="statistics_item">Статистика</string>
     <string name="result_and_statistics_item">Результаты и статистика</string>
     <string name="rating_item">Рейтинги</string>
     <string name="information_item">Информация</string>
@@ -74,15 +76,20 @@
     <string name="cancel_btn">Отмена</string>
     <string name="click_delete_info">Чтобы удалить информацию, кликните по ней</string>
     <string name="delete_this_info">Удалить данную информацию?</string>
-    <string name="rating_on_course">Рейтинг на курсе</string>
+    <string name="rating_on_course">Рейтинг курса</string>
     <string name="enter_the_course">Введите курс:</string>
     <string name="search">Поиск</string>
-    <string name="rating_on_group">Рейтинг в группе</string>
+    <string name="rating_on_group">Рейтинг группы</string>
     <string name="enter_course_and_group">Введите курс и группу:</string>
     <string name="student_rating">Рейтинг студента</string>
     <string name="enter_fio_student">Введите ФИО студента:</string>
     <string name="fio_et">Иванов Иван Иванович</string>
     <string name="not_data_about_students">Нет данных по вашему запросу</string>
+    <string name="add_course_and_group_text">Добавляйте курсы и группы, которым вы хотите отправить информацию</string>
+    <string name="enter_information">Введите информацию</string>
+    <string name="error_code_activation">Неправильный код активации</string>
+    <string name="error_data_name">ФИО указаны неправильно</string>
+    <string name="server_connection_error">Ошибка соединения с сервером..</string>
 
     <string-array name="chooseList">
         <item>Первые 10 студентов в рейтинге</item>

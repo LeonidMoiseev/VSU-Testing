@@ -33,6 +33,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".PreRegistrationActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".StudentAccount.RegistrationStudentActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -44,18 +47,6 @@
         <activity
             android:name=".StudentAccount.ResultTestActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".PreRegistrationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".StudentAccount.ResultsActivityForStudents"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".TeacherAccount.ResultsActivityForTeachers"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".TeacherAccount.StatisticsActivity"
-            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

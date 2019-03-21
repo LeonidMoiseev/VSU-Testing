@@ -1,14 +1,14 @@
-package com.lion.test_rating.TeacherAccount;
+package com.lion.test_rating.TeacherAccount.Fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.app.Fragment;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,22 +18,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
+import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class FragmentStatisticsForTeachers extends Fragment {
 
-    String dataCreateTest;
     String nameSubject;
     String topicName;
     String numberTest;
@@ -47,21 +44,19 @@ public class StatisticsActivity extends AppCompatActivity {
 
     DatabaseReference statisticsDatabase;
 
+    View fragmentView;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_for_teachers_statistics);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        Toolbar toolbar = findViewById(R.id.myToolBar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTitle("Статистика");
-        setSupportActionBar(toolbar);
+        fragmentView = inflater.inflate(R.layout.fragment_for_teacher_statistics, container, false);
 
-        Intent intent = getIntent();
-        dataCreateTest = intent.getStringExtra("dataCreateTest");
-        nameSubject = intent.getStringExtra("subjectName");
-        topicName = intent.getStringExtra("topicName");
-        numberTest = intent.getStringExtra("numberTest");
+        getActivity().setTitle(getString(R.string.statistics_item));
+
+        nameSubject = this.getArguments().getString("nameSubject");
+        topicName = this.getArguments().getString("nameTopic");
+        numberTest = this.getArguments().getString("numberTest");
 
         statisticsDatabase = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).
                 child(AccountTeacherActivity.mListUserInformation.get(0)).child(numberTest);
@@ -88,6 +83,8 @@ public class StatisticsActivity extends AppCompatActivity {
         } catch (NullPointerException ex) {
             errorNull();
         }
+
+        return fragmentView;
     }
 
     private void countAssessment(DataSnapshot dataSnapshot) {
@@ -114,8 +111,8 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initGraph() {
-        GraphView graph = findViewById(R.id.graph_statistic);
-        TextView title = findViewById(R.id.graph_title);
+        GraphView graph = fragmentView.findViewById(R.id.graph_statistic);
+        TextView title = fragmentView.findViewById(R.id.graph_title);
 
         graph.removeAllSeries();
 
@@ -185,7 +182,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
-        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
-        finish();
+        Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
     }
 }

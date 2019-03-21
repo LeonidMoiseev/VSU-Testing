@@ -190,7 +190,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                     } else {
                         progressBar.setVisibility(ProgressBar.INVISIBLE);
                         dialogProgressBar.dismiss();
-                        Toast.makeText(RegistrationStudentActivity.this, getResources().getString(R.string.registration_error),
+                        Toast.makeText(RegistrationStudentActivity.this, getResources().getString(R.string.registration_error_with_email),
                                 Toast.LENGTH_SHORT).show();
                     }
                 }

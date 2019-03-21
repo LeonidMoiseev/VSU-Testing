@@ -1,13 +1,14 @@
-package com.lion.test_rating.StudentAccount;
+package com.lion.test_rating.StudentAccount.Fragments;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,31 +18,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.AccountStudentActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAResultsForStudentAccount;
 
 import java.util.ArrayList;
 
-public class ResultsActivityForStudents extends AppCompatActivity {
-
-    String nameTeacher;
+public class FragmentResultsForStudent extends Fragment {
 
     private ArrayList<String> mSubjectName = new ArrayList<>();
     private ArrayList<String> mDataName = new ArrayList<>();
     private ArrayList<String> mPoints = new ArrayList<>();
     private ArrayList<String> mTopicName = new ArrayList<>();
 
+    View fragmentView;
+
+    String nameTeacher;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_for_student_results);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        Toolbar toolbar = findViewById(R.id.myToolBar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTitle(ConstantsNames.RESULTS);
-        setSupportActionBar(toolbar);
+        fragmentView = inflater.inflate(R.layout.fragment_for_student_list_results, container, false);
 
-        Intent intent = getIntent();
-        nameTeacher = intent.getStringExtra("nameTeacher");
+        nameTeacher = this.getArguments().getString("teacher");
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference resultDatabase = mFirebaseDatabase.getReference()
@@ -54,7 +53,7 @@ public class ResultsActivityForStudents extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         clearLists();
-                        checkExistenceTests(dataSnapshot);
+                        openDatabaseResults(dataSnapshot);
                     }
                 }
 
@@ -67,9 +66,10 @@ public class ResultsActivityForStudents extends AppCompatActivity {
             errorNull();
         }
 
+        return fragmentView;
     }
 
-    private void checkExistenceTests(DataSnapshot dataSnapshot) {
+    private void openDatabaseResults(DataSnapshot dataSnapshot) {
 
         for (DataSnapshot numberTest : dataSnapshot.getChildren()) {
 
@@ -103,10 +103,10 @@ public class ResultsActivityForStudents extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_results_students);
-        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(this, mSubjectName, mDataName, mPoints, mTopicName);
+        RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_results_students);
+        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(getActivity(), mSubjectName, mDataName, mPoints, mTopicName);
         recyclerView.setAdapter(adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -114,8 +114,7 @@ public class ResultsActivityForStudents extends AppCompatActivity {
 
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
-        Toast.makeText(ResultsActivityForStudents.this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
-        finish();
+        Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
     }
 
     private void clearLists() {

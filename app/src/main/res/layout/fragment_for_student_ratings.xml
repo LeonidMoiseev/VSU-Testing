@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="15dp">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/paddingLeftRight">
 
     <RelativeLayout
         android:id="@+id/layout_stud_rating"
@@ -23,24 +25,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_course_and_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/paddingLeftRight"
-            android:paddingRight="@dimen/paddingLeftRight"
-            android:paddingBottom="@dimen/paddingTopBottom"
-            android:layout_below="@+id/text_name_student"
-            android:text="1 курс 7 группа"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size2" />
-
-        <TextView
             android:id="@+id/text_place_on_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:layout_below="@+id/text_course_and_group"
+            android:layout_below="@+id/text_name_student"
             android:text="Место на курсе: 1"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size2" />
@@ -79,14 +69,19 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/text_no_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="@dimen/paddingLeftRight"
-        android:text="@string/not_data_about_students"
+        android:text="@string/rating_on_group"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size2" />
+        android:textSize="@dimen/text_size2"
+        android:textStyle="bold"/>
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view_for_student_rating_on_group">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

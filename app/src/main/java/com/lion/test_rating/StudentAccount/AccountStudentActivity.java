@@ -31,6 +31,7 @@ import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.MainActivity;
 import com.lion.test_rating.R;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentInformationForStudentsAccount;
+import com.lion.test_rating.StudentAccount.Fragments.FragmentRatings;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentTeachersForStudentsAccount;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentTestsForStudentsAccount;
 
@@ -52,10 +53,13 @@ public class AccountStudentActivity extends AppCompatActivity
     TextView headerEmail;
     TextView headerOtherInformation;
 
-    FragmentTransaction fragmentTransaction;
     private FragmentTestsForStudentsAccount fTest;
     private FragmentTeachersForStudentsAccount fResult;
     private FragmentInformationForStudentsAccount fInformation;
+    private FragmentRatings fRatings;
+    FragmentTransaction fragmentTransaction;
+
+    public static int checkFragment = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +115,7 @@ public class AccountStudentActivity extends AppCompatActivity
         fTest = new FragmentTestsForStudentsAccount();
         fResult = new FragmentTeachersForStudentsAccount();
         fInformation = new FragmentInformationForStudentsAccount();
+        fRatings = new FragmentRatings();
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fTest);
         fragmentTransaction.commit();
@@ -172,7 +177,14 @@ public class AccountStudentActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (checkFragment == 0) {
+                super.onBackPressed();
+            } else if (checkFragment == 1) {
+                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fResult);
+                fragmentTransaction.commit();
+                checkFragment = 0;
+            }
         }
     }
 
@@ -213,7 +225,7 @@ public class AccountStudentActivity extends AppCompatActivity
         } else if (id == R.id.nav_result) {
             fragmentTransaction.replace(R.id.container, fResult);
         } else if (id == R.id.nav_rating) {
-
+            fragmentTransaction.replace(R.id.container, fRatings);
         } else if (id == R.id.nav_information) {
             fragmentTransaction.replace(R.id.container, fInformation);
         }

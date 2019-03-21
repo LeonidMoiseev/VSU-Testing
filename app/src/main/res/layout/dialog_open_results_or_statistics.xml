@@ -20,20 +20,22 @@
         android:id="@+id/btn_results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="13dp"
+        android:layout_margin="@dimen/paddingLeftRight"
         android:background="@drawable/ripple_btn"
         android:text="@string/result_item"
+        android:textAllCaps="false"
         android:textSize="@dimen/text_size2" />
 
     <Button
         android:id="@+id/btn_statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginLeft="@dimen/paddingLeftRight"
+        android:layout_marginRight="@dimen/paddingLeftRight"
+        android:layout_marginBottom="@dimen/paddingLeftRight"
         android:background="@drawable/ripple_btn"
         android:text="@string/Statistic"
+        android:textAllCaps="false"
         android:textSize="@dimen/text_size2" />
 
 </LinearLayout>

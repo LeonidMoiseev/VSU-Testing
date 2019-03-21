@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
+import com.lion.test_rating.StudentAccount.AccountStudentActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListTeachersForStudentAccount;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
     View fragmentView;
 
     private ArrayList<String> mTeacherName = new ArrayList<>();
+    private ArrayList<String> mDepartmentName = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,17 +36,19 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_student_list_teachers, container, false);
 
+        getActivity().setTitle(getString(R.string.result_item));
+
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference teachersDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS);
-        teachersDatabase.keepSynced(true);
+        DatabaseReference teacherDatabase = mFirebaseDatabase.getReference();
+        teacherDatabase.keepSynced(true);
 
         try {
-            teachersDatabase.addValueEventListener(new ValueEventListener() {
+            teacherDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
+                    if (dataSnapshot.child(ConstantsNames.RESULTS).exists()) {
                         clearLists();
-                        checkExistenceTests(dataSnapshot);
+                        openDataTeachers(dataSnapshot);
                     }
                 }
 
@@ -60,20 +64,39 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
         return fragmentView;
     }
 
-    private void checkExistenceTests(DataSnapshot dataSnapshot) {
-        for (DataSnapshot teachers : dataSnapshot.getChildren()) {
-            initListTests(teachers.getKey());
+    private void openDataTeachers(DataSnapshot dataSnapshot) {
+        for (DataSnapshot teachers : dataSnapshot.child(ConstantsNames.RESULTS).getChildren()) {
+            for (DataSnapshot tests: teachers.getChildren()) {
+                for (DataSnapshot courses : tests.getChildren()) {
+                    if (courses.getKey().equals(AccountStudentActivity.mListUserInformation.get(2))) {
+                        if (courses.hasChild(AccountStudentActivity.mListUserInformation.get(3))) {
+                            for (DataSnapshot teachersID : dataSnapshot.child(ConstantsNames.USERS)
+                                    .child(ConstantsNames.TEACHERS).getChildren()) {
+                                if (teachersID.child(ConstantsNames.FULL_NAME).getValue().equals(teachers.getKey())) {
+                                    initList(teachers.getKey()
+                                            , (String) teachersID.child(ConstantsNames.DEPARTMENT).getValue());
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
         }
         initRecyclerView();
     }
 
-    private void initListTests(String teacher) {
+    private void initList(String teacher, String department) {
         mTeacherName.add(teacher);
+        mDepartmentName.add(department);
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_teachers);
-        RVAListTeachersForStudentAccount adapter = new RVAListTeachersForStudentAccount(getActivity(), mTeacherName);
+        RVAListTeachersForStudentAccount adapter = new RVAListTeachersForStudentAccount(getActivity()
+                , mTeacherName, mDepartmentName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
@@ -88,6 +111,7 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
     }
 
     private void clearLists() {
+        mDepartmentName.clear();
         mTeacherName.clear();
     }
 

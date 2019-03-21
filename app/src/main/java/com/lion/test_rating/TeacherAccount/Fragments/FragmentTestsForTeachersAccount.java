@@ -40,6 +40,8 @@ public class FragmentTestsForTeachersAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_list_tests, container, false);
 
+        getActivity().setTitle(getString(R.string.result_and_statistics_item));
+
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         testsDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS);
         testsDatabase.keepSynced(true);

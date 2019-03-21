@@ -42,7 +42,6 @@ public class CreateInformation {
     private String course_inf;
     private String group_inf;
     private String text_inf;
-    private String textCoursesAndGroups;
 
     private ArrayList<String> listCourses = new ArrayList<>();
     private ArrayList<String> listGroups = new ArrayList<>();
@@ -156,14 +155,13 @@ public class CreateInformation {
         listCourses.add(course_inf);
         listGroups.add(group_inf);
 
-        textCoursesAndGroups = "";
+        String textCoursesAndGroups = "";
 
         for (int i = 0; i < listCourses.size(); i++) {
             if (textCoursesAndGroups.equals("")) {
                 textCoursesAndGroups = listCourses.get(i) + " курс " + listGroups.get(i) + " группа";
             } else {
-                textCoursesAndGroups = textCoursesAndGroups + "\n" + listCourses.get(i) + " курс "
-                        + listGroups.get(i) + " группа";
+                textCoursesAndGroups = String.format("%s\n%s курс %s группа", textCoursesAndGroups, listCourses.get(i), listGroups.get(i));
             }
         }
 
@@ -204,13 +202,9 @@ public class CreateInformation {
     }
 
     private boolean isOnline() {
-        String cs = Context.CONNECTIVITY_SERVICE;
         ConnectivityManager cm = (ConnectivityManager)
-                context.getSystemService(cs);
-        if (cm.getActiveNetworkInfo() == null) {
-            return false;
-        } else {
-            return true;
-        }
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        return cm.getActiveNetworkInfo() != null;
     }
 }

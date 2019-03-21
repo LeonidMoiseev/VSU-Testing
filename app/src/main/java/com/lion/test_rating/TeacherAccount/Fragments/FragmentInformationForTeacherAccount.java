@@ -42,6 +42,8 @@ public class FragmentInformationForTeacherAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_list_information, container, false);
 
+        getActivity().setTitle(getString(R.string.information_item));
+
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         testsDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.INFORMATION)
                 .child(AccountTeacherActivity.mListUserInformation.get(0));
@@ -82,14 +84,14 @@ public class FragmentInformationForTeacherAccount extends Fragment {
     private void OpenDataInformation(DataSnapshot dataSnapshot) {
         for (DataSnapshot info : dataSnapshot.getChildren()) {
 
-            String text = "";
+            StringBuilder text = new StringBuilder();
             for (DataSnapshot coursesAndGroups : info.child(ConstantsNames.COURSES_AND_GROUPS).getChildren()) {
-                text = text + "\n" + coursesAndGroups.getValue();
+                text.append("\n").append(coursesAndGroups.getValue());
             }
 
             initList((String) info.child(ConstantsNames.INFORMATION).getValue(),
                     (String) info.child(ConstantsNames.DATE_CREATE).getValue(),
-                    text,
+                    text.toString(),
                     info.getKey());
 
         }

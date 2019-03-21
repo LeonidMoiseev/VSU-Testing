@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <EditText
             android:id="@+id/nameField"
@@ -23,12 +24,13 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            android:background="@color/gray2"
+            android:background="@drawable/ripple_btn2"
             android:hint="@string/your_name"
-            android:padding="5dp"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:textColorHint="@color/white2"
+            android:textSize="@dimen/text_size2" />
 
         <EditText
             android:id="@+id/courseField"
@@ -37,12 +39,13 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            android:background="@color/gray2"
+            android:background="@drawable/ripple_btn2"
             android:hint="@string/courseET"
-            android:padding="5dp"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:textColorHint="@color/white2"
+            android:textSize="@dimen/text_size2" />
 
         <EditText
             android:id="@+id/groupField"
@@ -51,12 +54,13 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            android:background="@color/gray2"
+            android:background="@drawable/ripple_btn2"
             android:hint="@string/groupET"
-            android:padding="5dp"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:textColorHint="@color/white2"
+            android:textSize="@dimen/text_size2" />
 
         <EditText
             android:id="@+id/emailField"
@@ -65,12 +69,13 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            android:background="@color/gray2"
+            android:background="@drawable/ripple_btn2"
             android:hint="@string/et_email"
-            android:padding="5dp"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_size" />
+            android:textColorHint="@color/white2"
+            android:textSize="@dimen/text_size2" />
 
         <EditText
             android:id="@+id/passwordField"
@@ -79,12 +84,13 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
             android:layout_weight="1"
-            android:background="@color/gray2"
+            android:background="@drawable/ripple_btn2"
             android:hint="@string/et_password"
-            android:padding="5dp"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_size"
+            android:textColorHint="@color/white2"
+            android:textSize="@dimen/text_size2"
             android:inputType="textPassword"/>
 
         <EditText
@@ -93,27 +99,27 @@
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
-            android:background="@color/gray2"
+            android:background="@drawable/ripple_btn2"
             android:hint="@string/et_code"
-            android:padding="10dp"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_size"/>
+            android:textColorHint="@color/white2"
+            android:textSize="@dimen/text_size2"/>
 
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1"
+            android:layout_height="55dp"
+            android:layout_marginTop="@dimen/paddingLeftRight"
+            android:layout_marginLeft="@dimen/paddingTopBottom"
+            android:layout_marginRight="@dimen/paddingTopBottom"
             android:background="@drawable/ripple_btn"
-            android:elevation="10dp"
             android:text="@string/register_user"
             android:textSize="@dimen/text_size2"
-            android:translationZ="10dp" />
+            android:translationZ="10dp"
+            android:elevation="10dp"/>
 
     </LinearLayout>
 

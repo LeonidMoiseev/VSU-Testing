@@ -36,8 +36,6 @@ public class FragmentRatingForTeacherAccount extends Fragment {
 
     View fragmentView;
 
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
     FragmentRatingOnCourse fragmentRatingOnCourse;
     FragmentRatingOnGroup fragmentRatingOnGroup;
     FragmentRatingStudent fragmentRatingStudent;
@@ -49,8 +47,8 @@ public class FragmentRatingForTeacherAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_teacher_rating_select, container, false);
 
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        getActivity().setTitle(getString(R.string.rating_item));
+
         fragmentRatingOnCourse = new FragmentRatingOnCourse();
         fragmentRatingOnGroup = new FragmentRatingOnGroup();
         fragmentRatingStudent = new FragmentRatingStudent();
@@ -92,10 +90,7 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         courseOnRatingCourse = courseOnRatingCourseET.getText().toString().trim();
         validateForm1();
         if (!TextUtils.isEmpty(courseOnRatingCourse)) {
-            fragmentTransaction.replace(R.id.container, fragmentRatingOnCourse);
-            fragmentTransaction.commit();
-            AccountTeacherActivity.checkFragment = 1;
-            hideKeyboardFrom(getActivity(), fragmentView);
+            replaceFragment(fragmentRatingOnCourse);
         }
     }
 
@@ -104,10 +99,7 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         groupOnRatingGroup = groupOnRatingGroupET.getText().toString().trim();
         validateForm2();
         if (!TextUtils.isEmpty(courseOnRatingGroup) && !TextUtils.isEmpty(groupOnRatingGroup)) {
-            fragmentTransaction.replace(R.id.container, fragmentRatingOnGroup);
-            fragmentTransaction.commit();
-            AccountTeacherActivity.checkFragment = 1;
-            hideKeyboardFrom(getActivity(), fragmentView);
+            replaceFragment(fragmentRatingOnGroup);
         }
     }
 
@@ -115,11 +107,17 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         nameStudentOnStudentRating = nameStudentOnStudentRatingET.getText().toString().trim();
         validateForm3();
         if (!TextUtils.isEmpty(nameStudentOnStudentRating)) {
-            fragmentTransaction.replace(R.id.container, fragmentRatingStudent);
-            fragmentTransaction.commit();
-            AccountTeacherActivity.checkFragment = 1;
-            hideKeyboardFrom(getActivity(), fragmentView);
+            replaceFragment(fragmentRatingStudent);
         }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
+        AccountTeacherActivity.checkFragment = 1;
+        hideKeyboardFrom(getActivity(), fragmentView);
     }
 
     private void validateForm1() {

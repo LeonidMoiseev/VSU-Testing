@@ -39,7 +39,7 @@
             android:id="@+id/text_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/orange_btn"
+            android:background="@drawable/ripple_btn"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size3"
             android:textStyle="bold"

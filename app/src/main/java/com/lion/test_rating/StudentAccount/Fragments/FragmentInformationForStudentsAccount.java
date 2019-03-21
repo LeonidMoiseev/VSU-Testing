@@ -37,6 +37,8 @@ public class FragmentInformationForStudentsAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_student_list_information, container, false);
 
+        getActivity().setTitle(getString(R.string.information_item));
+
         DatabaseReference informationDatabase = FirebaseDatabase.getInstance()
                 .getReference().child(ConstantsNames.INFORMATION);
         informationDatabase.keepSynced(true);

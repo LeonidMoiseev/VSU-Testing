@@ -6,14 +6,8 @@ public class TeacherInformation {
     private String email;
     private String department;
 
-    public TeacherInformation() {
+    TeacherInformation() {
 
-    }
-
-    public TeacherInformation(String name, String email, String department) {
-        this.name = name;
-        this.email = email;
-        this.department = department;
     }
 
     public String getName() {
@@ -32,11 +26,11 @@ public class TeacherInformation {
         this.email = email;
     }
 
-    public String getDepartment() {
+    String getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    void setDepartment(String department) {
         this.department = department;
     }
 }

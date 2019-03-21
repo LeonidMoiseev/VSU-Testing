@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parent_layout_teachers"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
+    android:orientation="vertical"
     android:background="@drawable/ripple_btn2">
 
-    <TextView
-        android:id="@+id/text_name_teacher"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/paddingLeftRight"
-        android:text="Teacher1"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size2"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_name_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingTop="@dimen/paddingTopBottom"
+            android:text="Teacher1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_department"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingTopBottom"
+            android:layout_below="@+id/text_name_teacher"
+            android:text="Teacher1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size2" />
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_alignBottom="@+id/text_name_teacher"
-        android:background="@drawable/ripple_btn4" />
+        android:background="@color/white2" />
 
-</RelativeLayout>
+</LinearLayout>

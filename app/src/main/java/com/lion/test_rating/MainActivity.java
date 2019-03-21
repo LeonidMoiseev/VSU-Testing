@@ -1,5 +1,6 @@
 package com.lion.test_rating;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -7,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     String email;
     String password;
-    Boolean dataUsed = false;
     Intent loginIntent;
 
     TextView progressBarText;
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        @SuppressLint("InflateParams")
         View mView = getLayoutInflater().inflate(R.layout.dialog_progress_bar, null);
         mBuilder.setView(mView);
         dialogProgressBar = mBuilder.create();
@@ -68,43 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 } else activityVisible();
             }
         };
-    }
-
-
-    public void signing() {
-        email = mEmailField.getText().toString().trim();
-        password = mPasswordField.getText().toString().trim();
-
-        validateForm();
-
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-
-            progressBarText.setText(getString(R.string.progressMessage));
-            dialogProgressBar.show();
-            progressBar.setVisibility(ProgressBar.VISIBLE);
-
-            try {
-
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            getUserInformationAndStartActivity();
-                            progressBar.setVisibility(ProgressBar.INVISIBLE);
-                            dialogProgressBar.dismiss();
-                        } else {
-                            progressBar.setVisibility(ProgressBar.INVISIBLE);
-                            dialogProgressBar.dismiss();
-                            Toast.makeText(MainActivity.this, R.string.authorization_error, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            } catch (NullPointerException ex) {
-                progressBar.setVisibility(ProgressBar.INVISIBLE);
-                dialogProgressBar.dismiss();
-                Toast.makeText(MainActivity.this, R.string.authorization_error, Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     private void activityVisible() {
@@ -136,47 +99,74 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void signing() {
+        email = mEmailField.getText().toString().trim();
+        password = mPasswordField.getText().toString().trim();
+
+        validateForm();
+
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+
+            progressBarText.setText(getString(R.string.progressMessage));
+            dialogProgressBar.show();
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+
+            try {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    getUserInformationAndStartActivity();
+                                    progressBar.setVisibility(ProgressBar.INVISIBLE);
+                                    dialogProgressBar.dismiss();
+                                } else {
+                                    errorSigning();
+                                }
+                            }
+                        });
+            } catch (NullPointerException ex) {
+                errorSigning();
+            }
+        }
+    }
+
     private void getUserInformationAndStartActivity() {
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference userDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.USERS);
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    try {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        assert user != null;
+                        String userID = user.getUid();
 
-        try {
-            userDatabase.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (!dataUsed) {
-                        try {
-
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            assert user != null;
-                            String userID = user.getUid();
-                            if (dataSnapshot.child(ConstantsNames.STUDENTS).hasChild(userID)) {
-                                loginIntent = new Intent(MainActivity.this, AccountStudentActivity.class);
-                            } else if (dataSnapshot.child(ConstantsNames.TEACHERS).hasChild(userID)) {
-                                loginIntent = new Intent(MainActivity.this, AccountTeacherActivity.class);
-                            }
-                            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(loginIntent);
-                            dataUsed = true;
-                            progressBar.setVisibility(ProgressBar.INVISIBLE);
-                            dialogProgressBar.dismiss();
-                            finish();
-
-                        } catch (NullPointerException ex) {
-                            errorNull();
+                        if (dataSnapshot.child(ConstantsNames.STUDENTS).hasChild(userID)) {
+                            loginIntent = new Intent(MainActivity.this, AccountStudentActivity.class);
+                        } else if (dataSnapshot.child(ConstantsNames.TEACHERS).hasChild(userID)) {
+                            loginIntent = new Intent(MainActivity.this, AccountTeacherActivity.class);
                         }
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    errorNull();
-                }
-            });
-        } catch (NullPointerException ex) {
-            errorNull();
-        }
+                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(loginIntent);
+                        progressBar.setVisibility(ProgressBar.INVISIBLE);
+                        dialogProgressBar.dismiss();
+                        finish();
+
+                    } catch (NullPointerException ex) {
+                        errorNull();
+                    }
+                } else errorNull();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                errorNull();
+            }
+        });
     }
 
     private void validateForm() {
@@ -195,11 +185,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void errorNull() {
-        Log.d("Errors", "NullPointerException");
-        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.server_connection_error, Toast.LENGTH_SHORT).show();
         logout();
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         dialogProgressBar.dismiss();
+    }
+
+    private void errorSigning() {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        dialogProgressBar.dismiss();
+        Toast.makeText(MainActivity.this, R.string.authorization_error, Toast.LENGTH_SHORT).show();
     }
 
     private void logout() {

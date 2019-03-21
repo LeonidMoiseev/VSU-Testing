@@ -11,48 +11,58 @@
     <include
         layout="@layout/toolbar"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="30dp">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/paddingLeftRight">
 
-        <TextView
-            android:id="@+id/resultTest"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/result_TV"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:layout_marginBottom="20dp"
-            android:textStyle="bold"/>
+            android:padding="@dimen/paddingLeftRight"
+            android:background="@drawable/ripple_btn2">
 
-        <TextView
-            android:id="@+id/rightAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/resultTest"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/white"
-            android:text="@string/right_answer_TV"
-            android:textSize="@dimen/text_size"/>
+            <TextView
+                android:id="@+id/resultTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/result_TV"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/points"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rightAnswer"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/white"
-            android:text="@string/points_TV"
-            android:textSize="@dimen/text_size"/>
+            <TextView
+                android:id="@+id/rightAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/resultTest"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:text="@string/right_answer_TV"
+                android:textSize="@dimen/text_size2"/>
+
+            <TextView
+                android:id="@+id/points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rightAnswer"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:text="@string/points_TV"
+                android:textSize="@dimen/text_size2"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/ratingOverall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/check_test"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:textColor="@color/white"
             android:text="@string/remark_TV"
             android:textSize="@dimen/text_size2"/>
@@ -61,10 +71,10 @@
             android:id="@+id/check_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/backMenu"
             android:layout_marginBottom="15dp"
             android:background="@drawable/ripple_btn"
             android:text="@string/check_test_btn"
+            android:textAllCaps="false"
             android:elevation="10dp"
             android:translationZ="10dp"
             android:textSize="@dimen/text_size2"/>
@@ -73,13 +83,13 @@
             android:id="@+id/backMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/ripple_btn"
             android:text="@string/main_menu_btn"
+            android:textAllCaps="false"
             android:elevation="10dp"
             android:translationZ="10dp"
             android:textSize="@dimen/text_size2"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

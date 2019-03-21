@@ -42,6 +42,8 @@ public class FragmentTestsForStudentsAccount extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_for_student_list_tests, container, false);
 
+        getActivity().setTitle(getString(R.string.test_item));
+
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference testsDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.TESTS);
         testsDatabase.keepSynced(true);
@@ -71,48 +73,36 @@ public class FragmentTestsForStudentsAccount extends Fragment {
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
 
         for (DataSnapshot teachers : dataSnapshot.getChildren()) {
-            mAllTeachers.add(teachers.getKey());
-        }
 
-        for (int k = 0; k < mAllTeachers.size(); k++) {
+            for (DataSnapshot testNumber : teachers.getChildren()) {
 
-            for (DataSnapshot testNumber : dataSnapshot.child(mAllTeachers.get(k)).getChildren()) {
-                String m = testNumber.getKey();
+                if (testNumber.child(ConstantsNames.STATUS_TEST).exists()) {
+                    String openTest = (String) testNumber.child(ConstantsNames.STATUS_TEST).getValue();
+                    //Проверка статуса теста
+                    assert openTest != null;
+                    if (openTest.equals(ConstantsNames.OPEN)) {
 
-                assert m != null;
-                String openTest = (String) dataSnapshot.child(mAllTeachers.get(k)).child(m)
-                        .child(ConstantsNames.STATUS_TEST).getValue();
-                assert openTest != null;
-                //Проверка статуса теста
-                if (openTest.equals(ConstantsNames.OPEN)) {
+                        //Проверка: для каких курсов открыт тест
+                        if (testNumber.hasChild(AccountStudentActivity.mListUserInformation.get(2))) {
 
-                    //Проверка: для каких курсов открыт тест
-                    if (dataSnapshot.child(mAllTeachers.get(k)).child(m)
-                            .hasChild(AccountStudentActivity.mListUserInformation.get(2))) {
+                            String groups = (String) testNumber
+                                    .child(AccountStudentActivity.mListUserInformation.get(2)).getValue();
+                            assert groups != null;
+                            //Проверка: для каких групп открыт тест
+                            if (groups.contains(AccountStudentActivity.mListUserInformation.get(3))) {
 
-                        String groups = (String) dataSnapshot.child(mAllTeachers.get(k)).child(m)
-                                .child(AccountStudentActivity.mListUserInformation.get(2)).getValue();
-                        assert groups != null;
-                        //Проверка: для каких групп открыт тест
-                        if (groups.contains(AccountStudentActivity.mListUserInformation.get(3))) {
+                                //Проверка: кто уже прошёл тест
+                                if (!testNumber.child(ConstantsNames.USER_COMPLETE_TEST)
+                                        .hasChild(AccountStudentActivity.mListUserInformation.get(0))) {
 
-                            //Проверка: кто уже прошёл тест
-                            if (!dataSnapshot.child(mAllTeachers.get(k)).child(m)
-                                    .child(ConstantsNames.USER_COMPLETE_TEST)
-                                    .hasChild(AccountStudentActivity.mListUserInformation.get(0))) {
-
-                                initListTests((String) dataSnapshot.child(mAllTeachers.get(k))
-                                                .child(m).child(ConstantsNames.SUBJECT).getValue()
-                                        , mAllTeachers.get(k)
-                                        , (String) dataSnapshot.child(mAllTeachers.get(k))
-                                                .child(m).child(ConstantsNames.DATE_CREATE).getValue()
-                                        , m
-                                        , (String) dataSnapshot.child(mAllTeachers.get(k))
-                                                .child(m).child(ConstantsNames.RESTRICTION).getValue()
-                                        , (String) dataSnapshot.child(mAllTeachers.get(k))
-                                                .child(m).child(ConstantsNames.TIME_TEST).getValue()
-                                        , (String) dataSnapshot.child(mAllTeachers.get(k))
-                                                .child(m).child(ConstantsNames.TOPIC_NAME).getValue());
+                                    initListTests((String) testNumber.child(ConstantsNames.SUBJECT).getValue()
+                                            , teachers.getKey()
+                                            , (String) testNumber.child(ConstantsNames.DATE_CREATE).getValue()
+                                            , testNumber.getKey()
+                                            , (String) testNumber.child(ConstantsNames.RESTRICTION).getValue()
+                                            , (String) testNumber.child(ConstantsNames.TIME_TEST).getValue()
+                                            , (String) testNumber.child(ConstantsNames.TOPIC_NAME).getValue());
+                                }
                             }
                         }
                     }

@@ -1,15 +1,15 @@
-package com.lion.test_rating.TeacherAccount;
+package com.lion.test_rating.TeacherAccount.Fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +21,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
+import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
 import com.lion.test_rating.TeacherAccount.RecyclerViewAdapters.RVAResultsForTeacherAccount;
 
 import java.util.ArrayList;
 
-public class ResultsActivityForTeachers extends AppCompatActivity {
+public class FragmentResultsForTeachers extends Fragment {
 
     FirebaseDatabase mFirebaseDatabase;
 
@@ -41,24 +42,23 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
     private ArrayList<String> mStudents = new ArrayList<>();
     private ArrayList<String> mPoints = new ArrayList<>();
 
+    View fragmentView;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_for_teacher_results);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        Toolbar toolbar = findViewById(R.id.myToolBar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        toolbar.setTitle(ConstantsNames.RESULTS);
-        setSupportActionBar(toolbar);
+        fragmentView = inflater.inflate(R.layout.fragment_for_teacher_list_results, container, false);
 
-        previousList = findViewById(R.id.previous_list);
-        nextList = findViewById(R.id.next_list);
-        courseAndGroup = findViewById(R.id.course_group);
+        getActivity().setTitle(getString(R.string.result_item));
+
+        previousList = fragmentView.findViewById(R.id.previous_list);
+        nextList = fragmentView.findViewById(R.id.next_list);
+        courseAndGroup = fragmentView.findViewById(R.id.course_group);
 
         countCourseAndGroup = 0;
 
-        Intent intent = getIntent();
-        numberTest = intent.getStringExtra("numberTest");
+        numberTest = this.getArguments().getString("numberTest");
 
         studentsData();
 
@@ -81,6 +81,8 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
                 }
             }
         });
+
+        return fragmentView;
     }
 
     private void setCourseAndGroupList(DataSnapshot dataSnapshot) {
@@ -145,16 +147,15 @@ public class ResultsActivityForTeachers extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_results_teachers);
-        RVAResultsForTeacherAccount adapter = new RVAResultsForTeacherAccount(this, mStudents, mPoints);
+        RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_results_teachers);
+        RVAResultsForTeacherAccount adapter = new RVAResultsForTeacherAccount(getActivity(), mStudents, mPoints);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
-        Toast.makeText(ResultsActivityForTeachers.this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
-        finish();
+        Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
     }
 
     private void clearLists() {

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class FragmentRatingStudent extends Fragment {
     int countStudentsOnCourse;
     int countStudentsOnGroup;
 
-    LinearLayout layoutStudRating;
+    RelativeLayout layoutStudRating;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,8 +52,10 @@ public class FragmentRatingStudent extends Fragment {
 
         textNoData = fragmentView.findViewById(R.id.text_no_data);
         textNoData.setText(getString(R.string.not_data_about_students));
-        layoutStudRating = fragmentView.findViewById(R.id.layout_stud_rating);
 
+        getActivity().setTitle(getString(R.string.student_rating));
+
+        layoutStudRating = fragmentView.findViewById(R.id.layout_stud_rating);
         tvName = fragmentView.findViewById(R.id.text_name_student);
         tvCourseAndGroup = fragmentView.findViewById(R.id.text_course_and_group);
         tvRating = fragmentView.findViewById(R.id.text_rating);
@@ -90,8 +93,8 @@ public class FragmentRatingStudent extends Fragment {
         countStudentsOnCourse = 0;
         countStudentsOnGroup = 0;
         for (DataSnapshot users : dataSnapshot.getChildren()) {
-            if (users.child(ConstantsNames.FULL_NAME).getValue()
-                    .equals(FragmentRatingForTeacherAccount.nameStudentOnStudentRating)) {
+            if (FragmentRatingForTeacherAccount.nameStudentOnStudentRating
+                    .equals(users.child(ConstantsNames.FULL_NAME).getValue())) {
                 textNoData.setText("");
                 layoutStudRating.setVisibility(LinearLayout.VISIBLE);
                 sRating = (String) users.child(ConstantsNames.RATING).getValue();
@@ -100,13 +103,13 @@ public class FragmentRatingStudent extends Fragment {
 
 
                 for (DataSnapshot users2 : dataSnapshot.getChildren()) {
-                    if (users2.child(ConstantsNames.COURSE).getValue().equals(sCourse)) {
+                    if (sCourse.equals(users2.child(ConstantsNames.COURSE).getValue())) {
                         countStudentsOnCourse++;
                         if (Integer.parseInt(sRating) > Integer.parseInt((String) users2
                                 .child(ConstantsNames.RATING).getValue())) {
                             sPlaceOnCourse++;
                         }
-                        if (users2.child(ConstantsNames.GROUP).getValue().equals(sGroup)) {
+                        if (sGroup.equals(users2.child(ConstantsNames.GROUP).getValue())) {
                             countStudentsOnGroup++;
                             if (Integer.parseInt(sRating) > Integer.parseInt((String) users2
                                     .child(ConstantsNames.RATING).getValue())) {
