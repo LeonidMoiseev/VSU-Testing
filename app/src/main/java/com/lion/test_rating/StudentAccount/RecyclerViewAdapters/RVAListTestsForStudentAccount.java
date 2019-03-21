@@ -3,6 +3,7 @@ package com.lion.test_rating.StudentAccount.RecyclerViewAdapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,14 +43,15 @@ public class RVAListTestsForStudentAccount extends RecyclerView.Adapter<RVAListT
         this.mTopicName = mTopic;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_for_students_list_tests, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.subjectTV.setText(mSubject.get(position));
         holder.nameTeacherTV.setText(mTeacher.get(position));

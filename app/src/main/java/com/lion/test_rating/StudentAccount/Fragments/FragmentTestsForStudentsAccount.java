@@ -30,7 +30,6 @@ public class FragmentTestsForStudentsAccount extends Fragment {
     private ArrayList<String> mTopicName = new ArrayList<>();
     private ArrayList<String> mNumberTeacherTest = new ArrayList<>();
     private ArrayList<String> mDataName = new ArrayList<>();
-    private ArrayList<String> mAllTeachers = new ArrayList<>();
     private ArrayList<String> mRestrictionCountQuestion = new ArrayList<>();
     private ArrayList<String> mTestTime = new ArrayList<>();
 
@@ -141,7 +140,6 @@ public class FragmentTestsForStudentsAccount extends Fragment {
     }
 
     private void clearLists() {
-        mAllTeachers.clear();
         mSubjectName.clear();
         mTeacherName.clear();
         mDataName.clear();

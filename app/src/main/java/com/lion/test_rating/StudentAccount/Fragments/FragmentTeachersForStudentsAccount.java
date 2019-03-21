@@ -66,15 +66,28 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
 
     private void openDataTeachers(DataSnapshot dataSnapshot) {
         for (DataSnapshot teachers : dataSnapshot.child(ConstantsNames.RESULTS).getChildren()) {
-            for (DataSnapshot tests: teachers.getChildren()) {
+            boolean teacherAdded = false;
+
+            for (DataSnapshot tests : teachers.getChildren()) {
+
+                if (teacherAdded) {
+                    break;
+                }
+
                 for (DataSnapshot courses : tests.getChildren()) {
-                    if (courses.getKey().equals(AccountStudentActivity.mListUserInformation.get(2))) {
+
+                    if (AccountStudentActivity.mListUserInformation.get(2).equals(courses.getKey())) {
                         if (courses.hasChild(AccountStudentActivity.mListUserInformation.get(3))) {
+
                             for (DataSnapshot teachersID : dataSnapshot.child(ConstantsNames.USERS)
                                     .child(ConstantsNames.TEACHERS).getChildren()) {
-                                if (teachersID.child(ConstantsNames.FULL_NAME).getValue().equals(teachers.getKey())) {
+
+                                String teacherName = teachers.getKey();
+                                assert teacherName != null;
+                                if (teacherName.equals(teachersID.child(ConstantsNames.FULL_NAME).getValue())) {
                                     initList(teachers.getKey()
                                             , (String) teachersID.child(ConstantsNames.DEPARTMENT).getValue());
+                                    teacherAdded = true;
                                     break;
                                 }
                             }
@@ -82,7 +95,6 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
                         }
                     }
                 }
-                break;
             }
         }
         initRecyclerView();
@@ -105,8 +117,7 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
     }
 
     private void errorNull() {
-        Log.d("Errors", "NullPointerException");
-        Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.server_connection_error, Toast.LENGTH_LONG).show();
         getActivity().finish();
     }
 

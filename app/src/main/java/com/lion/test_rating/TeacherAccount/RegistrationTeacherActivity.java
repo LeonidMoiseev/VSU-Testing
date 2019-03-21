@@ -128,20 +128,25 @@ public class RegistrationTeacherActivity extends AppCompatActivity {
 
     private void validateOfEnteredData(DataSnapshot dataSnapshot) {
 
-        if (dataSnapshot.child(ConstantsNames.ACTIVATION_CODES)
-                .child(ConstantsNames.TEACHERS).hasChild(name)) {
+        DataSnapshot teacher = dataSnapshot.child(ConstantsNames.ACTIVATION_CODES)
+                .child(ConstantsNames.TEACHERS);
 
-            completeCode = (String) dataSnapshot.child(ConstantsNames.ACTIVATION_CODES)
-                    .child(ConstantsNames.TEACHERS).child(name).getValue();
+        if (teacher.exists()) {
+            if (teacher.hasChild(name)) {
 
-            if (code.equals(completeCode)) {
-                createAccount();
+                completeCode = (String) teacher.child(name).getValue();
+
+                if (code.equals(completeCode)) {
+                    createAccount();
+                } else {
+                    errorRegistration(getString(R.string.error_code_activation));
+                }
+
             } else {
-                errorRegistration(getString(R.string.error_code_activation));
+                errorRegistration(getString(R.string.error_data_name));
             }
-
         } else {
-            errorRegistration(getString(R.string.error_data_name));
+            errorRegistration(getString(R.string.registration_error));
         }
     }
 

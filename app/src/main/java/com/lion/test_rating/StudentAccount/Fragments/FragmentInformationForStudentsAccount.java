@@ -35,7 +35,8 @@ public class FragmentInformationForStudentsAccount extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragmentView = inflater.inflate(R.layout.fragment_for_student_list_information, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_for_student_list_information
+                , container, false);
 
         getActivity().setTitle(getString(R.string.information_item));
 
@@ -68,15 +69,18 @@ public class FragmentInformationForStudentsAccount extends Fragment {
     private void openDataInformation(DataSnapshot dataSnapshot) {
         for (DataSnapshot teachers : dataSnapshot.getChildren()) {
             for (DataSnapshot numberInfo : teachers.getChildren()) {
-                for (DataSnapshot checkCourseAndGroup : numberInfo.child(ConstantsNames.COURSES_AND_GROUPS).getChildren()) {
+                for (DataSnapshot checkCourseAndGroup : numberInfo.child(ConstantsNames.COURSES_AND_GROUPS)
+                        .getChildren()) {
 
                     String courseAndGroup = (String) checkCourseAndGroup.getValue();
+                    assert courseAndGroup != null;
                     String course = Character.toString(courseAndGroup.charAt(0));
                     String group = Character.toString(courseAndGroup.charAt(7));
                     if (AccountStudentActivity.mListUserInformation.get(2).equals(course)
                             && AccountStudentActivity.mListUserInformation.get(3).equals(group)) {
 
-                        initListTests(teachers.getKey(), (String) numberInfo.child(ConstantsNames.INFORMATION).getValue()
+                        initListTests(teachers.getKey(), (String) numberInfo.child(ConstantsNames.INFORMATION)
+                                        .getValue()
                                 , (String) numberInfo.child(ConstantsNames.DATE_CREATE).getValue());
 
                     }

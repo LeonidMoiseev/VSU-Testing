@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -100,7 +99,9 @@ public class AccountStudentActivity extends AppCompatActivity
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    showData(dataSnapshot);
+                    if (dataSnapshot.exists()) {
+                        showData(dataSnapshot);
+                    }
                 }
 
                 @Override
@@ -157,18 +158,15 @@ public class AccountStudentActivity extends AppCompatActivity
         headerOtherInformation = header.findViewById(R.id.otherInformation);
         headerName.setText(mListUserInformation.get(0));
         headerEmail.setText(mListUserInformation.get(1));
-        headerOtherInformation.setText(mListUserInformation.get(2) + " курс, " + mListUserInformation.get(3) + " группа");
+        headerOtherInformation.setText(mListUserInformation.get(2) + " курс, "
+                + mListUserInformation.get(3) + " группа");
     }
 
     protected boolean isOnline() {
-        String cs = Context.CONNECTIVITY_SERVICE;
         ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(cs);
-        if (cm.getActiveNetworkInfo() == null) {
-            return false;
-        } else {
-            return true;
-        }
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        return cm.getActiveNetworkInfo() != null;
     }
 
     @Override
@@ -240,13 +238,12 @@ public class AccountStudentActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (!isOnline()) {
-            Toast.makeText(getApplicationContext(), "Нет соединения с интернетом!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.internet_connection_error, Toast.LENGTH_LONG).show();
         }
     }
 
     private void errorNull() {
-        Log.d("Errors", "NullPointerException");
-        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.server_connection_error, Toast.LENGTH_LONG).show();
         logout();
     }
 

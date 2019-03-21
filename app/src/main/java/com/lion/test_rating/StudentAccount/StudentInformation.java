@@ -8,7 +8,7 @@ public class StudentInformation {
 
     private String rating;
 
-    public StudentInformation() {
+    StudentInformation() {
 
     }
 

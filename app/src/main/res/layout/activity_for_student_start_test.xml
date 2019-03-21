@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,9 +16,9 @@
             android:id="@+id/time_tv"
             android:layout_width="85dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/paddingLeftRight"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
             android:background="@drawable/circle"
             android:gravity="center"
             android:padding="2dp"
@@ -31,8 +30,8 @@
             android:id="@+id/numberQuestion"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="1/15"
             android:textColor="@color/white"
@@ -45,16 +44,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="13dp">
+        android:padding="@dimen/paddingLeftRight">
 
         <TextView
             android:id="@+id/question"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
+            android:background="@color/gray2"
             android:gravity="center"
+            android:padding="5dp"
             android:text="Вопрос"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_question_size" />
+            android:textSize="@dimen/text_question_size"
+            style="@style/scrollbar_shape_style" />
 
         <Button
             android:id="@+id/answer1"
@@ -62,12 +64,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/ripple_btn"
+            android:background="@color/orange_btn"
             android:elevation="10dp"
+            android:padding="5dp"
             android:text="Ответ 1"
             android:textAllCaps="false"
             android:textSize="@dimen/text_answer_size"
-            android:translationZ="10dp" />
+            android:translationZ="10dp"
+            style="@style/scrollbar_shape_style"/>
 
         <Button
             android:id="@+id/answer2"
@@ -75,12 +79,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/ripple_btn"
+            android:background="@color/orange_btn"
             android:elevation="10dp"
+            android:padding="5dp"
             android:text="Ответ 2"
             android:textAllCaps="false"
             android:textSize="@dimen/text_answer_size"
-            android:translationZ="10dp" />
+            android:translationZ="10dp"
+            style="@style/scrollbar_shape_style"/>
 
         <Button
             android:id="@+id/answer3"
@@ -88,12 +94,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/ripple_btn"
+            android:background="@color/orange_btn"
             android:elevation="10dp"
+            android:padding="5dp"
             android:text="Ответ 3"
             android:textAllCaps="false"
             android:textSize="@dimen/text_answer_size"
-            android:translationZ="10dp" />
+            android:translationZ="10dp"
+            style="@style/scrollbar_shape_style"/>
 
         <Button
             android:id="@+id/answer4"
@@ -101,17 +109,19 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/ripple_btn"
+            android:background="@color/orange_btn"
             android:elevation="10dp"
+            android:padding="5dp"
             android:text="Ответ 4"
             android:textAllCaps="false"
             android:textSize="@dimen/text_answer_size"
-            android:translationZ="10dp" />
+            android:translationZ="10dp"
+            style="@style/scrollbar_shape_style"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="@dimen/paddingLeftRight">
 
             <ImageButton
                 android:id="@+id/previous_question"

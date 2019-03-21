@@ -68,7 +68,8 @@ public class FragmentRatings extends Fragment {
         tvPlaceOnGroup = fragmentView.findViewById(R.id.text_place_on_group);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        userDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.USERS).child(ConstantsNames.STUDENTS);
+        userDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.USERS)
+                .child(ConstantsNames.STUDENTS);
         userDatabase.keepSynced(true);
 
         try {
@@ -83,7 +84,7 @@ public class FragmentRatings extends Fragment {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    errorNull();
                 }
             });
         } catch (NullPointerException ex) {
@@ -103,13 +104,13 @@ public class FragmentRatings extends Fragment {
         sGroup = AccountStudentActivity.mListUserInformation.get(3);
 
         for (DataSnapshot users : dataSnapshot.getChildren()) {
-            if (users.child(ConstantsNames.COURSE).getValue().equals(sCourse)) {
+            if (sCourse.equals(users.child(ConstantsNames.COURSE).getValue())) {
                 countStudentsOnCourse++;
                 if (Integer.parseInt(sRating) > Integer.parseInt((String) users
                         .child(ConstantsNames.RATING).getValue())) {
                     sPlaceOnCourse++;
                 }
-                if (users.child(ConstantsNames.GROUP).getValue().equals(sGroup)) {
+                if (sGroup.equals(users.child(ConstantsNames.GROUP).getValue())) {
                     countStudentsOnGroup++;
                     if (Integer.parseInt(sRating) > Integer.parseInt((String) users
                             .child(ConstantsNames.RATING).getValue())) {
@@ -119,8 +120,8 @@ public class FragmentRatings extends Fragment {
             }
         }
         for (DataSnapshot users : dataSnapshot.getChildren()) {
-            if (users.child(ConstantsNames.COURSE).getValue().equals(sCourse)
-                    &&users.child(ConstantsNames.GROUP).getValue().equals(sGroup)) {
+            if (sCourse.equals(users.child(ConstantsNames.COURSE).getValue())
+                    && sGroup.equals(users.child(ConstantsNames.GROUP).getValue())) {
                 number++;
 
                 initList(Integer.toString(number), (String) users.child(ConstantsNames.FULL_NAME).getValue()

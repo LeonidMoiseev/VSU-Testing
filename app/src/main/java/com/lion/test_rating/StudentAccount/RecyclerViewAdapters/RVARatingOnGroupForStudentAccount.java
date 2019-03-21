@@ -2,6 +2,7 @@ package com.lion.test_rating.StudentAccount.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +29,16 @@ public class RVARatingOnGroupForStudentAccount extends RecyclerView.Adapter<RVAR
         this.mContext = mContext;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_for_teachers_list_rating_on_group, parent, false);
         return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.numberTV.setText(mListPlaceNumber.get(position));
         holder.nameStudentTV.setText(mListNameStudent.get(position));

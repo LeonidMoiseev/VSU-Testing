@@ -1,5 +1,6 @@
 package com.lion.test_rating.StudentAccount;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -7,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,14 +36,12 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     private EditText mEmailField;
     private EditText mPasswordField;
     private EditText mCodeField;
-    private Button mRegisterBtn;
     private AlertDialog dialogProgressBar;
     private ProgressBar progressBar;
 
     TextView progressBarText;
 
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseUsers;
 
     String name;
@@ -52,8 +51,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     String password;
     String code;
 
-    String completeCode = "";
-    Boolean dataUse = false;
+    String completeCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +59,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_for_student_registration);
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(RegistrationStudentActivity.this);
+        @SuppressLint("InflateParams")
         View mView = getLayoutInflater().inflate(R.layout.dialog_progress_bar, null);
         mBuilder.setView(mView);
         dialogProgressBar = mBuilder.create();
@@ -73,7 +72,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseUsers = mFirebaseDatabase.getReference();
         mDatabaseUsers.keepSynced(true);
 
@@ -84,7 +83,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         mEmailField = findViewById(R.id.emailField);
         mPasswordField = findViewById(R.id.passwordField);
         mCodeField = findViewById(R.id.codeField);
-        mRegisterBtn = findViewById(R.id.registerBtn);
+        Button mRegisterBtn = findViewById(R.id.registerBtn);
 
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,11 +111,13 @@ public class RegistrationStudentActivity extends AppCompatActivity {
             progressBar.setVisibility(ProgressBar.VISIBLE);
 
             try {
-                mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+                mDatabaseUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (!dataUse) {
-                            showData(dataSnapshot);
+                        if (dataSnapshot.exists()) {
+                            validateOfEnteredData(dataSnapshot);
+                        } else {
+                            finish();
                         }
                     }
 
@@ -128,48 +129,50 @@ public class RegistrationStudentActivity extends AppCompatActivity {
             } catch (NullPointerException ex) {
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
                 dialogProgressBar.dismiss();
-                Log.d("Errors", "NullPointerException");
             }
         }
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
+    private void validateOfEnteredData(DataSnapshot dataSnapshot) {
 
-        completeCode = (String) dataSnapshot.child(ConstantsNames.ACTIVATION_CODES).child(ConstantsNames.STUDENTS).
-                child(course).child(group).child(name).getValue();
+        DataSnapshot student = dataSnapshot.child(ConstantsNames.ACTIVATION_CODES)
+                .child(ConstantsNames.STUDENTS).child(course).child(group);
 
-        try {
-            if (completeCode.equals(code)) {
-                createAccount();
+        if (student.exists()) {
+            if (student.hasChild(name)) {
+
+                completeCode = (String) student.child(name).getValue();
+
+                if (code.equals(completeCode)) {
+                    createAccount();
+                } else {
+                    errorRegistration(getString(R.string.error_code_activation));
+                }
+
             } else {
-                progressBar.setVisibility(ProgressBar.INVISIBLE);
-                dialogProgressBar.dismiss();
-                Toast.makeText(RegistrationStudentActivity.this, "Неправильный код активации",
-                        Toast.LENGTH_SHORT).show();
+                errorRegistration(getString(R.string.error_data_name));
             }
-        } catch (NullPointerException ex) {
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            dialogProgressBar.dismiss();
-            Toast.makeText(RegistrationStudentActivity.this, "Данные указаны неправильно",
-                    Toast.LENGTH_SHORT).show();
+        } else {
+            errorRegistration(getString(R.string.registration_error_course_group));
         }
     }
 
     private void createAccount() {
         try {
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
 
-                        dataUse = true;
-
-                        String user_id = mAuth.getCurrentUser().getUid();
-                        String user_email = mAuth.getCurrentUser().getEmail();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        assert user != null;
+                        String userID = user.getUid();
+                        String user_email = user.getEmail();
 
                         DatabaseReference current_user_db = mDatabaseUsers.child(ConstantsNames.USERS).
-                                child(ConstantsNames.STUDENTS).child(user_id);
+                                child(ConstantsNames.STUDENTS).child(userID);
                         current_user_db.child(ConstantsNames.FULL_NAME).setValue(name);
                         current_user_db.child(ConstantsNames.COURSE).setValue(course);
                         current_user_db.child(ConstantsNames.GROUP).setValue(group);
@@ -182,24 +185,19 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                         mDatabaseUsers.child(ConstantsNames.ACTIVATION_CODES).child(ConstantsNames.STUDENTS).
                                 child(course).child(group).child(name).removeValue();
 
-                        Intent mainIntent = new Intent(RegistrationStudentActivity.this, AccountStudentActivity.class);
+                        Intent mainIntent = new Intent(RegistrationStudentActivity.this
+                                , AccountStudentActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                         finish();
 
                     } else {
-                        progressBar.setVisibility(ProgressBar.INVISIBLE);
-                        dialogProgressBar.dismiss();
-                        Toast.makeText(RegistrationStudentActivity.this, getResources().getString(R.string.registration_error_with_email),
-                                Toast.LENGTH_SHORT).show();
+                        errorRegistration(getString(R.string.registration_error_with_email));
                     }
                 }
             });
         } catch (NullPointerException ex) {
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            dialogProgressBar.dismiss();
-            Toast.makeText(RegistrationStudentActivity.this, "Ошибка регистрации",
-                    Toast.LENGTH_SHORT).show();
+            errorRegistration(getString(R.string.registration_error));
         }
     }
 
@@ -240,5 +238,12 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         } else {
             mCodeField.setError(null);
         }
+    }
+
+    private void errorRegistration(String message) {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        dialogProgressBar.dismiss();
+        Toast.makeText(RegistrationStudentActivity.this, message,
+                Toast.LENGTH_SHORT).show();
     }
 }

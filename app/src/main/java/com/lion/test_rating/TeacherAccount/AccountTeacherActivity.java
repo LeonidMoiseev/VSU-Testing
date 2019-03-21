@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -214,7 +213,6 @@ public class AccountTeacherActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         checkFragment = 0;
-        setTitle(getString(R.string.app_name));
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 
@@ -233,8 +231,7 @@ public class AccountTeacherActivity extends AppCompatActivity
     }
 
     private void errorNull() {
-        Log.d("Errors", "NullPointerException");
-        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.server_connection_error, Toast.LENGTH_LONG).show();
         logout();
     }
 
@@ -242,7 +239,7 @@ public class AccountTeacherActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (!isOnline()) {
-            Toast.makeText(getApplicationContext(), "Нет соединения с интернетом!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.internet_connection_error, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -9,10 +9,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,6 @@ public class StartTestActivity extends AppCompatActivity {
     Button finishTest;
     CountDownTimer cTimer;
 
-    private boolean listDownload = false;
     private boolean testFinished = false;
     private int countTrueAnswers = 0;
     private int countQuestion = 0;
@@ -103,14 +103,21 @@ public class StartTestActivity extends AppCompatActivity {
         answer3 = findViewById(R.id.answer3);
         answer4 = findViewById(R.id.answer4);
 
+        setScrollButton(answer1);
+        setScrollButton(answer2);
+        setScrollButton(answer3);
+        setScrollButton(answer4);
+        mQuestion.setScroller(new Scroller(this));
+        mQuestion.setVerticalScrollBarEnabled(true);
+        mQuestion.setMovementMethod(new ScrollingMovementMethod());
+
         mProgress = new ProgressDialog(this);
 
         try {
-            myRef.addValueEventListener(new ValueEventListener() {
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    if (!listDownload) {
+                    if (dataSnapshot.exists()) {
                         mProgress.setMessage("Загрузка вопросов ...");
                         mProgress.show();
                         clearLists();
@@ -133,7 +140,6 @@ public class StartTestActivity extends AppCompatActivity {
                 }
             });
         } catch (NullPointerException ex) {
-            Log.d("Errors", "NullPointerException");
             errorNull();
         }
 
@@ -143,22 +149,26 @@ public class StartTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.answer1:
-                        changeListAndSetColorBtn(mListColorButton1, mListColorButton2, mListColorButton3, mListColorButton4
+                        changeListAndSetColorBtn(mListColorButton1, mListColorButton2
+                                , mListColorButton3, mListColorButton4
                                 , answer1, answer2, answer3, answer4);
                         checkRightAnswer(mListAnswer1);
                         break;
                     case R.id.answer2:
-                        changeListAndSetColorBtn(mListColorButton2, mListColorButton1, mListColorButton3, mListColorButton4
+                        changeListAndSetColorBtn(mListColorButton2, mListColorButton1
+                                , mListColorButton3, mListColorButton4
                                 , answer2, answer1, answer3, answer4);
                         checkRightAnswer(mListAnswer2);
                         break;
                     case R.id.answer3:
-                        changeListAndSetColorBtn(mListColorButton3, mListColorButton1, mListColorButton2, mListColorButton4
+                        changeListAndSetColorBtn(mListColorButton3, mListColorButton1
+                                , mListColorButton2, mListColorButton4
                                 , answer3, answer1, answer2, answer4);
                         checkRightAnswer(mListAnswer3);
                         break;
                     case R.id.answer4:
-                        changeListAndSetColorBtn(mListColorButton4, mListColorButton1, mListColorButton2, mListColorButton3
+                        changeListAndSetColorBtn(mListColorButton4, mListColorButton1
+                                , mListColorButton2, mListColorButton3
                                 , answer4, answer1, answer2, answer3);
                         checkRightAnswer(mListAnswer4);
                         break;
@@ -169,6 +179,12 @@ public class StartTestActivity extends AppCompatActivity {
         answer2.setOnClickListener(onClickListener);
         answer3.setOnClickListener(onClickListener);
         answer4.setOnClickListener(onClickListener);
+    }
+
+    private void setScrollButton(Button button) {
+        button.setScroller(new Scroller(this));
+        button.setVerticalScrollBarEnabled(true);
+        button.setMovementMethod(new ScrollingMovementMethod());
     }
 
     private void addQuestionAndAnswer(DataSnapshot dataSnapshot) {
@@ -185,7 +201,6 @@ public class StartTestActivity extends AppCompatActivity {
             mListAnswer4.add((String) testDB.child(mListAnswers.get(masNumberAnswers[3])).getValue());
             mListCorrectAnswer.add((String) testDB.child(ConstantsNames.CORRECT_ANSWER).getValue());
         }
-        listDownload = true;
     }
 
     private void changeListAndSetColorBtn(ArrayList<Integer> listColorBtn1, ArrayList<Integer> listColorBtn2
@@ -193,13 +208,13 @@ public class StartTestActivity extends AppCompatActivity {
             , Button btn, Button other_btn_1, Button other_btn_2, Button other_btn_3) {
 
         btn.setBackground(getResources().getDrawable(R.drawable.btn_yellow));
-        listColorBtn1.set(countQuestion, R.drawable.btn_yellow);
-        listColorBtn2.set(countQuestion, R.drawable.ripple_btn);
-        listColorBtn3.set(countQuestion, R.drawable.ripple_btn);
-        listColorBtn4.set(countQuestion, R.drawable.ripple_btn);
-        other_btn_1.setBackground(getResources().getDrawable(R.drawable.ripple_btn));
-        other_btn_2.setBackground(getResources().getDrawable(R.drawable.ripple_btn));
-        other_btn_3.setBackground(getResources().getDrawable(R.drawable.ripple_btn));
+        listColorBtn1.set(countQuestion, R.color.yellow_btn);
+        listColorBtn2.set(countQuestion, R.color.orange_btn);
+        listColorBtn3.set(countQuestion, R.color.orange_btn);
+        listColorBtn4.set(countQuestion, R.color.orange_btn);
+        other_btn_1.setBackground(getResources().getDrawable(R.color.orange_btn));
+        other_btn_2.setBackground(getResources().getDrawable(R.color.orange_btn));
+        other_btn_3.setBackground(getResources().getDrawable(R.color.orange_btn));
     }
 
     private void checkRightAnswer(ArrayList<String> listAnswer) {
@@ -212,10 +227,10 @@ public class StartTestActivity extends AppCompatActivity {
 
     private void createListColorBtnAndListUserAnswer() {
         for (int i = 0; i < numberQuestion; i++) {
-            mListColorButton1.add(R.drawable.ripple_btn);
-            mListColorButton2.add(R.drawable.ripple_btn);
-            mListColorButton3.add(R.drawable.ripple_btn);
-            mListColorButton4.add(R.drawable.ripple_btn);
+            mListColorButton1.add(R.color.orange_btn);
+            mListColorButton2.add(R.color.orange_btn);
+            mListColorButton3.add(R.color.orange_btn);
+            mListColorButton4.add(R.color.orange_btn);
             mListUserAnswer.add(0);
         }
     }
@@ -254,6 +269,11 @@ public class StartTestActivity extends AppCompatActivity {
         answer2.setText(mListAnswer2.get(countQuestion));
         answer3.setText(mListAnswer3.get(countQuestion));
         answer4.setText(mListAnswer4.get(countQuestion));
+        mQuestion.scrollTo(0,0);
+        answer1.scrollTo(0,0);
+        answer2.scrollTo(0,0);
+        answer3.scrollTo(0,0);
+        answer4.scrollTo(0,0);
         mNumberOfQuestion.setText(countQuestion + 1 + "/" + numberQuestion);
     }
 
@@ -294,10 +314,9 @@ public class StartTestActivity extends AppCompatActivity {
             countTrueAnswers = Collections.frequency(mListUserAnswer, 1);
             startResultActivity();
             setColorButtonAfterFinishTest();
-            finishTest.setText("Главное меню");
+            finishTest.setText(R.string.main_menu);
             finishTest.setBackgroundColor(getResources().getColor(R.color.gray3));
         } else finish();
-        //Toast.makeText(StartTestActivity.this, Integer.toString(countTrueAnswers), Toast.LENGTH_SHORT).show();
         testFinished = true;
     }
 
@@ -354,15 +373,19 @@ public class StartTestActivity extends AppCompatActivity {
 
             @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
-                //mTimeLeft.setText(Integer.toString((int) (millisUntilFinished / 1000)));
+
                 if (((millisUntilFinished / 1000) < 10) && testTime < 10) {
-                    mTimeLeft.setText("0" +Integer.toString(testTime-1) + " : 0" +Integer.toString((int) (millisUntilFinished / 1000)));
+                    mTimeLeft.setText("0" +Integer.toString(testTime-1)
+                            + " : 0" +Integer.toString((int) (millisUntilFinished / 1000)));
                 } else if ((millisUntilFinished / 1000) < 10) {
-                    mTimeLeft.setText(Integer.toString(testTime-1) + " : 0" +Integer.toString((int) (millisUntilFinished / 1000)));
+                    mTimeLeft.setText(Integer.toString(testTime-1)
+                            + " : 0" +Integer.toString((int) (millisUntilFinished / 1000)));
                 } else if (testTime < 10) {
-                    mTimeLeft.setText("0" +Integer.toString(testTime-1) + " : " +Integer.toString((int) (millisUntilFinished / 1000)));
+                    mTimeLeft.setText("0" +Integer.toString(testTime-1)
+                            + " : " +Integer.toString((int) (millisUntilFinished / 1000)));
                 } else {
-                    mTimeLeft.setText(Integer.toString(testTime - 1) + " : " + Integer.toString((int) (millisUntilFinished / 1000)));
+                    mTimeLeft.setText(Integer.toString(testTime - 1)
+                            + " : " + Integer.toString((int) (millisUntilFinished / 1000)));
                 }
 
                 if (testTime-1 == 0) {
@@ -399,8 +422,7 @@ public class StartTestActivity extends AppCompatActivity {
     }
 
     private void errorNull() {
-        Log.d("Errors", "NullPointerException");
-        Toast.makeText(this, "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.server_connection_error, Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -408,6 +430,11 @@ public class StartTestActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         cTimer.cancel();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

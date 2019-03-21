@@ -2,10 +2,12 @@ package com.lion.test_rating.StudentAccount.RecyclerViewAdapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.lion.test_rating.R;
 import com.lion.test_rating.StudentAccount.AccountStudentActivity;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentResultsForStudent;
+import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
 
 import java.util.ArrayList;
 
@@ -25,9 +28,7 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
     private ArrayList<String> mDepartment;
     private Context mContext;
 
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    FragmentResultsForStudent fragmentResultsForStudent;
+    private FragmentResultsForStudent fragmentResultsForStudent;
 
     public RVAListTeachersForStudentAccount(Context mContext, ArrayList<String> teacher, ArrayList<String> department) {
         this.mTeacher = teacher;
@@ -35,19 +36,17 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
         this.mContext = mContext;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_for_students_list_teachers, parent, false);
 
-        Activity activity = (Activity) mContext;
-        fragmentManager = activity.getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentResultsForStudent = new FragmentResultsForStudent();
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.nameTeacherTV.setText(mTeacher.get(position));
         holder.departmentTV.setText(mDepartment.get(position));
@@ -58,12 +57,20 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
                 Bundle bundle = new Bundle();
                 String myMessage = mTeacher.get(position);
                 bundle.putString("teacher", myMessage);
-                fragmentResultsForStudent.setArguments(bundle);
-                fragmentTransaction.replace(R.id.container, fragmentResultsForStudent);
-                fragmentTransaction.commit();
+                replaceFragment(fragmentResultsForStudent, bundle);
                 AccountStudentActivity.checkFragment = 1;
             }
         });
+    }
+
+    private void replaceFragment(Fragment fragment, Bundle bundle) {
+        Activity activity = (Activity) mContext;
+        FragmentManager fragmentManager = activity.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
+        AccountTeacherActivity.checkFragment = 1;
     }
 
     @Override

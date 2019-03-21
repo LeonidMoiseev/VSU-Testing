@@ -26,6 +26,7 @@
     <string name="authorization_complete">Авторизация прошла успешно</string>
     <string name="registration_error_with_email">Регистрация неуспешна. Введите другой E-mail</string>
     <string name="registration_error">Ошибка регистрации</string>
+    <string name="registration_error_course_group">Ошибка регистрации. Проверьте введённые курс и группу</string>
     <string name="registration_complete">Регистрация прошла успешно</string>
     <string name="progressMessage">Вход в систему ...</string>
     <string name="your_name">ФИО полностью</string>
@@ -90,6 +91,8 @@
     <string name="error_code_activation">Неправильный код активации</string>
     <string name="error_data_name">ФИО указаны неправильно</string>
     <string name="server_connection_error">Ошибка соединения с сервером..</string>
+    <string name="internet_connection_error">Нет соединения с интернетом!</string>
+    <string name="main_menu">Главное меню</string>
 
     <string-array name="chooseList">
         <item>Первые 10 студентов в рейтинге</item>

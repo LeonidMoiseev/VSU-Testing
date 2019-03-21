@@ -104,7 +104,8 @@ public class FragmentResultsForStudent extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_results_students);
-        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(getActivity(), mSubjectName, mDataName, mPoints, mTopicName);
+        RVAResultsForStudentAccount adapter = new RVAResultsForStudentAccount(getActivity()
+                , mSubjectName, mDataName, mPoints, mTopicName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
