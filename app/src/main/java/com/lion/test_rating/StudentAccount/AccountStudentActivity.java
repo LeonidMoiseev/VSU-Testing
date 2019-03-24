@@ -192,6 +192,7 @@ public class AccountStudentActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        checkFragment = 0;
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 

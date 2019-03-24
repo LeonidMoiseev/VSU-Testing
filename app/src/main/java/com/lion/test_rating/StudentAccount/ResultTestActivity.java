@@ -115,7 +115,7 @@ public class ResultTestActivity extends AppCompatActivity {
 
         mDatabaseUserComplete.child(ConstantsNames.TESTS).child(nameTeacher).child(numberTest)
                 .child(ConstantsNames.USER_COMPLETE_TEST)
-                .child(nameStudent).setValue(ConstantsNames.COMPLETE);
+                .child(nameStudent).setValue(Integer.toString(points));
     }
 
     private void writeResultTest() {

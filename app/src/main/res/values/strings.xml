@@ -21,7 +21,7 @@
     <string name="et_email">Email</string>
     <string name="et_password">Пароль</string>
     <string name="btn_sign_in">Авторизация</string>
-    <string name="btn_registration">Создать аккаунт?</string>
+    <string name="btn_registration">Создать аккаунт</string>
     <string name="authorization_error">Авторизация неуспешна</string>
     <string name="authorization_complete">Авторизация прошла успешно</string>
     <string name="registration_error_with_email">Регистрация неуспешна. Введите другой E-mail</string>
@@ -97,6 +97,18 @@
     <string name="exit_item">Выход</string>
     <string name="close_test">Покинуть тест? (Вы получите 0 баллов за данный тест)</string>
     <string name="text_destroy_app_result_test">Тест был завершён по причине закрытия приложения или выхода из теста. Если это получилось случайно, обратитесь к преподавателю.</string>
+    <string name="my_tests_item">Мои тесты</string>
+    <string name="change_status_test">Изменить статус теста</string>
+    <string name="remark_status_test">(При закрытом статусе, студенты не смогут проходить данный тест)</string>
+    <string name="status_open">Открыт</string>
+    <string name="status_close">Закрыт</string>
+    <string name="delete_test">Удалить</string>
+    <string name="delete_test_from_db">Удалить тест из базы данных?</string>
+    <string name="open_test_for_student_text">Введите ФИО студента для которого вы повторно хотите открыть тест</string>
+    <string name="open_for_student">Открыть для студента</string>
+    <string name="this_student_not_exist">Такого студента нет в списках пользователей прошедших тест</string>
+    <string name="status_changed">Статус изменён</string>
+    <string name="test_deleted">Тест удалён</string>
 
     <string-array name="chooseList">
         <item>Первые 10 студентов в рейтинге</item>

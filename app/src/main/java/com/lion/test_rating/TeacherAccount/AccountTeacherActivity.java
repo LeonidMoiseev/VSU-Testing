@@ -29,6 +29,7 @@ import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.MainActivity;
 import com.lion.test_rating.R;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentInformationForTeacherAccount;
+import com.lion.test_rating.TeacherAccount.Fragments.FragmentMyTestsStatusForTeachersAccount;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentRatingForTeacherAccount;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentTestsForTeachersAccount;
 
@@ -53,6 +54,7 @@ public class AccountTeacherActivity extends AppCompatActivity
     private FragmentTestsForTeachersAccount fResult;
     private FragmentInformationForTeacherAccount fInformation;
     private FragmentRatingForTeacherAccount fRating;
+    private FragmentMyTestsStatusForTeachersAccount fTests;
     FragmentTransaction fragmentTransaction;
 
     public static int checkFragment = 0;
@@ -113,8 +115,9 @@ public class AccountTeacherActivity extends AppCompatActivity
         fResult = new FragmentTestsForTeachersAccount();
         fInformation = new FragmentInformationForTeacherAccount();
         fRating = new FragmentRatingForTeacherAccount();
+        fTests = new FragmentMyTestsStatusForTeachersAccount();
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fResult);
+        fragmentTransaction.replace(R.id.container, fTests);
         fragmentTransaction.commit();
     }
 
@@ -190,7 +193,9 @@ public class AccountTeacherActivity extends AppCompatActivity
 
         fragmentTransaction = getFragmentManager().beginTransaction();
 
-        if (id == R.id.nav_result_t) {
+        if (id == R.id.nav_test_t) {
+            fragmentTransaction.replace(R.id.container, fTests);
+        } else if (id == R.id.nav_result_t) {
             fragmentTransaction.replace(R.id.container, fResult);
         } else if (id == R.id.nav_information_t) {
             fragmentTransaction.replace(R.id.container, fInformation);

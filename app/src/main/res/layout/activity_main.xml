@@ -58,13 +58,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="7dp"
+            android:layout_marginBottom="4dp"
             android:layout_weight="2"
             android:background="@drawable/ripple_btn_orange"
             android:text="@string/btn_sign_in"
             android:textAllCaps="false"
             android:textSize="@dimen/text_size2"
             android:elevation="10dp"
-            android:translationZ="10dp" />
+            android:translationZ="7dp" />
 
         <Button
             android:id="@+id/btn_registration"
@@ -73,11 +74,11 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="2"
-            android:background="@color/gray"
+            android:background="@drawable/ripple_btn_orange"
             android:text="@string/btn_registration"
             android:textAllCaps="false"
             android:textSize="@dimen/text_size2"
-            android:textColor="@color/white2"/>
+            android:textColor="@color/gray"/>
 
     </LinearLayout>
 

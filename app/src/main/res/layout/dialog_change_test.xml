@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/gray"
+    android:padding="@dimen/paddingLeftRight">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/gray2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/delete_test_from_db"
+            android:textSize="@dimen/text_size2"
+            android:gravity="center"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/btn_delete_test"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_btn_orange"
+            android:text="@string/delete_test"
+            android:textSize="@dimen/text_size2"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/gray2"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/change_status_test"
+            android:textSize="@dimen/text_size2"
+            android:gravity="center"
+            android:padding="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_status_close"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn_orange"
+                android:text="@string/status_close"
+                android:textSize="@dimen/text_size2"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="7dp"/>
+
+            <Button
+                android:id="@+id/btn_status_open"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn_orange"
+                android:text="@string/status_open"
+                android:textSize="@dimen/text_size2"
+                android:textAllCaps="false"
+                android:layout_weight="1"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/remark_status_test"
+            android:textSize="@dimen/text_size3"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/gray2"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/open_test_for_student_text"
+            android:textSize="@dimen/text_size2"
+            android:gravity="center"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/fio_student_ET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size2"
+            android:textColor="@color/white"
+            android:hint="Иванов Иван Иванович"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColorHint="@color/white2"/>
+
+        <Button
+            android:id="@+id/btn_open_test_for_student"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_btn_orange"
+            android:text="@string/open_for_student"
+            android:textSize="@dimen/text_size2"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
