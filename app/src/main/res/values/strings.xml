@@ -21,7 +21,7 @@
     <string name="et_email">Email</string>
     <string name="et_password">Пароль</string>
     <string name="btn_sign_in">Авторизация</string>
-    <string name="btn_registration">Создать аккаунт</string>
+    <string name="btn_registration">Создать аккаунт?</string>
     <string name="authorization_error">Авторизация неуспешна</string>
     <string name="authorization_complete">Авторизация прошла успешно</string>
     <string name="registration_error_with_email">Регистрация неуспешна. Введите другой E-mail</string>
@@ -93,6 +93,10 @@
     <string name="server_connection_error">Ошибка соединения с сервером..</string>
     <string name="internet_connection_error">Нет соединения с интернетом!</string>
     <string name="main_menu">Главное меню</string>
+    <string name="setting_item">Настройки</string>
+    <string name="exit_item">Выход</string>
+    <string name="close_test">Покинуть тест? (Вы получите 0 баллов за данный тест)</string>
+    <string name="text_destroy_app_result_test">Тест был завершён по причине закрытия приложения или выхода из теста. Если это получилось случайно, обратитесь к преподавателю.</string>
 
     <string-array name="chooseList">
         <item>Первые 10 студентов в рейтинге</item>

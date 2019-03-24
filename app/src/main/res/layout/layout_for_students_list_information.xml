@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/ripple_btn2">
+    android:background="@drawable/ripple_btn_gray">
 
     <TextView
         android:id="@+id/text_name_teacher"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/paddingLeftRight"
         android:paddingRight="@dimen/paddingLeftRight"
-        android:paddingTop="@dimen/paddingTopBottom"
+        android:paddingTop="@dimen/paddingLeftRight"
         android:text="Teacher"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size2"
@@ -27,6 +27,7 @@
         android:layout_below="@+id/text_name_teacher"
         android:paddingLeft="@dimen/paddingLeftRight"
         android:paddingRight="@dimen/paddingLeftRight"
+        android:paddingBottom="@dimen/paddingLeftRight"
         android:text="Информация"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size2" />
@@ -35,19 +36,23 @@
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_btn3"
+        android:background="@drawable/ripple_btn_coral"
         android:layout_below="@+id/text_information"
         android:layout_alignParentRight="true"
         android:text="28.01.2019"
-        android:padding="5dp"
+        android:paddingRight="@dimen/paddingLeftRight"
+        android:paddingLeft="@dimen/paddingLeftRight"
+        android:paddingTop="@dimen/paddingTopBottom"
+        android:paddingBottom="@dimen/paddingTopBottom"
         android:textColor="@color/gray"
         android:textSize="@dimen/text_size3"
+        android:textStyle="bold"
         android:focusable="true"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="@dimen/line_height"
         android:layout_alignBottom="@+id/text_date"
-        android:background="@drawable/ripple_btn3"/>
+        android:background="@drawable/ripple_line_coral"/>
 
 </RelativeLayout>

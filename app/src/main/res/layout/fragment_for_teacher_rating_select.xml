@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/ripple_btn2">
+        android:background="@drawable/ripple_btn_gray">
 
         <TextView
             android:layout_width="match_parent"
@@ -25,8 +25,7 @@
             android:textStyle="bold"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:paddingTop="@dimen/paddingTopBottom"
-            android:paddingBottom="@dimen/paddingTopBottom" />
+            android:paddingTop="@dimen/paddingLeftRight"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size2"
-                android:textColor="@color/white"
+                android:textColor="@color/white2"
                 android:text="@string/enter_the_course"/>
 
             <EditText
@@ -50,6 +49,7 @@
                 android:textSize="@dimen/text_size2"
                 android:textColor="@color/white"
                 android:hint="@string/courseET"
+                android:gravity="center"
                 android:backgroundTint="@color/yellow_btn"
                 android:textCursorDrawable="@drawable/cursor_yellow_color"
                 android:textColorHint="@color/white2"/>
@@ -62,17 +62,19 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/ripple_btn4"
+            android:background="@drawable/ripple_btn_yellow"
             android:textSize="@dimen/text_size2"
             android:textColor="@color/gray"
             android:textAllCaps="false"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:text="@string/search"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line_height"
             android:layout_alignBottom="@+id/search_rating_on_course"
-            android:background="@drawable/ripple_btn4" />
+            android:background="@drawable/ripple_line_yellow" />
 
     </RelativeLayout>
 
@@ -82,7 +84,7 @@
         android:layout_weight="1"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/ripple_btn2">
+        android:background="@drawable/ripple_btn_gray">
 
         <TextView
             android:layout_width="match_parent"
@@ -93,8 +95,7 @@
             android:textStyle="bold"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:paddingTop="@dimen/paddingTopBottom"
-            android:paddingBottom="@dimen/paddingTopBottom" />
+            android:paddingTop="@dimen/paddingLeftRight"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size2"
-                android:textColor="@color/white"
+                android:textColor="@color/white2"
                 android:text="@string/enter_course_and_group"/>
 
             <LinearLayout
@@ -123,6 +124,8 @@
                     android:textSize="@dimen/text_size2"
                     android:textColor="@color/white"
                     android:hint="@string/courseET"
+                    android:gravity="center"
+                    android:inputType="text"
                     android:backgroundTint="@color/orange_btn"
                     android:textCursorDrawable="@drawable/cursor_orange_color"
                     android:textColorHint="@color/white2"/>
@@ -135,6 +138,7 @@
                     android:textSize="@dimen/text_size2"
                     android:textColor="@color/white"
                     android:hint="@string/groupET"
+                    android:gravity="center"
                     android:backgroundTint="@color/orange_btn"
                     android:textCursorDrawable="@drawable/cursor_orange_color"
                     android:textColorHint="@color/white2"/>
@@ -149,17 +153,19 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/ripple_btn"
+            android:background="@drawable/ripple_btn_orange"
             android:textSize="@dimen/text_size2"
             android:textColor="@color/gray"
             android:textAllCaps="false"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:text="@string/search"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line_height"
             android:layout_alignBottom="@+id/search_rating_on_group"
-            android:background="@drawable/ripple_btn" />
+            android:background="@drawable/ripple_line_orange" />
 
     </RelativeLayout>
 
@@ -168,7 +174,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginTop="5dp"
-        android:background="@drawable/ripple_btn2">
+        android:background="@drawable/ripple_btn_gray">
 
         <TextView
             android:layout_width="match_parent"
@@ -179,8 +185,7 @@
             android:textStyle="bold"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:paddingTop="@dimen/paddingTopBottom"
-            android:paddingBottom="@dimen/paddingTopBottom" />
+            android:paddingTop="@dimen/paddingLeftRight"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -194,7 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size2"
-                android:textColor="@color/white"
+                android:textColor="@color/white2"
                 android:text="@string/enter_fio_student"/>
 
             <LinearLayout
@@ -223,17 +228,19 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/ripple_btn3"
+            android:background="@drawable/ripple_btn_coral"
             android:textSize="@dimen/text_size2"
             android:textColor="@color/gray"
             android:textAllCaps="false"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingRight="@dimen/paddingLeftRight"
             android:text="@string/search"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line_height"
             android:layout_alignBottom="@+id/search_student_rating"
-            android:background="@drawable/ripple_btn3" />
+            android:background="@drawable/ripple_line_coral" />
 
     </RelativeLayout>
 

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/ripple_btn2">
+    android:background="@drawable/ripple_btn_gray">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:paddingTop="@dimen/paddingTopBottom"
+            android:paddingTop="@dimen/paddingLeftRight"
             android:text="Информация"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size2" />
@@ -29,6 +29,7 @@
             android:layout_below="@+id/text_information"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingLeftRight"
             android:text="1 курс 7 группа"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size3"
@@ -40,8 +41,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_course_and_group"
             android:layout_alignParentRight="true"
-            android:background="@drawable/ripple_btn3"
-            android:padding="5dp"
+            android:background="@drawable/ripple_btn_coral"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingTopBottom"
+            android:paddingTop="@dimen/paddingTopBottom"
             android:text="28.01.2019"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size3"
@@ -49,9 +53,9 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line_height"
             android:layout_alignBottom="@+id/text_date"
-            android:background="@drawable/ripple_btn3"/>
+            android:background="@drawable/ripple_line_coral"/>
 
     </RelativeLayout>
 

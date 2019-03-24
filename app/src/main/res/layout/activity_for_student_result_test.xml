@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/paddingLeftRight"
-            android:background="@drawable/ripple_btn2">
+            android:background="@drawable/ripple_btn_gray">
 
             <TextView
                 android:id="@+id/resultTest"
@@ -58,7 +58,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/ratingOverall"
+            android:id="@+id/text_result_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/ripple_btn"
+            android:background="@drawable/ripple_btn_orange"
             android:text="@string/check_test_btn"
             android:textAllCaps="false"
             android:elevation="10dp"
@@ -83,7 +83,7 @@
             android:id="@+id/backMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_btn"
+            android:background="@drawable/ripple_btn_orange"
             android:text="@string/main_menu_btn"
             android:textAllCaps="false"
             android:elevation="10dp"

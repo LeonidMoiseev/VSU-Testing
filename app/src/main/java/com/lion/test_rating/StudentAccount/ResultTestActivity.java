@@ -23,6 +23,7 @@ public class ResultTestActivity extends AppCompatActivity {
     private int points;
     TextView rightAnswerTV;
     TextView pointsTV;
+    TextView textResultTestTV;
     Button checkTest;
     Button backMenu;
 
@@ -31,6 +32,11 @@ public class ResultTestActivity extends AppCompatActivity {
     String dataCreateTest;
     String nameSubject;
     String topicName;
+
+    String nameStudent;
+    String courseStudent;
+    String groupStudent;
+    String ratingStudent;
 
     DatabaseReference mDatabaseUserComplete;
     DatabaseReference mDatabaseUserResult;
@@ -49,20 +55,31 @@ public class ResultTestActivity extends AppCompatActivity {
         pointsTV = findViewById(R.id.points);
         checkTest = findViewById(R.id.check_test);
         backMenu = findViewById(R.id.backMenu);
+        textResultTestTV = findViewById(R.id.text_result_test);
 
         Intent intent = getIntent();
         countTrueAnswers = intent.getIntExtra("countTrueAnswers", 0);
         numberQuestions = intent.getIntExtra("numberQuestions", 0);
+        int destroyTest = intent.getIntExtra("destroyTest", 0);
         nameTeacher = intent.getStringExtra("nameTeacher");
         numberTest = intent.getStringExtra("numberTest");
         dataCreateTest = intent.getStringExtra("dataCreateTest");
         nameSubject = intent.getStringExtra("nameSubject");
         topicName = intent.getStringExtra("topicName");
+        nameStudent = intent.getStringExtra("nameStudent");
+        courseStudent = intent.getStringExtra("courseStudent");
+        groupStudent = intent.getStringExtra("groupStudent");
+        ratingStudent = intent.getStringExtra("ratingStudent");
 
         countPoints();
         showResult();
         writeUserCompletedTest();
         writeResultTest();
+
+        if (destroyTest == 1) {
+            checkTest.setEnabled(false);
+            textResultTestTV.setText(R.string.text_destroy_app_result_test);
+        }
 
         checkTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +115,7 @@ public class ResultTestActivity extends AppCompatActivity {
 
         mDatabaseUserComplete.child(ConstantsNames.TESTS).child(nameTeacher).child(numberTest)
                 .child(ConstantsNames.USER_COMPLETE_TEST)
-                .child(AccountStudentActivity.mListUserInformation.get(0)).setValue(ConstantsNames.COMPLETE);
+                .child(nameStudent).setValue(ConstantsNames.COMPLETE);
     }
 
     private void writeResultTest() {
@@ -106,9 +123,7 @@ public class ResultTestActivity extends AppCompatActivity {
                 .child(ConstantsNames.RESULTS).child(nameTeacher).child(numberTest);
         mDatabaseUserResult.keepSynced(true);
 
-        mDatabaseUserResult.child(AccountStudentActivity.mListUserInformation.get(2))
-                .child(AccountStudentActivity.mListUserInformation.get(3))
-                .child(AccountStudentActivity.mListUserInformation.get(0))
+        mDatabaseUserResult.child(courseStudent).child(groupStudent).child(nameStudent)
                 .setValue(Integer.toString(points));
         mDatabaseUserResult.child(ConstantsNames.SUBJECT).setValue(nameSubject);
         mDatabaseUserResult.child(ConstantsNames.DATE_CREATE).setValue(dataCreateTest);
@@ -120,13 +135,7 @@ public class ResultTestActivity extends AppCompatActivity {
         mDatabaseRating = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.USERS)
                 .child(ConstantsNames.STUDENTS).child(userID);
 
-        int newPoints = Integer.parseInt(AccountStudentActivity.mListUserInformation.get(4)) + points;
+        int newPoints = Integer.parseInt(ratingStudent) + points;
         mDatabaseRating.child(ConstantsNames.RATING).setValue(Integer.toString(newPoints));
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 }

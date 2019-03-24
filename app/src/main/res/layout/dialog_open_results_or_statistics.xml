@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/paddingLeftRight"
-        android:background="@drawable/ripple_btn"
+        android:background="@drawable/ripple_btn_orange"
         android:text="@string/result_item"
         android:textAllCaps="false"
         android:textSize="@dimen/text_size2" />
@@ -33,7 +33,7 @@
         android:layout_marginLeft="@dimen/paddingLeftRight"
         android:layout_marginRight="@dimen/paddingLeftRight"
         android:layout_marginBottom="@dimen/paddingLeftRight"
-        android:background="@drawable/ripple_btn"
+        android:background="@drawable/ripple_btn_orange"
         android:text="@string/Statistic"
         android:textAllCaps="false"
         android:textSize="@dimen/text_size2" />

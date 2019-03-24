@@ -8,4 +8,4 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:textColor="@color/white"
     android:textSize="@dimen/text_size2"
-    android:background="@drawable/ripple_btn2"/>
+    android:background="@drawable/ripple_btn_gray"/>

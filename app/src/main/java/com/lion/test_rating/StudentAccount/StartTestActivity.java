@@ -1,12 +1,18 @@
 package com.lion.test_rating.StudentAccount;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -27,6 +33,7 @@ import com.lion.test_rating.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class StartTestActivity extends AppCompatActivity {
@@ -34,7 +41,8 @@ public class StartTestActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     TextView mQuestion;
     TextView mNumberOfQuestion;
-    TextView mTimeLeft;
+    @SuppressLint("StaticFieldLeak")
+    public static TextView mTimeLeft;
     Button answer1;
     Button answer2;
     Button answer3;
@@ -42,18 +50,26 @@ public class StartTestActivity extends AppCompatActivity {
     ImageButton previousQuestion;
     ImageButton nextQuestion;
     Button finishTest;
-    CountDownTimer cTimer;
+    AlertDialog dialog;
 
-    private boolean testFinished = false;
+    public static boolean testFinished;
+    private int destroyTest = 0;
     private int countTrueAnswers = 0;
     private int countQuestion = 0;
     private int numberQuestion;
     private int numberAllQuestion;
-    private int testTime;
+    public static int testTime;
     private String numberTest;
     private String nameTeacher;
+    private String nameStudent;
+    private String courseStudent;
+    private String groupStudent;
+    private String ratingStudent;
     private Integer[] masNumberQuestion;
     private Integer[] masNumberAnswers;
+
+    static AlarmManager alarmManager;
+    static PendingIntent pendingIntent;
 
     private ArrayList<String> mListQuestion = new ArrayList<>();
     private ArrayList<String> mListAnswer1 = new ArrayList<>();
@@ -73,11 +89,29 @@ public class StartTestActivity extends AppCompatActivity {
     private String nameSubject;
     private String topicName;
 
-    @SuppressLint("HandlerLeak")
+    LocalBroadcastManager mLocalBroadcastManager;
+    BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("com.lion.close".equals(intent.getAction())) {
+                finishTest();
+            }
+        }
+    };
+
+    @SuppressLint({"HandlerLeak", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_student_start_test);
+
+        testFinished = false;
+
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction("com.lion.close");
+        mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, mIntentFilter);
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = mFirebaseDatabase.getReference().child(ConstantsNames.TESTS);
@@ -91,6 +125,10 @@ public class StartTestActivity extends AppCompatActivity {
         topicName = intent.getStringExtra("topicName");
         numberQuestion = Integer.parseInt(intent.getStringExtra("restrictionTest"));
         testTime = Integer.parseInt(intent.getStringExtra("testTime"));
+        nameStudent = AccountStudentActivity.mListUserInformation.get(0);
+        courseStudent = AccountStudentActivity.mListUserInformation.get(2);
+        groupStudent = AccountStudentActivity.mListUserInformation.get(3);
+        ratingStudent = AccountStudentActivity.mListUserInformation.get(4);
 
         previousQuestion = findViewById(R.id.previous_question);
         nextQuestion = findViewById(R.id.next_question);
@@ -113,6 +151,12 @@ public class StartTestActivity extends AppCompatActivity {
 
         mProgress = new ProgressDialog(this);
 
+        if (testTime < 10) {
+            StartTestActivity.mTimeLeft.setText("0" + Integer.toString(testTime) + " : 00");
+        } else {
+            StartTestActivity.mTimeLeft.setText(Integer.toString(testTime) + " : 00");
+        }
+
         try {
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -129,7 +173,9 @@ public class StartTestActivity extends AppCompatActivity {
                         addQuestionAndAnswer(dataSnapshot);
                         changeQuestionAndAnswer();
                         previousAndNextQuestionButton();
-                        countDownTimer();
+
+                        initAlarmManager(StartTestActivity.this);
+                        mProgress.dismiss();
                     }
                     mProgress.dismiss();
                 }
@@ -208,13 +254,13 @@ public class StartTestActivity extends AppCompatActivity {
             , Button btn, Button other_btn_1, Button other_btn_2, Button other_btn_3) {
 
         btn.setBackground(getResources().getDrawable(R.drawable.btn_yellow));
-        listColorBtn1.set(countQuestion, R.color.yellow_btn);
-        listColorBtn2.set(countQuestion, R.color.orange_btn);
-        listColorBtn3.set(countQuestion, R.color.orange_btn);
-        listColorBtn4.set(countQuestion, R.color.orange_btn);
-        other_btn_1.setBackground(getResources().getDrawable(R.color.orange_btn));
-        other_btn_2.setBackground(getResources().getDrawable(R.color.orange_btn));
-        other_btn_3.setBackground(getResources().getDrawable(R.color.orange_btn));
+        listColorBtn1.set(countQuestion, R.drawable.btn_yellow);
+        listColorBtn2.set(countQuestion, R.drawable.btn_orange);
+        listColorBtn3.set(countQuestion, R.drawable.btn_orange);
+        listColorBtn4.set(countQuestion, R.drawable.btn_orange);
+        other_btn_1.setBackground(getResources().getDrawable(R.drawable.btn_orange));
+        other_btn_2.setBackground(getResources().getDrawable(R.drawable.btn_orange));
+        other_btn_3.setBackground(getResources().getDrawable(R.drawable.btn_orange));
     }
 
     private void checkRightAnswer(ArrayList<String> listAnswer) {
@@ -227,10 +273,10 @@ public class StartTestActivity extends AppCompatActivity {
 
     private void createListColorBtnAndListUserAnswer() {
         for (int i = 0; i < numberQuestion; i++) {
-            mListColorButton1.add(R.color.orange_btn);
-            mListColorButton2.add(R.color.orange_btn);
-            mListColorButton3.add(R.color.orange_btn);
-            mListColorButton4.add(R.color.orange_btn);
+            mListColorButton1.add(R.drawable.btn_orange);
+            mListColorButton2.add(R.drawable.btn_orange);
+            mListColorButton3.add(R.drawable.btn_orange);
+            mListColorButton4.add(R.drawable.btn_orange);
             mListUserAnswer.add(0);
         }
     }
@@ -269,11 +315,11 @@ public class StartTestActivity extends AppCompatActivity {
         answer2.setText(mListAnswer2.get(countQuestion));
         answer3.setText(mListAnswer3.get(countQuestion));
         answer4.setText(mListAnswer4.get(countQuestion));
-        mQuestion.scrollTo(0,0);
-        answer1.scrollTo(0,0);
-        answer2.scrollTo(0,0);
-        answer3.scrollTo(0,0);
-        answer4.scrollTo(0,0);
+        mQuestion.scrollTo(0, 0);
+        answer1.scrollTo(0, 0);
+        answer2.scrollTo(0, 0);
+        answer3.scrollTo(0, 0);
+        answer4.scrollTo(0, 0);
         mNumberOfQuestion.setText(countQuestion + 1 + "/" + numberQuestion);
     }
 
@@ -282,7 +328,7 @@ public class StartTestActivity extends AppCompatActivity {
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (countQuestion + 1 <= numberQuestion-1) {
+                if (countQuestion + 1 <= numberQuestion - 1) {
                     countQuestion++;
                     changeQuestionAndAnswer();
                 }
@@ -310,14 +356,24 @@ public class StartTestActivity extends AppCompatActivity {
 
     private void finishTest() {
         if (!testFinished) {
-            cTimer.cancel();
+            testFinished = true;
+            mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+            stopAlarmManager(StartTestActivity.this);
             countTrueAnswers = Collections.frequency(mListUserAnswer, 1);
             startResultActivity();
             setColorButtonAfterFinishTest();
             finishTest.setText(R.string.main_menu);
             finishTest.setBackgroundColor(getResources().getColor(R.color.gray3));
-        } else finish();
-        testFinished = true;
+        } else {
+            finish();
+        }
+    }
+
+    private void finishTestWhenDestroyActivity() {
+        countTrueAnswers = Collections.frequency(mListUserAnswer, 1);
+        destroyTest = 1;
+        startResultActivity();
+        finish();
     }
 
     private void setColorButtonAfterFinishTest() {
@@ -328,6 +384,7 @@ public class StartTestActivity extends AppCompatActivity {
 
         for (int i = 0; i < numberQuestion; i++) {
             if (mListUserAnswer.get(i) == 1) {
+
                 if (mListColorButton1.get(i) == R.drawable.btn_yellow) {
                     mListColorButton1.set(i, R.drawable.btn_green);
                 } else if (mListColorButton2.get(i) == R.drawable.btn_yellow) {
@@ -365,45 +422,12 @@ public class StartTestActivity extends AppCompatActivity {
         resultTest.putExtra("dataCreateTest", dataCreateTest);
         resultTest.putExtra("nameSubject", nameSubject);
         resultTest.putExtra("topicName", topicName);
+        resultTest.putExtra("destroyTest", destroyTest);
+        resultTest.putExtra("nameStudent", nameStudent);
+        resultTest.putExtra("courseStudent", courseStudent);
+        resultTest.putExtra("groupStudent", groupStudent);
+        resultTest.putExtra("ratingStudent", ratingStudent);
         startActivity(resultTest);
-    }
-
-    private void countDownTimer() {
-        cTimer = new CountDownTimer(60000, 1) {
-
-            @SuppressLint("SetTextI18n")
-            public void onTick(long millisUntilFinished) {
-
-                if (((millisUntilFinished / 1000) < 10) && testTime < 10) {
-                    mTimeLeft.setText("0" +Integer.toString(testTime-1)
-                            + " : 0" +Integer.toString((int) (millisUntilFinished / 1000)));
-                } else if ((millisUntilFinished / 1000) < 10) {
-                    mTimeLeft.setText(Integer.toString(testTime-1)
-                            + " : 0" +Integer.toString((int) (millisUntilFinished / 1000)));
-                } else if (testTime < 10) {
-                    mTimeLeft.setText("0" +Integer.toString(testTime-1)
-                            + " : " +Integer.toString((int) (millisUntilFinished / 1000)));
-                } else {
-                    mTimeLeft.setText(Integer.toString(testTime - 1)
-                            + " : " + Integer.toString((int) (millisUntilFinished / 1000)));
-                }
-
-                if (testTime-1 == 0) {
-                    mTimeLeft.setTextColor(getResources().getColor(R.color.red_btn));
-                } else mTimeLeft.setTextColor(getResources().getColor(R.color.white));
-            }
-
-            public void onFinish() {
-                if (testTime-1 == 0) {
-                    finishTest();
-                } else {
-                    testTime--;
-                    cTimer.start();
-                }
-            }
-
-        };
-        cTimer.start();
     }
 
     private void clearLists() {
@@ -426,21 +450,87 @@ public class StartTestActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        cTimer.cancel();
+    private void dialogCloseTest(){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        @SuppressLint("InflateParams")
+        View mView = getLayoutInflater().inflate(R.layout.dialog_close_test, null);
+
+        Button btnYes = mView.findViewById(R.id.btn_yes);
+        Button btnNo = mView.findViewById(R.id.btn_no);
+
+        mBuilder.setView(mView);
+        dialog = mBuilder.create();
+        dialog.show();
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearLists();
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    public static void initAlarmManager(Context context) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        Intent intent = new Intent(context, TimerReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(), pendingIntent);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+    }
+
+    public static void stopAlarmManager(Context context) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        Intent intent = new Intent(context, TimerReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(context, 100, intent
+                , PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(), pendingIntent);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+    }
+
+    protected void onDestroy() {
+        if (!testFinished) {
+            mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+            stopAlarmManager(StartTestActivity.this);
+            finishTestWhenDestroyActivity();
+        }
+        super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
-        clearLists();
-        cTimer.cancel();
-        super.onBackPressed();
+        if (!testFinished) {
+            dialogCloseTest();
+        } else finish();
     }
 }

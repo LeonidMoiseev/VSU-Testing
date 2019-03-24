@@ -21,8 +21,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:background="@color/colorPrimary"
+        android:theme="@style/ThemeNavigation"
         app:headerLayout="@layout/nav_header_main"
         app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white2"/>
+        app:itemIconTint="@color/orange_btn"/>
 
 </android.support.v4.widget.DrawerLayout>

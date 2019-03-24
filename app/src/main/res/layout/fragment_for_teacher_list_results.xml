@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
-    android:orientation="vertical"
-    tools:context=".TeacherAccount.ResultsActivityForTeachers">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@drawable/ripple_btn2"
+            android:background="@drawable/ripple_btn_gray"
             android:src="@drawable/icon_back" />
 
         <TextView
@@ -56,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@drawable/ripple_btn2"
+            android:background="@drawable/ripple_btn_gray"
             android:src="@drawable/icon_next" />
 
     </LinearLayout>

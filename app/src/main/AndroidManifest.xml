@@ -47,6 +47,9 @@
         <activity
             android:name=".StudentAccount.ResultTestActivity"
             android:screenOrientation="portrait" />
+
+        <receiver android:name=".StudentAccount.TimerReceiver" />
+
     </application>
 
 </manifest>

@@ -4,22 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/paddingLeftRight">
+    android:paddingTop="10dp">
 
     <RelativeLayout
         android:id="@+id/layout_stud_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray2">
+        android:background="@drawable/ripple_btn_gray">
 
         <TextView
             android:id="@+id/text_name_student"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/paddingLeftRight"
-            android:paddingTop="@dimen/paddingTopBottom"
+            android:paddingTop="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingTopBottom"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:text="Моисеев Леонид Олегович"
+            android:text="Фио студента"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size2"
             android:textStyle="bold" />
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingLeftRight"
             android:layout_below="@+id/text_place_on_course"
             android:text="Место в группе: 1"
             android:textColor="@color/white"
@@ -51,8 +53,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@color/orange_btn"
-            android:padding="@dimen/paddingTopBottom"
+            android:background="@drawable/ripple_btn_orange"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingTopBottom"
+            android:paddingTop="@dimen/paddingTopBottom"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/text_place_on_group"
             android:text="Рейтинг: 245"
@@ -62,26 +67,10 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line_height"
             android:layout_alignBottom="@+id/text_rating"
-            android:background="@color/orange_btn"/>
+            android:background="@drawable/ripple_line_orange"/>
 
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/paddingLeftRight"
-        android:text="@string/rating_on_group"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size2"
-        android:textStyle="bold"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler_view_for_student_rating_on_group">
-    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

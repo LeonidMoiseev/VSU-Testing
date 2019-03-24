@@ -6,11 +6,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:id="@+id/parent_layout_tests_for_teachers_account"
-    android:background="@drawable/ripple_btn2">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:background="@drawable/ripple_btn_gray">
 
         <TextView
             android:id="@+id/text_name_subject"
@@ -20,7 +16,7 @@
             android:textSize="@dimen/text_size2"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
-            android:paddingTop="@dimen/paddingTopBottom"
+            android:paddingTop="@dimen/paddingLeftRight"
             android:text="Технологии программирования"
             android:textStyle="bold"/>
 
@@ -32,6 +28,7 @@
             android:textSize="@dimen/text_size2"
             android:paddingLeft="@dimen/paddingLeftRight"
             android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingLeftRight"
             android:text="Аттестация 1. ООП"
             android:layout_below="@+id/text_name_subject"/>
 
@@ -39,21 +36,22 @@
             android:id="@+id/text_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_btn"
+            android:background="@drawable/ripple_btn_orange"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size3"
             android:textStyle="bold"
-            android:padding="5dp"
+            android:paddingRight="@dimen/paddingLeftRight"
+            android:paddingLeft="@dimen/paddingLeftRight"
+            android:paddingBottom="@dimen/paddingTopBottom"
+            android:paddingTop="@dimen/paddingTopBottom"
             android:text="28.01.2019"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/text_topic_name"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line_height"
             android:layout_alignBottom="@+id/text_data"
-            android:background="@drawable/ripple_btn"/>
-
-    </RelativeLayout>
+            android:background="@drawable/ripple_line_orange"/>
 
 </RelativeLayout>

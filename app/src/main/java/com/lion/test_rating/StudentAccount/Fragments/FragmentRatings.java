@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
 import com.lion.test_rating.StudentAccount.AccountStudentActivity;
-import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVARatingOnGroupForStudentAccount;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class FragmentRatings extends Fragment {
 
@@ -45,13 +39,8 @@ public class FragmentRatings extends Fragment {
     int sPlaceOnGroup;
     int countStudentsOnCourse;
     int countStudentsOnGroup;
-    int number;
 
     RelativeLayout layoutStudRating;
-
-    private ArrayList<String> mListPlaceNumber = new ArrayList<>();
-    private ArrayList<String> mListNameStudent = new ArrayList<>();
-    private ArrayList<String> mListStudentRating = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +66,6 @@ public class FragmentRatings extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        clearLists();
                         openUserDatabase(dataSnapshot);
                     }
                 }
@@ -119,60 +107,13 @@ public class FragmentRatings extends Fragment {
                 }
             }
         }
-        for (DataSnapshot users : dataSnapshot.getChildren()) {
-            if (sCourse.equals(users.child(ConstantsNames.COURSE).getValue())
-                    && sGroup.equals(users.child(ConstantsNames.GROUP).getValue())) {
-                number++;
-
-                initList(Integer.toString(number), (String) users.child(ConstantsNames.FULL_NAME).getValue()
-                        , (String) users.child(ConstantsNames.RATING).getValue());
-            }
-        }
-        initRecyclerView();
         initInfo();
-    }
-
-    private void initList(String number, String name, String rating) {
-        mListPlaceNumber.add(number);
-        mListNameStudent.add(name);
-        mListStudentRating.add(rating);
-    }
-
-    private void initRecyclerView() {
-        sortingList();
-
-        RecyclerView recyclerView = fragmentView.findViewById(R.id.recycler_view_for_student_rating_on_group);
-        RVARatingOnGroupForStudentAccount adapter = new RVARatingOnGroupForStudentAccount(getActivity()
-                , mListPlaceNumber, mListNameStudent, mListStudentRating);
-        recyclerView.setAdapter(adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void sortingList() {
-        int t1;
-        String t2;
-        for (int i = 0; i < mListPlaceNumber.size(); i++)
-            for (int j = i + 1; j < mListPlaceNumber.size(); j++)
-                if (Integer.parseInt(mListStudentRating.get(j)) < Integer.parseInt(mListStudentRating.get(i))) {
-
-                    t1 = Integer.parseInt(mListStudentRating.get(i));
-                    mListStudentRating.set(i, mListStudentRating.get(j));
-                    mListStudentRating.set(j, Integer.toString(t1));
-
-                    t2 = mListNameStudent.get(i);
-                    mListNameStudent.set(i, mListNameStudent.get(j));
-                    mListNameStudent.set(j, t2);
-                }
-
-        Collections.sort(mListPlaceNumber, Collections.reverseOrder());
     }
 
     @SuppressLint("SetTextI18n")
     private void initInfo() {
         tvRating.setText("Рейтинг: " + sRating);
+        tvName.setText(AccountStudentActivity.mListUserInformation.get(0));
         tvPlaceOnCourse.setText("Место на курсе: " + Integer.toString(countStudentsOnCourse - sPlaceOnCourse));
         tvPlaceOnGroup.setText("Место в группе: " + Integer.toString(countStudentsOnGroup - sPlaceOnGroup));
     }
@@ -180,12 +121,5 @@ public class FragmentRatings extends Fragment {
     private void errorNull() {
         Log.d("Errors", "NullPointerException");
         Toast.makeText(getActivity(), "Ошибка соединения с сервером..", Toast.LENGTH_LONG).show();
-    }
-
-    private void clearLists() {
-        mListPlaceNumber.clear();
-        mListNameStudent.clear();
-        mListStudentRating.clear();
-        number = 0;
     }
 }

@@ -12,4 +12,6 @@
     <dimen name="text_answer_size">13sp</dimen>
     <dimen name="paddingLeftRight">16dp</dimen>
     <dimen name="paddingTopBottom">8dp</dimen>
+    <dimen name="button_corners_radius">4dp</dimen>
+    <dimen name="line_height">4dp</dimen>
 </resources>
