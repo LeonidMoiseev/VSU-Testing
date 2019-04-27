@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 import com.lion.test_rating.TeacherAccount.CreateInformation;
 import com.lion.test_rating.R;
 import com.lion.test_rating.TeacherAccount.RecyclerViewAdapters.RVAInformationForTeacherAccount;
@@ -46,7 +46,7 @@ public class FragmentInformationForTeacherAccount extends Fragment {
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         testsDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.INFORMATION)
-                .child(AccountTeacherActivity.mListUserInformation.get(0));
+                .child(TeacherAccountActivity.mListUserInformation.get(0));
         testsDatabase.keepSynced(true);
 
         try {

@@ -35,7 +35,7 @@ import com.lion.test_rating.TeacherAccount.Fragments.FragmentTestsForTeachersAcc
 
 import java.util.ArrayList;
 
-public class AccountTeacherActivity extends AppCompatActivity
+public class TeacherAccountActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
@@ -86,7 +86,7 @@ public class AccountTeacherActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(AccountTeacherActivity.this, MainActivity.class);
+                    Intent loginIntent = new Intent(TeacherAccountActivity.this, MainActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();

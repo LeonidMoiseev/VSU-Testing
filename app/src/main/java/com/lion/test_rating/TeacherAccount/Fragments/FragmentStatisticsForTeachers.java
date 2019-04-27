@@ -24,7 +24,7 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,7 @@ public class FragmentStatisticsForTeachers extends Fragment {
         numberTest = this.getArguments().getString("numberTest");
 
         statisticsDatabase = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.RESULTS).
-                child(AccountTeacherActivity.mListUserInformation.get(0)).child(numberTest);
+                child(TeacherAccountActivity.mListUserInformation.get(0)).child(numberTest);
         statisticsDatabase.keepSynced(true);
 
         try {

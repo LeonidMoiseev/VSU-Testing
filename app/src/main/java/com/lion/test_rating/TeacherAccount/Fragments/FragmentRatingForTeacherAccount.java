@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 
 public class FragmentRatingForTeacherAccount extends Fragment {
 
@@ -116,7 +116,7 @@ public class FragmentRatingForTeacherAccount extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
-        AccountTeacherActivity.checkFragment = 1;
+        TeacherAccountActivity.checkFragment = 1;
         hideKeyboardFrom(getActivity(), fragmentView);
     }
 

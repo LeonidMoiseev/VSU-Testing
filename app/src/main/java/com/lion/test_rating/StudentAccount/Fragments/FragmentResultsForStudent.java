@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAResultsForStudentAccount;
 
 import java.util.ArrayList;
@@ -73,20 +73,20 @@ public class FragmentResultsForStudent extends Fragment {
 
         for (DataSnapshot numberTest : dataSnapshot.getChildren()) {
 
-            if (numberTest.hasChild(AccountStudentActivity.mListUserInformation.get(2))) {
+            if (numberTest.hasChild(StudentAccountActivity.mListUserInformation.get(2))) {
 
-                if (numberTest.child(AccountStudentActivity.mListUserInformation.get(2))
-                        .hasChild(AccountStudentActivity.mListUserInformation.get(3))) {
+                if (numberTest.child(StudentAccountActivity.mListUserInformation.get(2))
+                        .hasChild(StudentAccountActivity.mListUserInformation.get(3))) {
 
-                    if (numberTest.child(AccountStudentActivity.mListUserInformation.get(2))
-                            .child(AccountStudentActivity.mListUserInformation.get(3))
-                            .hasChild(AccountStudentActivity.mListUserInformation.get(0))) {
+                    if (numberTest.child(StudentAccountActivity.mListUserInformation.get(2))
+                            .child(StudentAccountActivity.mListUserInformation.get(3))
+                            .hasChild(StudentAccountActivity.mListUserInformation.get(0))) {
 
                         initListTests((String) numberTest.child(ConstantsNames.SUBJECT).getValue()
                                 , (String) numberTest.child(ConstantsNames.DATE_CREATE).getValue()
-                                , (String) numberTest.child(AccountStudentActivity.mListUserInformation.get(2))
-                                        .child(AccountStudentActivity.mListUserInformation.get(3))
-                                        .child(AccountStudentActivity.mListUserInformation.get(0)).getValue()
+                                , (String) numberTest.child(StudentAccountActivity.mListUserInformation.get(2))
+                                        .child(StudentAccountActivity.mListUserInformation.get(3))
+                                        .child(StudentAccountActivity.mListUserInformation.get(0)).getValue()
                                 , (String) numberTest.child(ConstantsNames.TOPIC_NAME).getValue());
                     }
                 }

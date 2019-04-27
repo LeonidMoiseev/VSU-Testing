@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 import com.lion.test_rating.TeacherAccount.RecyclerViewAdapters.RVAResultsForTeacherAccount;
 
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public class FragmentResultsForTeachers extends Fragment {
     private void studentsData() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference resultDatabase = mFirebaseDatabase.getReference().child(ConstantsNames.RESULTS)
-                .child(AccountTeacherActivity.mListUserInformation.get(0)).child(numberTest);
+                .child(TeacherAccountActivity.mListUserInformation.get(0)).child(numberTest);
         resultDatabase.keepSynced(true);
 
         try {

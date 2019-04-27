@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public class RVAMyTestsStatusForTeachersAccount extends RecyclerView.Adapter<RVA
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         databaseTestsReference = mFirebaseDatabase.getReference().child(ConstantsNames.TESTS)
-                .child(AccountTeacherActivity.mListUserInformation.get(0));
+                .child(TeacherAccountActivity.mListUserInformation.get(0));
         databaseTestsReference.keepSynced(true);
 
         return new ViewHolder(view);
@@ -168,7 +168,7 @@ public class RVAMyTestsStatusForTeachersAccount extends RecyclerView.Adapter<RVA
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DataSnapshot dataCompleteTest = dataSnapshot.child(ConstantsNames.TESTS)
-                        .child(AccountTeacherActivity.mListUserInformation.get(0))
+                        .child(TeacherAccountActivity.mListUserInformation.get(0))
                         .child(mNumberTest.get(position))
                         .child(ConstantsNames.USER_COMPLETE_TEST);
 
@@ -176,7 +176,7 @@ public class RVAMyTestsStatusForTeachersAccount extends RecyclerView.Adapter<RVA
                     if (dataCompleteTest.hasChild(nameStudent)) {
 
                         databaseReference.child(ConstantsNames.TESTS)
-                                .child(AccountTeacherActivity.mListUserInformation.get(0))
+                                .child(TeacherAccountActivity.mListUserInformation.get(0))
                                 .child(mNumberTest.get(position))
                                 .child(ConstantsNames.USER_COMPLETE_TEST)
                                 .child(nameStudent).removeValue();

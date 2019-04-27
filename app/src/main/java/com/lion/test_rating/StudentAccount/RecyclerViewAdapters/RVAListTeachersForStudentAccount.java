@@ -16,9 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
 import com.lion.test_rating.StudentAccount.Fragments.FragmentResultsForStudent;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
                 String myMessage = mTeacher.get(position);
                 bundle.putString("teacher", myMessage);
                 replaceFragment(fragmentResultsForStudent, bundle);
-                AccountStudentActivity.checkFragment = 1;
+                StudentAccountActivity.checkFragment = 1;
             }
         });
     }
@@ -70,7 +70,7 @@ public class RVAListTeachersForStudentAccount extends RecyclerView.Adapter<RVALi
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
-        AccountTeacherActivity.checkFragment = 1;
+        TeacherAccountActivity.checkFragment = 1;
     }
 
     @Override

@@ -25,21 +25,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StudentAccount.AccountStudentActivity"
+            android:name=".StudentAccount.StudentAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TeacherAccount.AccountTeacherActivity"
+            android:name=".TeacherAccount.TeacherAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PreRegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StudentAccount.RegistrationStudentActivity"
+            android:name=".StudentAccount.StudentRegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TeacherAccount.RegistrationTeacherActivity"
+            android:name=".TeacherAccount.TeacherRegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".StudentAccount.StartTestActivity"

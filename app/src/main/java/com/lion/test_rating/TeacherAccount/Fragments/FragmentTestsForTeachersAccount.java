@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 import com.lion.test_rating.TeacherAccount.RecyclerViewAdapters.RVATestsForTeachersAccount;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class FragmentTestsForTeachersAccount extends Fragment {
             testsDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(AccountTeacherActivity.mListUserInformation.get(0)).exists()) {
+                    if (dataSnapshot.child(TeacherAccountActivity.mListUserInformation.get(0)).exists()) {
                         clearLists();
                         checkExistenceTests(dataSnapshot);
                     }
@@ -70,7 +70,7 @@ public class FragmentTestsForTeachersAccount extends Fragment {
 
     private void checkExistenceTests(DataSnapshot dataSnapshot) {
         for (DataSnapshot tests : dataSnapshot
-                .child(AccountTeacherActivity.mListUserInformation.get(0)).getChildren()) {
+                .child(TeacherAccountActivity.mListUserInformation.get(0)).getChildren()) {
 
             initList((String) tests.child(ConstantsNames.SUBJECT).getValue(),
                     (String) tests.child(ConstantsNames.DATE_CREATE).getValue(),

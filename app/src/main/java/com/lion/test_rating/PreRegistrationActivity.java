@@ -7,8 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-import com.lion.test_rating.StudentAccount.RegistrationStudentActivity;
-import com.lion.test_rating.TeacherAccount.RegistrationTeacherActivity;
+import com.lion.test_rating.StudentAccount.StudentRegistrationActivity;
+import com.lion.test_rating.TeacherAccount.TeacherRegistrationActivity;
 
 public class PreRegistrationActivity extends AppCompatActivity {
 
@@ -44,9 +44,9 @@ public class PreRegistrationActivity extends AppCompatActivity {
 
     private void openRegistrationActivity(String userType) {
         if (userType.equals(ConstantsNames.STUDENTS)) {
-            registerIntent = new Intent(PreRegistrationActivity.this, RegistrationStudentActivity.class);
+            registerIntent = new Intent(PreRegistrationActivity.this, StudentRegistrationActivity.class);
         } else if (userType.equals(ConstantsNames.TEACHERS)) {
-            registerIntent = new Intent(PreRegistrationActivity.this, RegistrationTeacherActivity.class);
+            registerIntent = new Intent(PreRegistrationActivity.this, TeacherRegistrationActivity.class);
         }
         registerIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(registerIntent);

@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
 
 public class FragmentRatings extends Fragment {
 
@@ -87,9 +87,9 @@ public class FragmentRatings extends Fragment {
         sPlaceOnGroup = 0;
         countStudentsOnCourse = 0;
         countStudentsOnGroup = 0;
-        sRating = AccountStudentActivity.mListUserInformation.get(4);
-        sCourse = AccountStudentActivity.mListUserInformation.get(2);
-        sGroup = AccountStudentActivity.mListUserInformation.get(3);
+        sRating = StudentAccountActivity.mListUserInformation.get(4);
+        sCourse = StudentAccountActivity.mListUserInformation.get(2);
+        sGroup = StudentAccountActivity.mListUserInformation.get(3);
 
         for (DataSnapshot users : dataSnapshot.getChildren()) {
             if (sCourse.equals(users.child(ConstantsNames.COURSE).getValue())) {
@@ -113,7 +113,7 @@ public class FragmentRatings extends Fragment {
     @SuppressLint("SetTextI18n")
     private void initInfo() {
         tvRating.setText("Рейтинг: " + sRating);
-        tvName.setText(AccountStudentActivity.mListUserInformation.get(0));
+        tvName.setText(StudentAccountActivity.mListUserInformation.get(0));
         tvPlaceOnCourse.setText("Место на курсе: " + Integer.toString(countStudentsOnCourse - sPlaceOnCourse));
         tvPlaceOnGroup.setText("Место в группе: " + Integer.toString(countStudentsOnGroup - sPlaceOnGroup));
     }

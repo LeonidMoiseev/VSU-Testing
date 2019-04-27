@@ -1,11 +1,11 @@
-package com.lion.test_rating.StudentAccount;
+package com.lion.test_rating.TeacherAccount;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,14 +28,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
 
-public class RegistrationStudentActivity extends AppCompatActivity {
+public class TeacherRegistrationActivity extends AppCompatActivity {
 
     private EditText mNameField;
-    private EditText mCourseField;
-    private EditText mGroupField;
     private EditText mEmailField;
     private EditText mPasswordField;
     private EditText mCodeField;
+    private EditText mDepartmentField;
     private AlertDialog dialogProgressBar;
     private ProgressBar progressBar;
 
@@ -45,20 +44,18 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsers;
 
     String name;
-    String course;
-    String group;
     String email;
     String password;
     String code;
-
+    String department;
     String completeCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_for_student_registration);
+        setContentView(R.layout.activity_for_teacher_registration);
 
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(RegistrationStudentActivity.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TeacherRegistrationActivity.this);
         @SuppressLint("InflateParams")
         View mView = getLayoutInflater().inflate(R.layout.dialog_progress_bar, null);
         mBuilder.setView(mView);
@@ -76,15 +73,12 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         mDatabaseUsers = mFirebaseDatabase.getReference();
         mDatabaseUsers.keepSynced(true);
 
-
         mNameField = findViewById(R.id.nameField);
-        mCourseField = findViewById(R.id.courseField);
-        mGroupField = findViewById(R.id.groupField);
+        mDepartmentField = findViewById(R.id.departmentField);
         mEmailField = findViewById(R.id.emailField);
         mPasswordField = findViewById(R.id.passwordField);
         mCodeField = findViewById(R.id.codeField);
         Button mRegisterBtn = findViewById(R.id.registerBtn);
-
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,16 +90,15 @@ public class RegistrationStudentActivity extends AppCompatActivity {
 
     private void startRegistration() {
         name = mNameField.getText().toString().trim();
-        course = mCourseField.getText().toString().trim();
-        group = mGroupField.getText().toString().trim();
+        department = mDepartmentField.getText().toString().trim();
         email = mEmailField.getText().toString().trim();
         password = mPasswordField.getText().toString().trim();
         code = mCodeField.getText().toString().trim();
 
         validateForm();
 
-        if ((!TextUtils.isEmpty(name) && !TextUtils.isEmpty(course) && !TextUtils.isEmpty(group)
-                && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(code))) {
+        if ((!TextUtils.isEmpty(name) && !TextUtils.isEmpty(department) && !TextUtils.isEmpty(email)
+                && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(code))) {
 
             dialogProgressBar.show();
             progressBar.setVisibility(ProgressBar.VISIBLE);
@@ -135,13 +128,13 @@ public class RegistrationStudentActivity extends AppCompatActivity {
 
     private void validateOfEnteredData(DataSnapshot dataSnapshot) {
 
-        DataSnapshot student = dataSnapshot.child(ConstantsNames.ACTIVATION_CODES)
-                .child(ConstantsNames.STUDENTS).child(course).child(group);
+        DataSnapshot teacher = dataSnapshot.child(ConstantsNames.ACTIVATION_CODES)
+                .child(ConstantsNames.TEACHERS);
 
-        if (student.exists()) {
-            if (student.hasChild(name)) {
+        if (teacher.exists()) {
+            if (teacher.hasChild(name)) {
 
-                completeCode = (String) student.child(name).getValue();
+                completeCode = (String) teacher.child(name).getValue();
 
                 if (code.equals(completeCode)) {
                     createAccount();
@@ -153,7 +146,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
                 errorRegistration(getString(R.string.error_data_name));
             }
         } else {
-            errorRegistration(getString(R.string.registration_error_course_group));
+            errorRegistration(getString(R.string.registration_error));
         }
     }
 
@@ -161,41 +154,40 @@ public class RegistrationStudentActivity extends AppCompatActivity {
         try {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (task.isSuccessful()) {
+                            if (task.isSuccessful()) {
 
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        assert user != null;
-                        String userID = user.getUid();
-                        String user_email = user.getEmail();
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                assert user != null;
+                                String userID = user.getUid();
+                                String user_email = user.getEmail();
 
-                        DatabaseReference current_user_db = mDatabaseUsers.child(ConstantsNames.USERS).
-                                child(ConstantsNames.STUDENTS).child(userID);
-                        current_user_db.child(ConstantsNames.FULL_NAME).setValue(name);
-                        current_user_db.child(ConstantsNames.COURSE).setValue(course);
-                        current_user_db.child(ConstantsNames.GROUP).setValue(group);
-                        current_user_db.child(ConstantsNames.RATING).setValue("0");
-                        current_user_db.child(ConstantsNames.EMAIL).setValue(user_email);
+                                DatabaseReference current_user_db = mDatabaseUsers.child(ConstantsNames.USERS).
+                                        child(ConstantsNames.TEACHERS).child(userID);
 
-                        progressBar.setVisibility(ProgressBar.INVISIBLE);
-                        dialogProgressBar.dismiss();
+                                current_user_db.child(ConstantsNames.FULL_NAME).setValue(name);
+                                current_user_db.child(ConstantsNames.DEPARTMENT).setValue(department);
+                                current_user_db.child(ConstantsNames.EMAIL).setValue(user_email);
 
-                        mDatabaseUsers.child(ConstantsNames.ACTIVATION_CODES).child(ConstantsNames.STUDENTS).
-                                child(course).child(group).child(name).removeValue();
+                                progressBar.setVisibility(ProgressBar.INVISIBLE);
+                                dialogProgressBar.dismiss();
 
-                        Intent mainIntent = new Intent(RegistrationStudentActivity.this
-                                , AccountStudentActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(mainIntent);
-                        finish();
+                                mDatabaseUsers.child(ConstantsNames.ACTIVATION_CODES)
+                                        .child(ConstantsNames.TEACHERS).child(name).removeValue();
 
-                    } else {
-                        errorRegistration(getString(R.string.registration_error_with_email));
-                    }
-                }
-            });
+                                Intent mainIntent = new Intent(TeacherRegistrationActivity.this
+                                        , TeacherAccountActivity.class);
+                                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(mainIntent);
+                                finish();
+
+                            } else {
+                                errorRegistration(getString(R.string.registration_error_with_email));
+                            }
+                        }
+                    });
         } catch (NullPointerException ex) {
             errorRegistration(getString(R.string.registration_error));
         }
@@ -207,18 +199,6 @@ public class RegistrationStudentActivity extends AppCompatActivity {
             mNameField.setError(getString(R.string.required));
         } else {
             mNameField.setError(null);
-        }
-
-        if (TextUtils.isEmpty(course)) {
-            mCourseField.setError(getString(R.string.required));
-        } else {
-            mCourseField.setError(null);
-        }
-
-        if (TextUtils.isEmpty(group)) {
-            mGroupField.setError(getString(R.string.required));
-        } else {
-            mGroupField.setError(null);
         }
 
         if (TextUtils.isEmpty(email)) {
@@ -233,6 +213,12 @@ public class RegistrationStudentActivity extends AppCompatActivity {
             mPasswordField.setError(null);
         }
 
+        if (TextUtils.isEmpty(department)) {
+            mDepartmentField.setError(getString(R.string.required));
+        } else {
+            mDepartmentField.setError(null);
+        }
+
         if (TextUtils.isEmpty(code)) {
             mCodeField.setError(getString(R.string.required));
         } else {
@@ -243,7 +229,7 @@ public class RegistrationStudentActivity extends AppCompatActivity {
     private void errorRegistration(String message) {
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         dialogProgressBar.dismiss();
-        Toast.makeText(RegistrationStudentActivity.this, message,
+        Toast.makeText(TeacherRegistrationActivity.this, message,
                 Toast.LENGTH_SHORT).show();
     }
 }

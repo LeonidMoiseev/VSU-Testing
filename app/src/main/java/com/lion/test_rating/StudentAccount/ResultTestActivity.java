@@ -91,7 +91,7 @@ public class ResultTestActivity extends AppCompatActivity {
         backMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainMenu = new Intent(ResultTestActivity.this, AccountStudentActivity.class);
+                Intent mainMenu = new Intent(ResultTestActivity.this, StudentAccountActivity.class);
                 mainMenu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(mainMenu);
                 finish();

@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListInformationForStudentAccount;
 
 import java.util.ArrayList;
@@ -76,8 +76,8 @@ public class FragmentInformationForStudentsAccount extends Fragment {
                     assert courseAndGroup != null;
                     String course = Character.toString(courseAndGroup.charAt(0));
                     String group = Character.toString(courseAndGroup.charAt(7));
-                    if (AccountStudentActivity.mListUserInformation.get(2).equals(course)
-                            && AccountStudentActivity.mListUserInformation.get(3).equals(group)) {
+                    if (StudentAccountActivity.mListUserInformation.get(2).equals(course)
+                            && StudentAccountActivity.mListUserInformation.get(3).equals(group)) {
 
                         initListTests(teachers.getKey(), (String) numberInfo.child(ConstantsNames.INFORMATION)
                                         .getValue()

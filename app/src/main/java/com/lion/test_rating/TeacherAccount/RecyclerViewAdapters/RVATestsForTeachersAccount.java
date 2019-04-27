@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentResultsForTeachers;
 import com.lion.test_rating.TeacherAccount.Fragments.FragmentStatisticsForTeachers;
 
@@ -114,7 +114,7 @@ public class RVATestsForTeachersAccount extends RecyclerView.Adapter<RVATestsFor
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
-        AccountTeacherActivity.checkFragment = 2;
+        TeacherAccountActivity.checkFragment = 2;
         dialog.dismiss();
     }
 

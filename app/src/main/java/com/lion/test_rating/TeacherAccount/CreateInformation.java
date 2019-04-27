@@ -56,7 +56,7 @@ public class CreateInformation {
     public void openData() {
 
         dataInformation = FirebaseDatabase.getInstance().getReference().child(ConstantsNames.INFORMATION)
-                .child(AccountTeacherActivity.mListUserInformation.get(0));
+                .child(TeacherAccountActivity.mListUserInformation.get(0));
 
         dataInformation.addValueEventListener(new ValueEventListener() {
             @Override

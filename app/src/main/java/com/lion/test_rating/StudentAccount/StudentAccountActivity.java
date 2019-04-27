@@ -37,7 +37,7 @@ import com.lion.test_rating.StudentAccount.Fragments.FragmentTestsForStudentsAcc
 
 import java.util.ArrayList;
 
-public class AccountStudentActivity extends AppCompatActivity
+public class StudentAccountActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private FirebaseAuth mAuth;
@@ -89,7 +89,7 @@ public class AccountStudentActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    Intent loginIntent = new Intent(AccountStudentActivity.this, MainActivity.class);
+                    Intent loginIntent = new Intent(StudentAccountActivity.this, MainActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();

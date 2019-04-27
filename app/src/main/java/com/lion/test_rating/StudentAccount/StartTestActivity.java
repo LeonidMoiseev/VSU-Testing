@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -89,6 +90,8 @@ public class StartTestActivity extends AppCompatActivity {
     private String nameSubject;
     private String topicName;
 
+    private boolean testTimeOut = false;
+
     LocalBroadcastManager mLocalBroadcastManager;
     BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
@@ -96,6 +99,7 @@ public class StartTestActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if ("com.lion.close".equals(intent.getAction())) {
                 finishTest();
+                testTimeOut = true;
             }
         }
     };
@@ -107,6 +111,8 @@ public class StartTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_for_student_start_test);
 
         testFinished = false;
+
+        Log.d("TAG", "created");
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter mIntentFilter = new IntentFilter();
@@ -125,10 +131,10 @@ public class StartTestActivity extends AppCompatActivity {
         topicName = intent.getStringExtra("topicName");
         numberQuestion = Integer.parseInt(intent.getStringExtra("restrictionTest"));
         testTime = Integer.parseInt(intent.getStringExtra("testTime"));
-        nameStudent = AccountStudentActivity.mListUserInformation.get(0);
-        courseStudent = AccountStudentActivity.mListUserInformation.get(2);
-        groupStudent = AccountStudentActivity.mListUserInformation.get(3);
-        ratingStudent = AccountStudentActivity.mListUserInformation.get(4);
+        nameStudent = StudentAccountActivity.mListUserInformation.get(0);
+        courseStudent = StudentAccountActivity.mListUserInformation.get(2);
+        groupStudent = StudentAccountActivity.mListUserInformation.get(3);
+        ratingStudent = StudentAccountActivity.mListUserInformation.get(4);
 
         previousQuestion = findViewById(R.id.previous_question);
         nextQuestion = findViewById(R.id.next_question);
@@ -450,7 +456,7 @@ public class StartTestActivity extends AppCompatActivity {
         finish();
     }
 
-    private void dialogCloseTest(){
+    private void dialogCloseTest() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         @SuppressLint("InflateParams")
         View mView = getLayoutInflater().inflate(R.layout.dialog_close_test, null);
@@ -518,13 +524,24 @@ public class StartTestActivity extends AppCompatActivity {
         pendingIntent.cancel();
     }
 
+    @Override
     protected void onDestroy() {
         if (!testFinished) {
             mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
             stopAlarmManager(StartTestActivity.this);
             finishTestWhenDestroyActivity();
         }
+        Log.d("TAG", "destroy");
         super.onDestroy();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (testTimeOut) {
+            mTimeLeft.setText("00 : 00");
+        }
     }
 
     @Override

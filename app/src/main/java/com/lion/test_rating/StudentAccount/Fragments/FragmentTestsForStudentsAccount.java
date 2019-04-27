@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListTestsForStudentAccount;
 
 import java.util.ArrayList;
@@ -82,17 +82,17 @@ public class FragmentTestsForStudentsAccount extends Fragment {
                     if (openTest.equals(ConstantsNames.OPEN)) {
 
                         //Проверка: для каких курсов открыт тест
-                        if (testNumber.hasChild(AccountStudentActivity.mListUserInformation.get(2))) {
+                        if (testNumber.hasChild(StudentAccountActivity.mListUserInformation.get(2))) {
 
                             String groups = (String) testNumber
-                                    .child(AccountStudentActivity.mListUserInformation.get(2)).getValue();
+                                    .child(StudentAccountActivity.mListUserInformation.get(2)).getValue();
                             assert groups != null;
                             //Проверка: для каких групп открыт тест
-                            if (groups.contains(AccountStudentActivity.mListUserInformation.get(3))) {
+                            if (groups.contains(StudentAccountActivity.mListUserInformation.get(3))) {
 
                                 //Проверка: кто уже прошёл тест
                                 if (!testNumber.child(ConstantsNames.USER_COMPLETE_TEST)
-                                        .hasChild(AccountStudentActivity.mListUserInformation.get(0))) {
+                                        .hasChild(StudentAccountActivity.mListUserInformation.get(0))) {
 
                                     initListTests((String) testNumber.child(ConstantsNames.SUBJECT).getValue()
                                             , teachers.getKey()

@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 
 import java.util.ArrayList;
 
@@ -93,7 +93,7 @@ public class RVAInformationForTeacherAccount extends RecyclerView.Adapter<RVAInf
     private void deleteInfo(final int position) {
         DatabaseReference mDatabaseInfo = FirebaseDatabase.getInstance().getReference();
         mDatabaseInfo.keepSynced(true);
-        mDatabaseInfo.child(ConstantsNames.INFORMATION).child(AccountTeacherActivity.mListUserInformation.get(0)).child(mNumberInformationBlock.get(position)).removeValue();
+        mDatabaseInfo.child(ConstantsNames.INFORMATION).child(TeacherAccountActivity.mListUserInformation.get(0)).child(mNumberInformationBlock.get(position)).removeValue();
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lion.test_rating.ConstantsNames;
 import com.lion.test_rating.R;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
 import com.lion.test_rating.StudentAccount.RecyclerViewAdapters.RVAListTeachersForStudentAccount;
 
 import java.util.ArrayList;
@@ -76,8 +75,8 @@ public class FragmentTeachersForStudentsAccount extends Fragment {
 
                 for (DataSnapshot courses : tests.getChildren()) {
 
-                    if (AccountStudentActivity.mListUserInformation.get(2).equals(courses.getKey())) {
-                        if (courses.hasChild(AccountStudentActivity.mListUserInformation.get(3))) {
+                    if (StudentAccountActivity.mListUserInformation.get(2).equals(courses.getKey())) {
+                        if (courses.hasChild(StudentAccountActivity.mListUserInformation.get(3))) {
 
                             for (DataSnapshot teachersID : dataSnapshot.child(ConstantsNames.USERS)
                                     .child(ConstantsNames.TEACHERS).getChildren()) {

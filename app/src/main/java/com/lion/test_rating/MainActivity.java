@@ -25,8 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.lion.test_rating.StudentAccount.AccountStudentActivity;
-import com.lion.test_rating.TeacherAccount.AccountTeacherActivity;
+import com.lion.test_rating.StudentAccount.StudentAccountActivity;
+import com.lion.test_rating.TeacherAccount.TeacherAccountActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -145,9 +145,9 @@ public class MainActivity extends AppCompatActivity {
                         String userID = user.getUid();
 
                         if (dataSnapshot.child(ConstantsNames.STUDENTS).hasChild(userID)) {
-                            loginIntent = new Intent(MainActivity.this, AccountStudentActivity.class);
+                            loginIntent = new Intent(MainActivity.this, StudentAccountActivity.class);
                         } else if (dataSnapshot.child(ConstantsNames.TEACHERS).hasChild(userID)) {
-                            loginIntent = new Intent(MainActivity.this, AccountTeacherActivity.class);
+                            loginIntent = new Intent(MainActivity.this, TeacherAccountActivity.class);
                         }
 
                         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
